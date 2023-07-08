@@ -172,6 +172,19 @@ class Trade(db.Model):
     sender_service = db.relationship('Service', foreign_keys=[sender_service_id])
     receiver_service = db.relationship('Service', foreign_keys=[receiver_service_id])
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "sender_id": self.sender_id,
+            "receiver_id": self.receiver_id,
+            "sender_product_id": self.sender_product_id,
+            "receiver_product_id": self.receiver_product_id,
+            "sender_service_id": self.sender_service_id,
+            "receiver_service_id": self.receiver_service_id,
+            "message": self.message,
+            "status": self.status
+        }
+
 
 class Message(db.Model):
     __tablename__ = 'message'
