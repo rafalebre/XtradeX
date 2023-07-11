@@ -2,7 +2,15 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 
 const Trades = () => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
+
+  const handleAcceptProposal = (proposalId) => {
+    actions.handleAcceptProposal(proposalId);
+  };
+
+  const handleDeclineProposal = (proposalId) => {
+    actions.handleDeclineProposal(proposalId);
+  };
 
   return (
     <div>

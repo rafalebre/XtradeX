@@ -15,7 +15,7 @@ const TradeProposal = ({ show, handleClose, itemToTrade }) => {
   const handleTradeProposal = (e) => {
     e.preventDefault();
     const receiverId = itemToTrade.user_id;
-    actions.sendTradeProposal(selectedItem, receiverId, itemToTrade.id, message);
+    actions.sendTradeProposal(store, selectedItem, receiverId, itemToTrade.id, message);
     handleClose();
   };
 
