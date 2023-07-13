@@ -339,7 +339,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       sendTradeProposal: async function (
-		store,
+        store,
         senderItem,
         receiverId,
         receiverItem,
@@ -355,34 +355,34 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const backendUrl = process.env.BACKEND_URL;
           const apiUrl = `${backendUrl}/api/trades`;
-
+      
           const requestBody = {
             receiver_id: receiverId,
             message: message,
           };
-
+      
           if (isSenderItemProduct) {
             requestBody.sender_product_id = senderItem;
           } else {
             requestBody.sender_service_id = senderItem;
           }
-
+      
           if (isReceiverItemProduct) {
             requestBody.receiver_product_id = receiverItem;
           } else {
             requestBody.receiver_service_id = receiverItem;
           }
-
+      
           console.log("Request Body:", requestBody);
-
+      
           const response = await fetch(apiUrl, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(requestBody),
           });
-
+      
           const textResponse = await response.text();
-
+      
           try {
             const data = JSON.parse(textResponse);
             if (response.ok) {
@@ -400,6 +400,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error sending trade proposal:", error);
         }
       },
+      
 
       handleAcceptProposal(proposalId) {
         try {

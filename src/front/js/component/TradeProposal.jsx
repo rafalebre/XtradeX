@@ -4,7 +4,8 @@ import { Context } from "../store/appContext";
 
 const TradeProposal = ({ show, handleClose, itemToTrade }) => {
   const { store, actions } = useContext(Context);
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItemId, setSelectedItemId] = useState("");
+  const [selectedItemType, setSelectedItemType] = useState("");
   const [message, setMessage] = useState("");
 
   // Fetch user items on component mount
@@ -15,7 +16,9 @@ const TradeProposal = ({ show, handleClose, itemToTrade }) => {
   const handleTradeProposal = (e) => {
     e.preventDefault();
     const receiverId = itemToTrade.user_id;
-    actions.sendTradeProposal(store, selectedItem, receiverId, itemToTrade.id, message);
+    const isSenderItemProduct = selectedItemType === 'product';
+    const isReceiverItemProduct = itemToTrade.type === 'product';
+    actions.sendTradeProposal(store, selectedItemId, receiverId, itemToTrade.id, message, isSenderItemProduct, isReceiverItemProduct);
     handleClose();
   };
 
@@ -26,27 +29,57 @@ const TradeProposal = ({ show, handleClose, itemToTrade }) => {
       </Modal.Header>
       <Form onSubmit={handleTradeProposal}>
         <Modal.Body>
-          <Form.Group controlId="selectedItem">
-            <Form.Label>Selected Item</Form.Label>
+          <Form.Group controlId="selectedItemType">
+            <Form.Label>Item Type</Form.Label>
             <Form.Control
               as="select"
-              value={selectedItem}
-              onChange={(e) => setSelectedItem(e.target.value)}
+              value={selectedItemType}
+              onChange={(e) => setSelectedItemType(e.target.value)}
               required
             >
-              <option value="">Select an item</option>
-              {store.userProducts && store.userProducts.map((product) => (
-                <option key={product.id} value={product.id}>
-                  {product.name}
-                </option>
-              ))}
-              {store.userServices && store.userServices.map((service) => (
-                <option key={service.id} value={service.id}>
-                  {service.name}
-                </option>
-              ))}
+              <option value="">Select type</option>
+              <option value="product">Product</option>
+              <option value="service">Service</option>
             </Form.Control>
           </Form.Group>
+          {selectedItemType === 'product' &&
+            <Form.Group controlId="selectedItem">
+              <Form.Label>Selected Product</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedItemId}
+                onChange={(e) => setSelectedItemId(e.target.value)}
+                required
+              >
+                <option value="">Select a product</option>
+                {store.userProducts &&
+                  store.userProducts.map((product) => (
+                    <option key={product.id} value={product.id}>
+                      {product.name}
+                    </option>
+                  ))}
+              </Form.Control>
+            </Form.Group>
+          }
+          {selectedItemType === 'service' &&
+            <Form.Group controlId="selectedItem">
+              <Form.Label>Selected Service</Form.Label>
+              <Form.Control
+                as="select"
+                value={selectedItemId}
+                onChange={(e) => setSelectedItemId(e.target.value)}
+                required
+              >
+                <option value="">Select a service</option>
+                {store.userServices &&
+                  store.userServices.map((service) => (
+                    <option key={service.id} value={service.id}>
+                      {service.name}
+                    </option>
+                  ))}
+              </Form.Control>
+            </Form.Group>
+          }
           <Form.Group controlId="message">
             <Form.Label>Message</Form.Label>
             <Form.Control
