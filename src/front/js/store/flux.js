@@ -119,7 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Armazenando o token na local storage
             localStorage.setItem("token", data.access_token);
 
-            // Console log para depurar
+            // Console log para depurar.
             console.log("Logged in user ID:", data.user.id); // or use console.log("Logged in user object:", data.user); to see the whole object
 
             // Chama a função de callback onSuccess
