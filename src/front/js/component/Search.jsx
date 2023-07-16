@@ -51,7 +51,11 @@ const Search = () => {
           Check details
         </button>
         {/* Abre o modal de Trade Proposal */}
-        <button onClick={() => handleOpenTradeProposal(item)}>
+        <button
+          onClick={() =>
+            handleOpenTradeProposal(item, isProduct ? "product" : "service")
+          }
+        >
           Propose Trade
         </button>
       </div>
@@ -59,8 +63,9 @@ const Search = () => {
   };
 
   // Função para abrir o modal de TradeProposal
-  const handleOpenTradeProposal = (item) => {
+  const handleOpenTradeProposal = (item, itemType) => {
     setSelectedItem(item);
+    setSelectedItemType(itemType);
     setShowTradeProposal(true);
   };
 
@@ -78,7 +83,6 @@ const Search = () => {
   const handleCloseDetails = () => {
     setShowDetails(false);
   };
-
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -116,7 +120,6 @@ const Search = () => {
   const categories =
     searchType === "products" ? store.categories : store.serviceCategories;
 
-  
   return (
     <div>
       <div>
@@ -190,6 +193,7 @@ const Search = () => {
           show={showTradeProposal}
           handleClose={handleCloseTradeProposal}
           itemToTrade={selectedItem}
+          itemType={selectedItemType} // passa o tipo de item selecionado 
         />
       )}
     </div>

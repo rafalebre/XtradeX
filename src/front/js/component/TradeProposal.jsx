@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
-const TradeProposal = ({ show, handleClose, itemToTrade }) => {
+const TradeProposal = ({ show, handleClose, itemToTrade, itemType }) => {
   const { store, actions } = useContext(Context);
   const [selectedItemId, setSelectedItemId] = useState("");
   const [selectedItemType, setSelectedItemType] = useState("");
@@ -15,9 +15,10 @@ const TradeProposal = ({ show, handleClose, itemToTrade }) => {
 
   const handleTradeProposal = (e) => {
     e.preventDefault();
+    console.log(itemToTrade); // item solicitado
     const receiverId = itemToTrade.user_id;
     const isSenderItemProduct = selectedItemType === 'product';
-    const isReceiverItemProduct = itemToTrade.type === 'product';
+    const isReceiverItemProduct = itemType === 'product';
     actions.sendTradeProposal(store, selectedItemId, receiverId, itemToTrade.id, message, isSenderItemProduct, isReceiverItemProduct);
     handleClose();
   };
