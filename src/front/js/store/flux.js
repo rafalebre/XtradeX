@@ -402,6 +402,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error sending trade proposal:", error);
         }
       },     
+
+      getTrades: async () => {
+        try {
+          const token = localStorage.getItem("token");
+          const headers = new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          });
+          const backendUrl = process.env.BACKEND_URL;
+          const apiUrl = `${backendUrl}/api/trades`;
+
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: headers,
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            setStore({
+              sent_trades: data.sent_trades,
+              received_trades: data.received_trades,
+            });
+          } else {
+            console.log("Error fetching trades:", data);
+          }
+        } catch (error) {
+          console.error("Error fetching trades:", error);
+        }
+      },
       
       handleAcceptProposal(proposalId) {
         try {
