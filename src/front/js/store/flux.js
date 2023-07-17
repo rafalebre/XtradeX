@@ -388,7 +388,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             if (response.ok) {
               console.log("Trade proposal sent successfully:", data);
               // Atualiza a store com a nova proposta de negociação
-              store.tradeProposals.push(data);
+              setStore({
+                tradeProposals: [...store.tradeProposals, data]
+              });
             } else {
               console.log("Error sending trade proposal:", data);
             }
@@ -399,9 +401,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error sending trade proposal:", error);
         }
-      },
+      },     
       
-
       handleAcceptProposal(proposalId) {
         try {
           const token = localStorage.getItem("token");
