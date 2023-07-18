@@ -1,0 +1,24 @@
+.item-details-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 1em;
+    z-index: 1000;
+  }
+  
+  .item-details-container h2 {
+    margin-bottom: 1em;
+  }
+  
+  .item-name {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+  }
+  
+  .item-name:hover {
+    text-decoration: none;
+  }
+  

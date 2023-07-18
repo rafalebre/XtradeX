@@ -393,6 +393,9 @@ def get_trades():
     sent_trades_list = [trade.to_dict() for trade in sent_trades]
     received_trades_list = [trade.to_dict() for trade in received_trades]
 
+    print("Sent Trades:", sent_trades_list)  # Adicione este log
+    print("Received Trades:", received_trades_list)  # Adicione este log
+
     return jsonify({"sent_trades": sent_trades_list, "received_trades": received_trades_list}), 200
 
 
