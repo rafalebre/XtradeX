@@ -15,7 +15,45 @@ const TradeDetails = ({
       </Modal.Header>
       <Modal.Body>
         <h4>Sender Item: {trade.sender_item_name}</h4>
+        {trade.sender_product_details && (
+          <div>
+            <h5>Product Details:</h5>
+            <p>Name: {trade.sender_product_details.name}</p>
+            <p>Description: {trade.sender_product_details.description}</p>
+            <p>Condition: {trade.sender_product_details.condition}</p>
+            <p>Estimated Value: {trade.sender_product_details.estimated_value}</p>
+            <p>Location: {trade.sender_product_details.location}</p>
+          </div>
+        )}
+        {trade.sender_service_details && (
+          <div>
+            <h5>Service Details:</h5>
+            <p>Name: {trade.sender_service_details.name}</p>
+            <p>Description: {trade.sender_service_details.description}</p>
+            <p>Estimated Value: {trade.sender_service_details.estimated_value}</p>
+            <p>Location: {trade.sender_service_details.location}</p>
+          </div>
+        )}
         <h4>Receiver Item: {trade.receiver_item_name}</h4>
+        {trade.receiver_product_details && (
+          <div>
+            <h5>Product Details:</h5>
+            <p>Name: {trade.receiver_product_details.name}</p>
+            <p>Description: {trade.receiver_product_details.description}</p>
+            <p>Condition: {trade.receiver_product_details.condition}</p>
+            <p>Estimated Value: {trade.receiver_product_details.estimated_value}</p>
+            <p>Location: {trade.receiver_product_details.location}</p>
+          </div>
+        )}
+        {trade.receiver_service_details && (
+          <div>
+            <h5>Service Details:</h5>
+            <p>Name: {trade.receiver_service_details.name}</p>
+            <p>Description: {trade.receiver_service_details.description}</p>
+            <p>Estimated Value: {trade.receiver_service_details.estimated_value}</p>
+            <p>Location: {trade.receiver_service_details.location}</p>
+          </div>
+        )}
         <p>Message: {trade.message}</p>
         <p>Status: {trade.status}</p>
       </Modal.Body>
