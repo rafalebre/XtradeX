@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
+import { Context } from "../store/appContext";
 
-const TradeDetails = ({
-  show,
-  handleClose,
-  trade,
-  handleAcceptProposal,
-  handleDeclineProposal,
-}) => {
+const TradeDetails = ({ show, handleClose, trade }) => {
+  const { actions } = useContext(Context);
+  const [status, setStatus] = useState(trade.status);
+
+  const handleAccept = async () => {
+    await actions.handleAcceptProposal(trade.id);
+    setStatus("Accepted");
+  };
+
+  const handleDecline = async () => {
+    await actions.handleDeclineProposal(trade.id);
+    setStatus("Declined");
+  };
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -58,10 +66,10 @@ const TradeDetails = ({
         <p>Status: {trade.status}</p>
       </Modal.Body>
       <Modal.Footer>
-        {trade.status === "Pending" && (
+        {status === "Pending" && (
           <div>
-            <Button onClick={() => handleAcceptProposal(trade.id)}>Accept</Button>
-            <Button onClick={() => handleDeclineProposal(trade.id)}>Decline</Button>
+            <Button onClick={handleAccept}>Accept</Button>
+            <Button onClick={handleDecline}>Decline</Button>
           </div>
         )}
         <Button variant="secondary" onClick={handleClose}>
