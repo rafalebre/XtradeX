@@ -172,8 +172,8 @@ class Trade(db.Model):
     sender_service = db.relationship('Service', foreign_keys=[sender_service_id])
     receiver_service = db.relationship('Service', foreign_keys=[receiver_service_id])
 
-    def to_dict(self):
-        return {
+    def to_dict(self, include_product_service=False):
+        data = {
             "id": self.id,
             "sender_id": self.sender_id,
             "receiver_id": self.receiver_id,
@@ -186,6 +186,22 @@ class Trade(db.Model):
             "sender_item_name": self.sender_product.name if self.sender_product else self.sender_service.name,
             "receiver_item_name": self.receiver_product.name if self.receiver_product else self.receiver_service.name
         }
+
+        if include_product_service:
+            if self.sender_product:
+                data["sender_product_details"] = self.sender_product.to_dict()  # Aqui estou supondo que você tenha um método `to_dict()` na classe Product também
+
+            if self.receiver_product:
+                data["receiver_product_details"] = self.receiver_product.to_dict()
+
+            if self.sender_service:
+                data["sender_service_details"] = self.sender_service.to_dict()  # E aqui, estou supondo que você tenha um método `to_dict()` na classe Service também
+
+            if self.receiver_service:
+                data["receiver_service_details"] = self.receiver_service.to_dict()
+
+        return data
+
 
 
 class Message(db.Model):

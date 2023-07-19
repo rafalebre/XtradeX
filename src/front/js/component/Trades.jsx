@@ -1,23 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
+import TradeDetails from "./TradeDetails.jsx";
 
 const Trades = () => {
   const { store, actions } = useContext(Context);
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedTrade, setSelectedTrade] = useState(null);
 
   useEffect(() => {
-    actions.getTrades(); // Faz o fetch das trades quando o componente é montado
+    actions.getTrades();
   }, []);
 
-  const handleAcceptProposal = (proposalId) => {
-    actions.handleAcceptProposal(proposalId);
+  const handleOpenDetails = (trade) => {
+    setSelectedTrade(trade);
+    setShowDetails(true);
   };
 
-  const handleDeclineProposal = (proposalId) => {
-    actions.handleDeclineProposal(proposalId);
+  const handleCloseDetails = () => {
+    setShowDetails(false);
   };
 
-  const sentTrades = store.sent_trades || []; // Verifica se sent_trades existe na store
-  const receivedTrades = store.received_trades || []; // Verifica se received_trades existe na store
+  const sentTrades = store.sent_trades || [];
+  const receivedTrades = store.received_trades || [];
 
   return (
     <div>
@@ -26,28 +30,51 @@ const Trades = () => {
       {sentTrades.map((proposal) => (
         <div key={proposal.id}>
           <p>
-            You have offered "{proposal.sender_item_name}" in exchange for "{proposal.receiver_item_name}"
+            You have offered "
+            <span
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              {proposal.sender_item_name}
+            </span>
+            " in exchange for "
+            <span
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              {proposal.receiver_item_name}
+            </span>
+            "
           </p>
+          <button onClick={() => handleOpenDetails(proposal)}>Check Details</button>
         </div>
       ))}
       <h3>Proposals Received:</h3>
       {receivedTrades.map((proposal) => (
         <div key={proposal.id}>
           <p>
-            Check the offer: "{proposal.sender_item_name}" in exchange for your "{proposal.receiver_item_name}"
+            Check the offer: "
+            <span
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              {proposal.sender_item_name}
+            </span>
+            " in exchange for your "
+            <span
+              style={{ cursor: "pointer", textDecoration: "underline" }}
+            >
+              {proposal.receiver_item_name}
+            </span>
+            "
           </p>
-          {proposal.status === "Pending" && (
-            <div>
-              <button onClick={() => handleAcceptProposal(proposal.id)}>
-                Accept
-              </button>
-              <button onClick={() => handleDeclineProposal(proposal.id)}>
-                Decline
-              </button>
-            </div>
-          )}
+          <button onClick={() => handleOpenDetails(proposal)}>Check Details</button>
         </div>
       ))}
+      {showDetails && selectedTrade && (
+        <TradeDetails
+          show={showDetails}
+          handleClose={handleCloseDetails}
+          trade={selectedTrade}
+        />
+      )}
     </div>
   );
 };

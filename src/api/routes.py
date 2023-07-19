@@ -390,13 +390,15 @@ def get_trades():
     sent_trades = Trade.query.filter_by(sender_id=user.id).all()
     received_trades = Trade.query.filter_by(receiver_id=user.id).all()
 
-    sent_trades_list = [trade.to_dict() for trade in sent_trades]
-    received_trades_list = [trade.to_dict() for trade in received_trades]
+    # Utilizando o método `to_dict()` e incluindo os detalhes dos produtos e serviços
+    sent_trades_list = [trade.to_dict(include_product_service=True) for trade in sent_trades]
+    received_trades_list = [trade.to_dict(include_product_service=True) for trade in received_trades]
 
-    print("Sent Trades:", sent_trades_list)  # Adicione este log
-    print("Received Trades:", received_trades_list)  # Adicione este log
+    print("Sent Trades:", sent_trades_list)  # check log
+    print("Received Trades:", received_trades_list)  # check log
 
     return jsonify({"sent_trades": sent_trades_list, "received_trades": received_trades_list}), 200
+
 
 
 @api.route('/trades/<int:trade_id>', methods=['PUT'])
