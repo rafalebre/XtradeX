@@ -460,11 +460,13 @@ def create_trade():
         status="Pending"
     )
 
+    # A data de última atualização é definida aqui, quando a negociação é criada
+    new_trade.last_update = datetime.utcnow()
+
     db.session.add(new_trade)
     db.session.commit()
 
     return jsonify(new_trade.to_dict()), 201
-
 
 
 @api.route('/trades', methods=['GET'])
@@ -483,10 +485,20 @@ def get_trades():
     sent_trades_list = [trade.to_dict(include_product_service=True) for trade in sent_trades]
     received_trades_list = [trade.to_dict(include_product_service=True) for trade in received_trades]
 
-    print("Sent Trades:", sent_trades_list)  # check log
-    print("Received Trades:", received_trades_list)  # check log
+    new_sent_trades = [trade for trade in sent_trades if trade.last_update and user.last_checked and trade.last_update > user.last_checked]
+    new_received_trades = [trade for trade in received_trades if trade.last_update and user.last_checked and trade.last_update > user.last_checked]
 
-    return jsonify({"sent_trades": sent_trades_list, "received_trades": received_trades_list}), 200
+    user.last_checked = datetime.utcnow()
+    db.session.commit()
+
+    return jsonify({
+        "sent_trades": sent_trades_list,
+        "received_trades": received_trades_list,
+        "new_sent_trades": [trade.to_dict(include_product_service=True) for trade in new_sent_trades],
+        "new_received_trades": [trade.to_dict(include_product_service=True) for trade in new_received_trades]
+    }), 200
+
+
 
 
 
@@ -520,6 +532,10 @@ def respond_to_trade(trade_id):
         return jsonify({"msg": "Invalid status"}), 400
 
     trade.status = status
+
+    # A data de última atualização é definida aqui, quando a negociação é alterada
+    trade.last_update = datetime.utcnow()
+
     db.session.commit()
 
     return jsonify({"msg": "Trade status updated successfully"}), 200

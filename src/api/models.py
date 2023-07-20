@@ -18,6 +18,7 @@ class User(db.Model):
     birth_date = db.Column(db.Date)
     phone = db.Column(db.String(120))
     location = db.Column(db.String(120))
+    last_checked = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
         return {
@@ -164,6 +165,7 @@ class Trade(db.Model):
     receiver_service_id = db.Column(db.Integer, db.ForeignKey('service.id'), nullable=True)
     message = db.Column(db.String(200), nullable=False)
     status = db.Column(db.String(20), nullable=False)
+    last_update = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow) # adicionado
 
     sender = db.relationship('User', foreign_keys=[sender_id])
     receiver = db.relationship('User', foreign_keys=[receiver_id])
@@ -183,19 +185,20 @@ class Trade(db.Model):
             "receiver_service_id": self.receiver_service_id,
             "message": self.message,
             "status": self.status,
+            "last_update": self.last_update.isoformat() if self.last_update else None, # adicionado
             "sender_item_name": self.sender_product.name if self.sender_product else self.sender_service.name,
             "receiver_item_name": self.receiver_product.name if self.receiver_product else self.receiver_service.name
         }
 
         if include_product_service:
             if self.sender_product:
-                data["sender_product_details"] = self.sender_product.to_dict()  # Aqui estou supondo que você tenha um método `to_dict()` na classe Product também
+                data["sender_product_details"] = self.sender_product.to_dict()  # Aqui precisamos de um método `to_dict()` na classe Product também
 
             if self.receiver_product:
                 data["receiver_product_details"] = self.receiver_product.to_dict()
 
             if self.sender_service:
-                data["sender_service_details"] = self.sender_service.to_dict()  # E aqui, estou supondo que você tenha um método `to_dict()` na classe Service também
+                data["sender_service_details"] = self.sender_service.to_dict()  # Aqui precisamos de um método `to_dict()` na classe Service também
 
             if self.receiver_service:
                 data["receiver_service_details"] = self.receiver_service.to_dict()
