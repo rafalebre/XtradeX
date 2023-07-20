@@ -15,6 +15,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       searchedServices: [],
       userItems: [],
       tradeProposals: [],
+      sent_trades: [],
+      received_trades: [],
+      new_sent_trades: [],
+      new_received_trades: [],
       demo: [
         {
           title: "FIRST",
@@ -355,41 +359,41 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const backendUrl = process.env.BACKEND_URL;
           const apiUrl = `${backendUrl}/api/trades`;
-      
+
           const requestBody = {
             receiver_id: receiverId,
             message: message,
           };
-      
+
           if (isSenderItemProduct) {
             requestBody.sender_product_id = senderItem;
           } else {
             requestBody.sender_service_id = senderItem;
           }
-      
+
           if (isReceiverItemProduct) {
             requestBody.receiver_product_id = receiverItem;
           } else {
             requestBody.receiver_service_id = receiverItem;
           }
-      
+
           console.log("Request Body:", requestBody);
-      
+
           const response = await fetch(apiUrl, {
             method: "POST",
             headers: headers,
             body: JSON.stringify(requestBody),
           });
-      
+
           const textResponse = await response.text();
-      
+
           try {
             const data = JSON.parse(textResponse);
             if (response.ok) {
               console.log("Trade proposal sent successfully:", data);
               // Atualiza a store com a nova proposta de negociação
               setStore({
-                tradeProposals: [...store.tradeProposals, data]
+                tradeProposals: [...store.tradeProposals, data],
               });
             } else {
               console.log("Error sending trade proposal:", data);
@@ -401,7 +405,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error("Error sending trade proposal:", error);
         }
-      },     
+      },
 
       getTrades: async () => {
         try {
@@ -424,6 +428,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             setStore({
               sent_trades: data.sent_trades,
               received_trades: data.received_trades,
+              new_sent_trades: data.new_sent_trades,
+              new_received_trades: data.new_received_trades,
             });
           } else {
             console.log("Error fetching trades:", data);
@@ -432,7 +438,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching trades:", error);
         }
       },
-      
+
       handleAcceptProposal(proposalId) {
         try {
           const token = localStorage.getItem("token");
