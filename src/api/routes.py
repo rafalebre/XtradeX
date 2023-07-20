@@ -176,6 +176,51 @@ def create_product():
 
     return jsonify(new_product.to_dict()), 201
 
+@api.route('/products/<int:product_id>', methods=['PUT'])
+@jwt_required()
+def update_product(product_id):
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+
+    product = Product.query.get(product_id)
+
+    if not product:
+        return jsonify({"msg": "Product not found"}), 404
+
+    for key, value in data.items():
+        setattr(product, key, value)
+
+    db.session.commit()
+
+    return jsonify(product.to_dict()), 200
+
+@api.route('/products/<int:product_id>', methods=['DELETE'])
+@jwt_required()
+def delete_product(product_id):
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    product = Product.query.get(product_id)
+
+    if not product:
+        return jsonify({"msg": "Product not found"}), 404
+
+    db.session.delete(product)
+    db.session.commit()
+
+    return jsonify({"msg": "Product deleted"}), 200
+
 
 @api.route('/product-categories', methods=['GET'])
 def get_product_categories():
@@ -256,6 +301,50 @@ def create_service():
 
     return jsonify(new_service.to_dict()), 201
 
+@api.route('/services/<int:service_id>', methods=['PUT'])
+@jwt_required()
+def update_service(service_id):
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+
+    service = Service.query.get(service_id)
+
+    if not service:
+        return jsonify({"msg": "Service not found"}), 404
+
+    for key, value in data.items():
+        setattr(service, key, value)
+
+    db.session.commit()
+
+    return jsonify(service.to_dict()), 200
+
+@api.route('/services/<int:service_id>', methods=['DELETE'])
+@jwt_required()
+def delete_service(service_id):
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    service = Service.query.get(service_id)
+
+    if not service:
+        return jsonify({"msg": "Service not found"}), 404
+
+    db.session.delete(service)
+    db.session.commit()
+
+    return jsonify({"msg": "Service deleted"}), 200
 
 @api.route('/service-categories', methods=['GET'])
 def get_service_categories():
