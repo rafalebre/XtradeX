@@ -1,19 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
 const TradeDetails = ({ show, handleClose, trade }) => {
   const { actions } = useContext(Context);
-  const [status, setStatus] = useState(trade.status);
+  const [tradeStatus, setTradeStatus] = useState(trade.status);
+
+  useEffect(() => {
+    setTradeStatus(trade.status);
+  }, [trade.status]);
 
   const handleAccept = async () => {
     await actions.handleAcceptProposal(trade.id);
-    setStatus("Accepted");
+    setTradeStatus("Accepted");
   };
 
   const handleDecline = async () => {
     await actions.handleDeclineProposal(trade.id);
-    setStatus("Declined");
+    setTradeStatus("Declined");
   };
 
   return (
@@ -63,10 +67,10 @@ const TradeDetails = ({ show, handleClose, trade }) => {
           </div>
         )}
         <p>Message: {trade.message}</p>
-        <p>Status: {trade.status}</p>
+        <p>Status: {tradeStatus}</p>
       </Modal.Body>
       <Modal.Footer>
-        {status === "Pending" && (
+        {tradeStatus === "Pending" && (
           <div>
             <Button onClick={handleAccept}>Accept</Button>
             <Button onClick={handleDecline}>Decline</Button>
