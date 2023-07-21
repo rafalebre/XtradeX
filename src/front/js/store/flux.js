@@ -439,6 +439,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      clearTradeNotifications: () => {
+        setStore({
+          new_sent_trades: [],
+          new_received_trades: [],
+        });
+      },
+
       handleAcceptProposal(proposalId) {
         try {
           const token = localStorage.getItem("token");

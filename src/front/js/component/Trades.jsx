@@ -10,6 +10,8 @@ const Trades = () => {
   useEffect(() => {
     // Chamada para getTrades quando o componente é montado
     actions.getTrades();
+    // Limpa as notificações de novas trades assim que o componente é montado
+    actions.clearTradeNotifications();
   }, []);
 
   const handleOpenDetails = (trade) => {
