@@ -8,6 +8,7 @@ const Trades = () => {
   const [selectedTrade, setSelectedTrade] = useState(null);
 
   useEffect(() => {
+    // Chamada para getTrades quando o componente é montado
     actions.getTrades();
   }, []);
 
@@ -33,12 +34,14 @@ const Trades = () => {
             You have offered "
             <span
               style={{ cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.sender_item_name}
             </span>
             " in exchange for "
             <span
               style={{ cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.receiver_item_name}
             </span>
@@ -54,12 +57,14 @@ const Trades = () => {
             Check the offer: "
             <span
               style={{ cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.sender_item_name}
             </span>
             " in exchange for your "
             <span
               style={{ cursor: "pointer", textDecoration: "underline" }}
+              onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.receiver_item_name}
             </span>

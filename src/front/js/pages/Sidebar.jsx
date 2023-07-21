@@ -1,7 +1,7 @@
 import React from "react";
 import "./Profile.css";
 
-const Sidebar = ({ onMenuSelect }) => {
+const Sidebar = ({ onMenuSelect, newTradesCount }) => {
   return (
     <div className="sidebar">
       <div className="avatar-container">
@@ -12,10 +12,17 @@ const Sidebar = ({ onMenuSelect }) => {
         <li onClick={() => onMenuSelect("addProduct")}>Add a product</li>
         <li onClick={() => onMenuSelect("addService")}>Add a service</li>
         <li onClick={() => onMenuSelect("search")}>Search</li>
-        <li onClick={() => onMenuSelect("userItems")}>My Products / Services</li>
-        <li onClick={() => onMenuSelect("trades")}>Trades</li>
+        <li onClick={() => onMenuSelect("userItems")}>
+          My Products / Services
+        </li>
+        <li onClick={() => onMenuSelect("trades")}>
+          Trades{" "}
+          {newTradesCount > 0 && (
+            <span className="notification">{newTradesCount}</span>
+          )}
+        </li>
         {/* Adicionar o evento onClick para as outras opções à medida que forem criadas */}
-        
+
         <li>Wishlist</li>
         <li>Favorites</li>
       </ul>
