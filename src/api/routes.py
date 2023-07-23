@@ -499,9 +499,6 @@ def get_trades():
     }), 200
 
 
-
-
-
 @api.route('/trades/<int:trade_id>', methods=['PUT'])
 @jwt_required()
 def respond_to_trade(trade_id):
@@ -532,13 +529,20 @@ def respond_to_trade(trade_id):
         return jsonify({"msg": "Invalid status"}), 400
 
     trade.status = status
-
-    # A data de última atualização é definida aqui, quando a negociação é alterada
-    trade.last_update = datetime.utcnow()
-
+    trade.last_update = datetime.utcnow()  # A data de última atualização é definida aqui, quando a negociação é alterada
     db.session.commit()
 
-    return jsonify({"msg": "Trade status updated successfully"}), 200
+    sender = User.query.get(trade.sender_id)
+
+    # Aqui incluímos as informações do usuário que enviou a proposta na resposta
+    response = {
+        "msg": "Trade status updated successfully",
+        "trade": trade.to_dict(include_product_service=True),
+        "sender_email": sender.email
+    }
+
+    return jsonify(response), 200
+
 
 
 # Criar uma nova wishlist

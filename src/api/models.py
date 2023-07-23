@@ -187,7 +187,8 @@ class Trade(db.Model):
             "status": self.status,
             "last_update": self.last_update.isoformat() if self.last_update else None, # adicionado
             "sender_item_name": self.sender_product.name if self.sender_product else self.sender_service.name,
-            "receiver_item_name": self.receiver_product.name if self.receiver_product else self.receiver_service.name
+            "receiver_item_name": self.receiver_product.name if self.receiver_product else self.receiver_service.name,
+            "sender_email": self.sender.email,
         }
 
         if include_product_service:

@@ -446,7 +446,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
       },
 
-      handleAcceptProposal(proposalId) {
+      handleAcceptProposal: async function(proposalId) {
         try {
           const token = localStorage.getItem("token");
           const headers = new Headers({
@@ -455,31 +455,42 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const backendUrl = process.env.BACKEND_URL;
           const apiUrl = `${backendUrl}/api/trades/${proposalId}`;
-
-          fetch(apiUrl, {
+      
+          // Primeiro atualizamos a proposta para "Aceita"
+          await fetch(apiUrl, {
             method: "PUT",
             headers: headers,
             body: JSON.stringify({
               status: "Accepted",
             }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              // Atualiza a store com a proposta de negociação atualizada
-              const index = store.tradeProposals.findIndex(
-                (proposal) => proposal.id === data.id
-              );
-              if (index !== -1) {
-                store.tradeProposals[index] = data;
-              }
-            })
-            .catch((error) => {
-              // Lógica de tratamento para erros
-            });
+          });
+      
+          // Depois, buscamos a proposta atualizada para pegar as informações de e-mail
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: headers,
+          });
+          const data = await response.json();
+      
+          // Atualiza a store com a proposta de negociação atualizada
+          const index = store.tradeProposals.findIndex(
+            (proposal) => proposal.id === data.id
+          );
+          if (index !== -1) {
+            store.tradeProposals[index] = data;
+          }
+      
+          // Prepara e abre a URL do mailto:
+          const email = data.sender_email;
+          const subject = `Trade Proposal Accepted: ${data.receiver_item_name}`;
+          const body = `Hello,\n\nI have accepted your trade proposal for ${data.receiver_item_name}. Please let me know the next steps.\n\nBest,`;
+          const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.open(mailtoUrl, '_blank');
         } catch (error) {
-          // Lógica de tratamento de erros
+          // Lógica de tratamento para erros
         }
       },
+      
 
       handleDeclineProposal(proposalId) {
         try {
