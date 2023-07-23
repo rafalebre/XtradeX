@@ -25,7 +25,6 @@ const AddProduct = () => {
         return;
       }
 
-      // Fazendo uma chamada de API para autenticar o usuário
       const response = await fetch(`${backendUrl}/api/products`, {
         method: "POST",
         headers: {
@@ -46,7 +45,14 @@ const AddProduct = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Product succesfully created:", data);
+        window.confirm("Product successfully created!");  // Alerta personalizado para o usuário
+        setName("");
+        setDescription("");
+        setCondition("");
+        setEstimatedValue("");
+        setLocation("");
+        setSelectedCategory("");
+        setSelectedSubcategory("");
       } else {
         console.error("Failed creating product:", data);
       }
@@ -113,8 +119,7 @@ const AddProduct = () => {
           onChange={(e) => setLocation(e.target.value)}
         />
 
-        {/* Dropdown Menu for Categories */}
-        <select name="category_id" onChange={handleCategoryChange}>
+        <select name="category_id" value={selectedCategory} onChange={handleCategoryChange}>
           <option value="">Select Category</option>
           {store.categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -123,7 +128,6 @@ const AddProduct = () => {
           ))}
         </select>
 
-        {/* Dropdown Menu for Subcategories */}
         <select
           name="subcategory_id"
           value={selectedSubcategory}

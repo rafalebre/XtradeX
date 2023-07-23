@@ -43,7 +43,13 @@ const AddService = () => {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Service successfully created:", data);
+        window.confirm("Service successfully created!"); // Alerta personalizado para o usuário
+        setName("");
+        setDescription("");
+        setEstimatedValue("");
+        setLocation("");
+        setSelectedCategory("");
+        setSelectedSubcategory("");
       } else {
         console.error("Failed creating service:", data);
       }
@@ -104,7 +110,7 @@ const AddService = () => {
         />
 
         {/* Dropdown Menu for Categories */}
-        <select name="category_id" onChange={handleCategoryChange}>
+        <select name="category_id" value={selectedCategory} onChange={handleCategoryChange}>
           <option value="">Select Category</option>
           {store.serviceCategories.map((category) => (
             <option key={category.id} value={category.id}>
