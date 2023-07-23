@@ -3,12 +3,12 @@ import { Modal, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
 const TradeDetails = ({ show, handleClose, trade }) => {
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [tradeStatus, setTradeStatus] = useState(trade.status);
 
   useEffect(() => {
     setTradeStatus(trade.status);
-  }, [trade.status]);
+  }, [trade]);
 
   const handleAccept = async () => {
     await actions.handleAcceptProposal(trade.id);
@@ -19,6 +19,10 @@ const TradeDetails = ({ show, handleClose, trade }) => {
     await actions.handleDeclineProposal(trade.id);
     setTradeStatus("Declined");
   };
+
+  const isReceivedTrade = store.received_trades.some(
+    (receivedTrade) => receivedTrade.id === trade.id
+  );
 
   return (
     <Modal show={show} onHide={handleClose}>
@@ -70,7 +74,7 @@ const TradeDetails = ({ show, handleClose, trade }) => {
         <p>Status: {tradeStatus}</p>
       </Modal.Body>
       <Modal.Footer>
-        {tradeStatus === "Pending" && (
+        {isReceivedTrade && tradeStatus === "Pending" && (
           <div>
             <Button onClick={handleAccept}>Accept</Button>
             <Button onClick={handleDecline}>Decline</Button>
