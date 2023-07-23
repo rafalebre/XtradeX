@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
-const TradeDetails = ({ show, handleClose, trade }) => {
+const TradeDetails = ({ show, handleClose, trade, refreshTrades }) => {  // refreshTrades adicionado aqui
   const { store, actions } = useContext(Context);
   const [tradeStatus, setTradeStatus] = useState(trade.status);
 
@@ -13,11 +13,13 @@ const TradeDetails = ({ show, handleClose, trade }) => {
   const handleAccept = async () => {
     await actions.handleAcceptProposal(trade.id);
     setTradeStatus("Accepted");
+    refreshTrades();  // Chamando refreshTrades após aceitar um trade
   };
 
   const handleDecline = async () => {
     await actions.handleDeclineProposal(trade.id);
     setTradeStatus("Declined");
+    refreshTrades();  // Chamando refreshTrades após recusar um trade
   };
 
   const isReceivedTrade = store.received_trades.some(
