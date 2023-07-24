@@ -54,7 +54,7 @@ const Profile = () => {
         {selectedMenu === "addService" && <AddService />}
         {selectedMenu === "search" && <Search />}
         {selectedMenu === "userItems" && <UserItems />}
-        {selectedMenu === "trades" && <Trades intervalId={intervalId} clearInterval={clearInterval}/>}
+        {selectedMenu === "trades" && <Trades clearInterval={clearInterval} intervalId={intervalId}/>}
       </div>
     </div>
   );

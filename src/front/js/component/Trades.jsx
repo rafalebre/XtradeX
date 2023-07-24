@@ -15,7 +15,7 @@ const Trades = ({intervalId, clearInterval}) => {
 
     return () => {
         intervalId = setInterval(() => {
-            actions.getTrades(); // Supondo que a ação getTrades exista no contexto.
+            actions.getTrades(); // 
         }, 60000);
     };
   }, []);
