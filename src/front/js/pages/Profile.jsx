@@ -23,12 +23,6 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    // Verifica se o usuário está logado antes de definir o intervalo
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return;
-    }
-
     const id = setInterval(() => {
       actions.getTrades(); 
     }, 60000);
@@ -54,7 +48,7 @@ const Profile = () => {
         {selectedMenu === "addService" && <AddService />}
         {selectedMenu === "search" && <Search />}
         {selectedMenu === "userItems" && <UserItems />}
-        {selectedMenu === "trades" && <Trades clearInterval={clearInterval} intervalId={intervalId}/>}
+        {selectedMenu === "trades" && <Trades intervalId={intervalId} clearInterval={clearInterval}/>}
       </div>
     </div>
   );
