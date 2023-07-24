@@ -23,8 +23,14 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    // Verifica se o usuário está logado antes de definir o intervalo
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
+
     const id = setInterval(() => {
-      actions.getTrades(); // Supondo que a ação getTrades exista no contexto.
+      actions.getTrades(); 
     }, 60000);
 
     setIntervalId(id);
