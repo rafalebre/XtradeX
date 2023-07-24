@@ -2,14 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import TradeDetails from "./TradeDetails.jsx";
 
-const Trades = () => {
+const Trades = ({intervalId, clearInterval}) => {
   const { store, actions } = useContext(Context);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedTrade, setSelectedTrade] = useState(null);
 
   useEffect(() => {
+    clearInterval(intervalId);
+
     actions.getTrades();
     actions.clearTradeNotifications();
+
+    return () => {
+        intervalId = setInterval(() => {
+            actions.getTrades(); // Supondo que a ação getTrades exista no contexto.
+        }, 60000);
+    };
   }, []);
 
   const handleOpenDetails = (trade) => {

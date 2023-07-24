@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"; 
+import React, { useContext, useEffect, useState } from "react"; 
 import { Context } from "../store/appContext"; 
 import Sidebar from "./Sidebar.jsx";
 import AddProduct from "../component/AddProducts.jsx";
@@ -14,10 +14,25 @@ const Profile = () => {
   // Use useContext para acessar o estado global da loja
   const { actions, store } = useContext(Context); 
 
+  // Estado para armazenar o intervalId
+  const [intervalId, setIntervalId] = useState(null);
+
   // Função para atualizar a opção de menu selecionada
   const handleMenuSelection = (menu) => {
     setSelectedMenu(menu);
   };
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      actions.getTrades(); // Supondo que a ação getTrades exista no contexto.
+    }, 60000);
+
+    setIntervalId(id);
+
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
 
   return (
     <div className="profile-container">
@@ -33,7 +48,7 @@ const Profile = () => {
         {selectedMenu === "addService" && <AddService />}
         {selectedMenu === "search" && <Search />}
         {selectedMenu === "userItems" && <UserItems />}
-        {selectedMenu === "trades" && <Trades />}
+        {selectedMenu === "trades" && <Trades intervalId={intervalId} clearInterval={clearInterval}/>}
       </div>
     </div>
   );
