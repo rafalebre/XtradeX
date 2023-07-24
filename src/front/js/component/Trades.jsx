@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import TradeDetails from "./TradeDetails.jsx";
 
-const Trades = ({intervalId, clearInterval}) => {
+const Trades = ({ intervalId, clearInterval }) => {
   const { store, actions } = useContext(Context);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedTrade, setSelectedTrade] = useState(null);
@@ -14,9 +14,9 @@ const Trades = ({intervalId, clearInterval}) => {
     actions.clearTradeNotifications();
 
     return () => {
-        intervalId = setInterval(() => {
-            actions.getTrades(); // 
-        }, 60000);
+      intervalId = setInterval(() => {
+        actions.getTrades(); //
+      }, 60000);
     };
   }, []);
 
@@ -55,7 +55,9 @@ const Trades = ({intervalId, clearInterval}) => {
             </span>
             "
           </p>
-          <button onClick={() => handleOpenDetails(proposal)}>Check Details</button>
+          <button onClick={() => handleOpenDetails(proposal)}>
+            Check Details
+          </button>
         </div>
       ))}
       <h3>Proposals Received:</h3>
@@ -78,7 +80,16 @@ const Trades = ({intervalId, clearInterval}) => {
             </span>
             "
           </p>
-          <button onClick={() => handleOpenDetails(proposal)}>Check Details</button>
+          <button onClick={() => handleOpenDetails(proposal)}>
+            Check Details
+          </button>
+          {proposal.status === "Accepted" ? (
+            <button onClick={() => handleAcceptedProposal(proposal)}>
+              {proposal.status}
+            </button>
+          ) : (
+            <span>{proposal.status}</span>
+          )}
         </div>
       ))}
       {showDetails && selectedTrade && (
@@ -86,7 +97,7 @@ const Trades = ({intervalId, clearInterval}) => {
           show={showDetails}
           handleClose={handleCloseDetails}
           trade={selectedTrade}
-          refreshTrades={actions.getTrades}  // adicionado
+          refreshTrades={actions.getTrades} // adicionado
         />
       )}
     </div>
