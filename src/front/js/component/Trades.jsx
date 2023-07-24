@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import TradeDetails from "./TradeDetails.jsx";
+import Deal from "./Deal.jsx";
 
 const Trades = ({ intervalId, clearInterval }) => {
   const { store, actions } = useContext(Context);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedTrade, setSelectedTrade] = useState(null);
+  const [showDeal, setShowDeal] = useState(false);
 
   useEffect(() => {
     clearInterval(intervalId);
@@ -15,7 +17,7 @@ const Trades = ({ intervalId, clearInterval }) => {
 
     return () => {
       intervalId = setInterval(() => {
-        actions.getTrades(); //
+        actions.getTrades();
       }, 60000);
     };
   }, []);
@@ -27,6 +29,11 @@ const Trades = ({ intervalId, clearInterval }) => {
 
   const handleCloseDetails = () => {
     setShowDetails(false);
+  };
+
+  const handleAcceptedProposal = (proposal) => {
+    actions.handleAcceptProposal(proposal.id);
+    setShowDeal(true);
   };
 
   const sentTrades = store.sent_trades || [];
@@ -97,8 +104,11 @@ const Trades = ({ intervalId, clearInterval }) => {
           show={showDetails}
           handleClose={handleCloseDetails}
           trade={selectedTrade}
-          refreshTrades={actions.getTrades} // adicionado
+          refreshTrades={actions.getTrades} 
         />
+      )}
+      {showDeal && (
+        <Deal show={showDeal} handleClose={() => setShowDeal(false)} />
       )}
     </div>
   );

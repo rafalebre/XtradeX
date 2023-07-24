@@ -459,7 +459,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const backendUrl = process.env.BACKEND_URL;
           const apiUrl = `${backendUrl}/api/trades/${proposalId}`;
-
+      
           // Primeiro atualizamos a proposta para "Aceita"
           await fetch(apiUrl, {
             method: "PUT",
@@ -468,14 +468,14 @@ const getState = ({ getStore, getActions, setStore }) => {
               status: "Accepted",
             }),
           });
-
-          // Depois, buscamos a proposta atualizada para pegar as informações de e-mail
+      
+          // Depois, buscamos a proposta atualizada para pegar as informações do usuário
           const response = await fetch(apiUrl, {
             method: "GET",
             headers: headers,
           });
           const data = await response.json();
-
+      
           // Atualiza a store com a proposta de negociação atualizada
           const index = store.tradeProposals.findIndex(
             (proposal) => proposal.id === data.id
@@ -483,19 +483,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (index !== -1) {
             store.tradeProposals[index] = data;
           }
+      
+          // Prepara para abrir os detalhes do usuário
+          actions.setTradePartnerData(data.sender_email, data.first_name, data.sender_phone);
 
-          // Prepara e abre a URL do mailto:
-          const email = data.sender_email;
-          const subject = `Trade Proposal Accepted: ${data.receiver_item_name}`;
-          const body = `Hello,\n\nI have accepted your trade proposal for ${data.receiver_item_name}. Please let me know the next steps.\n\nBest,`;
-          const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(
-            subject
-          )}&body=${encodeURIComponent(body)}`;
-          window.open(mailtoUrl, "_blank");
+      
         } catch (error) {
           // Lógica de tratamento para erros
         }
       },
+      
 
       handleDeclineProposal(proposalId) {
         try {

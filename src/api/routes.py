@@ -538,7 +538,11 @@ def respond_to_trade(trade_id):
     response = {
         "msg": "Trade status updated successfully",
         "trade": trade.to_dict(include_product_service=True),
-        "sender_email": sender.email
+        "sender": {
+            "email": sender.email,
+            "first_name": sender.first_name,
+            "phone": sender.phone,
+        }
     }
 
     return jsonify(response), 200
