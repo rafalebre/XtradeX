@@ -14,12 +14,12 @@ const MyInfo = () => {
         birth_date: '',
         phone: '',
         location: '',
-        business_phone: ''
+        business_phone: '' // adicionado para lidar com os trades apenas
     });
     
     useEffect(() => {
         actions.getUserInfo();
-    }, []);
+    }, []); // 'Actions' removido das dependências para prevenir o loop infinito
     
     useEffect(() => {
         if (store.user) {
