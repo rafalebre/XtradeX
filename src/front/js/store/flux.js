@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       isLoggedIn: !!localStorage.getItem("token"), // Inicializa com base no token no localStorage
+      user: null,
       categories: [],
       subcategories: [],
       serviceCategories: [],
@@ -158,6 +159,67 @@ const getState = ({ getStore, getActions, setStore }) => {
       setLoginState: (loggedIn) => {
         setStore({ isLoggedIn: loggedIn });
       },
+
+      getUserInfo: async function () {
+        try {
+          const token = localStorage.getItem("token");
+          const headers = new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          });
+          const backendUrl = process.env.BACKEND_URL;
+          const apiUrl = `${backendUrl}/api/user/me`;
+      
+          const response = await fetch(apiUrl, { headers: headers });
+          const data = await response.json();
+      
+          if (response.ok) {
+            setStore({
+              user: data,
+            });
+          } else {
+            console.error("Failed to fetch user info:", data);
+          }
+        } catch (error) {
+          console.error("Error fetching user info:", error);
+        }
+      },
+      
+      updateUserInfo: async function (userInfo) {
+        try {
+          const token = localStorage.getItem("token");
+          const headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          });
+          const backendUrl = process.env.BACKEND_URL;
+      
+          // Enviar uma solicitação PUT para atualizar as informações do usuário
+          const response = await fetch(`${backendUrl}/api/user/me`, {
+              method: 'PUT',
+              headers: headers,
+              body: JSON.stringify(userInfo)
+          });
+          const data = await response.json();
+      
+          // Verifica se a solicitação foi bem-sucedida
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+      
+          // Aqui podemos mostrar uma mensagem de sucesso.
+          console.log('User information updated successfully:', data);
+      
+          // Atualizar o store com as novas informações do usuário
+          setStore({
+            user: data,
+          });
+      
+        } catch(error) {
+          console.error('There was a problem with the fetch operation:', error);
+        }
+      },
+      
 
       getCategories: async function () {
         try {
