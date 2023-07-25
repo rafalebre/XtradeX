@@ -8,6 +8,7 @@ const Trades = ({ intervalId, clearInterval }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedTrade, setSelectedTrade] = useState(null);
   const [showDeal, setShowDeal] = useState(false);
+  const [selectedSender, setSelectedSender] = useState(null);
 
   useEffect(() => {
     clearInterval(intervalId);
@@ -32,7 +33,9 @@ const Trades = ({ intervalId, clearInterval }) => {
   };
 
   const handleAcceptedProposal = (proposal) => {
+    console.log(proposal);
     actions.handleAcceptProposal(proposal.id);
+    setSelectedSender(proposal.sender_id);  // <-- Mudado para sender_id
     setShowDeal(true);
   };
 
@@ -107,8 +110,8 @@ const Trades = ({ intervalId, clearInterval }) => {
           refreshTrades={actions.getTrades} 
         />
       )}
-      {showDeal && (
-        <Deal show={showDeal} handleClose={() => setShowDeal(false)} />
+       {showDeal && selectedSender && (
+        <Deal show={showDeal} handleClose={() => setShowDeal(false)} sender={selectedSender} />
       )}
     </div>
   );
