@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import GoogleMaps from "./GoogleMaps.jsx";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -9,6 +10,7 @@ const AddProduct = () => {
   const [location, setLocation] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
+  const [showMap, setShowMap] = useState(false);
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
@@ -142,7 +144,11 @@ const AddProduct = () => {
         </select>
 
         <button type="submit">Add Product</button>
+        <button type="button" onClick={() => setShowMap(!showMap)}>Toggle Map</button>
+        {showMap && <GoogleMaps />}
+        <button type="submit">Add Product</button>
       </form>
+      
     </div>
   );
 };
