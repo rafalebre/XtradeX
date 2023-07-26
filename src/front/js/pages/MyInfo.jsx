@@ -58,7 +58,7 @@ const MyInfo = () => {
 
     const handleLocationChange = async (location) => {
         // Monta a URL da API
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_API_KEY}`;
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
         try {
             // Faz a requisição
