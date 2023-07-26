@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import GoogleMaps from '../component/GoogleMaps.jsx';
+
 
 const MyInfo = () => {
     const navigate = useNavigate();
@@ -17,6 +19,9 @@ const MyInfo = () => {
         business_phone: '' // adicionado para lidar com os trades apenas
     });
     
+    const [mapOpen, setMapOpen] = useState(false);
+    const [mapLocation, setMapLocation] = useState(null);
+    
     useEffect(() => {
         actions.getUserInfo();
     }, []); // 'Actions' removido das dependências para prevenir o loop infinito
@@ -30,6 +35,15 @@ const MyInfo = () => {
         }
     }, [store.user]);
 
+    useEffect(() => {
+        if (mapLocation) {
+            setUserInfo(prevUserInfo => ({
+                ...prevUserInfo,
+                location: mapLocation
+            }));
+        }
+    }, [mapLocation]);
+
     const handleChange = (e) => {
         setUserInfo({
             ...userInfo,
@@ -41,6 +55,10 @@ const MyInfo = () => {
         e.preventDefault();
         actions.updateUserInfo(userInfo);
         navigate('/profile');
+    };
+
+    const handleLocationChange = (location) => {
+        setMapLocation(`${location.lat},${location.lng}`);
     };
 
     return (
@@ -115,6 +133,8 @@ const MyInfo = () => {
                         value={userInfo.location}
                         onChange={handleChange}
                     />
+                    <button type="button" onClick={() => setMapOpen(true)}>Select on Map</button>
+                    {mapOpen && <GoogleMaps onLocationChange={handleLocationChange} />}
                 </label>
                 <br/>
                 <label>

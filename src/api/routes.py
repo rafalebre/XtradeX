@@ -97,7 +97,7 @@ def update_user_info():
         elif getattr(user, field) is None:  # check if field is required and not set
             return jsonify({f"msg": f"Missing {field} parameter"}), 400
 
-    optional_fields = ["gender", "birth_date", "phone", "location"]
+    optional_fields = ["gender", "birth_date", "phone", "location", "latitude", "longitude"]
     for field in optional_fields:
         if field in data:
             setattr(user, field, data[field])

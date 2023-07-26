@@ -18,6 +18,8 @@ class User(db.Model):
     birth_date = db.Column(db.Date)
     phone = db.Column(db.String(120))
     location = db.Column(db.String(120))
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
     last_checked = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
@@ -30,7 +32,9 @@ class User(db.Model):
             "gender": self.gender,
             "birth_date": self.birth_date.isoformat() if self.birth_date else None,
             "phone": self.phone,
-            "location": self.location
+            "location": self.location,
+            "latitude": self.latitude,
+            "longitude": self.longitude
         }
 
     def set_password(self, password):
@@ -38,6 +42,7 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
 
 
 class Product(db.Model):

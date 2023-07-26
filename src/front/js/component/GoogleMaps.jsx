@@ -1,22 +1,90 @@
-import React from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { GoogleMap, Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 
-const mapStyles = {
-  width: '100%',
-  height: '100%'
+const mapContainerStyle = {
+  height: "400px",
+  width: "800px",
 };
 
-export const GoogleMaps = (props) => {
-  return (
-    <Map
-      google={props.google}
-      zoom={8}
-      style={mapStyles}
-      initialCenter={{ lat: 47.444, lng: -122.176}}
-    />
-  );
-}
+export default function GoogleMaps({ onLocationChange }) {
+  const [map, setMap] = useState(null);
+  const [center, setCenter] = useState(null);
+  const autoCompleteRef = useRef(null);
 
-export default GoogleApiWrapper({
-  apiKey: process.env.GOOGLE_MAPS_API_KEY
-})(GoogleMaps);
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
+    libraries: ["places"] // Adicionado para carregar a biblioteca de lugares
+  });
+
+  const onLoad = useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds();
+    map.fitBounds(bounds);
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
+  const onPlaceChanged = () => {
+    if (autoCompleteRef.current != null) {
+      const place = autoCompleteRef.current.getPlace();
+
+      if (place && place.geometry) { // Verifique se o 'place' e 'place.geometry' não são 'undefined'
+        const location = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        };
+
+        setCenter(location);
+        if (map) { // Verifique se o 'map' não é 'null'
+          map.panTo(location);
+        }
+        if (onLocationChange) {
+          onLocationChange(location);
+        }
+      }
+    } else {
+      console.log("Autocomplete is not loaded yet!");
+    }
+  };
+
+  const onClick = (...args) => {
+    const lat = args[1].latLng.lat();
+    const lng = args[1].latLng.lng();
+    const location = { lat, lng };
+    setCenter(location);
+    if (map) { // Verifique se o 'map' não é 'null'
+      map.panTo(location);
+    }
+    if (onLocationChange) {
+      onLocationChange(location);
+    }
+  };
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords: { latitude: lat, longitude: lng } }) => {
+        setCenter({ lat, lng });
+      }
+    );
+  }, []);
+
+  return isLoaded ? (
+    <div>
+      <Autocomplete onLoad={(autoComplete) => (autoCompleteRef.current = autoComplete)} onPlaceChanged={onPlaceChanged}>
+        <input type="text" placeholder="Search Location" />
+      </Autocomplete>
+      <GoogleMap
+        id="map"
+        mapContainerStyle={mapContainerStyle}
+        center={center}
+        zoom={10}
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        onClick={onClick}
+      />
+    </div>
+  ) : <></>
+}
