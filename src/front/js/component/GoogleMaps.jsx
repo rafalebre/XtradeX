@@ -54,8 +54,8 @@ export default function GoogleMaps({ onLocationChange }) {
   };
 
   const onClick = (...args) => {
-    const lat = args[1].latLng.lat();
-    const lng = args[1].latLng.lng();
+    const lat = args[0].latLng.lat();
+    const lng = args[0].latLng.lng();
     const location = { lat, lng };
     setCenter(location);
     if (map) { // Verifique se o 'map' não é 'null'
