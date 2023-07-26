@@ -13,6 +13,7 @@ const AddService = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const userLocation = store.user ? store.user.location : "";
+  const [isOnline, setIsOnline] = useState(false);
 
   useEffect(() => {
     actions.getServiceCategories(); // Fetch service categories
@@ -68,9 +69,10 @@ const AddService = () => {
           category: selectedCategory,
           subcategory: selectedSubcategory,
           estimated_value: estimatedValue,
-          location,
-          latitude,
-          longitude,
+          location: isOnline ? "online" : location,
+          online: isOnline,
+          latitude: isOnline ? null : latitude,
+          longitude: isOnline ? null : longitude,
         }),
       });
 
@@ -109,7 +111,9 @@ const AddService = () => {
   };
 
   const filteredSubcategories = selectedCategory
-    ? store.serviceSubcategories.filter((sub) => sub.category_id == selectedCategory)
+    ? store.serviceSubcategories.filter(
+        (sub) => sub.category_id == selectedCategory
+      )
     : [];
 
   return (
@@ -136,6 +140,14 @@ const AddService = () => {
           onChange={(e) => setEstimatedValue(e.target.value)}
         />
 
+<label>
+          Online service:
+          <input
+            type="checkbox"
+            checked={isOnline}
+            onChange={(e) => setIsOnline(e.target.checked)}
+          />
+        </label>
         <label>
           Location:
           <input
@@ -144,8 +156,9 @@ const AddService = () => {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             readOnly
+            disabled={isOnline}
           />
-          <GoogleMaps onLocationChange={onLocationChange} />
+          <GoogleMaps onLocationChange={onLocationChange} disabled={isOnline} />
         </label>
         <button
           type="button"

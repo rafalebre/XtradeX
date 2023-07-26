@@ -295,9 +295,10 @@ def create_service():
         category_id=category.id,
         subcategory_id=subcategory.id,
         estimated_value=data['estimated_value'],
-        location=data['location'],
-        latitude=data.get('latitude'),
-        longitude=data.get('longitude')
+        online=data.get('online', False),  # novo campo
+        location=(data['location'] if not data.get('online', False) else "online"),  # modificação
+        latitude=(data.get('latitude') if not data.get('online', False) else None),  # modificação
+        longitude=(data.get('longitude') if not data.get('online', False) else None)  # modificação
     )
 
     db.session.add(new_service)

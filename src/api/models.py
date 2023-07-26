@@ -22,6 +22,7 @@ class User(db.Model):
     longitude = db.Column(db.Float)
     last_checked = db.Column(db.DateTime, default=datetime.utcnow)
 
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -121,6 +122,7 @@ class Service(db.Model):
     location = db.Column(db.String(120))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+    
 
     user = db.relationship('User', backref='services')
     category = db.relationship('ServiceCategory', backref='services')  # nova relação
