@@ -122,6 +122,7 @@ class Service(db.Model):
     location = db.Column(db.String(120))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+    online = db.Column(db.Boolean, default=False, nullable=False)
     
 
     user = db.relationship('User', backref='services')
@@ -139,7 +140,8 @@ class Service(db.Model):
             "estimated_value": self.estimated_value,
             "location": self.location,
             "latitude": self.latitude,
-            "longitude": self.longitude
+            "longitude": self.longitude,
+            "online": self.online
         }
 
 class ServiceCategory(db.Model):
