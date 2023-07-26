@@ -15,6 +15,8 @@ const MyInfo = () => {
         birth_date: '',
         phone: '',
         location: '',
+        latitude: null,    // added latitude state
+        longitude: null,   // added longitude state
         business_phone: '' // adicionado para lidar com os trades apenas
     });
     
@@ -38,7 +40,9 @@ const MyInfo = () => {
         if (mapLocation) {
             setUserInfo(prevUserInfo => ({
                 ...prevUserInfo,
-                location: mapLocation
+                location: mapLocation.address,   // changed from mapLocation to mapLocation.address
+                latitude: mapLocation.lat,   // updating latitude from mapLocation
+                longitude: mapLocation.lng   // updating longitude from mapLocation
             }));
         }
     }, [mapLocation]);
@@ -75,7 +79,7 @@ const MyInfo = () => {
             const address = data.results[0].formatted_address;
 
             // Atualiza o estado
-            setMapLocation(address);
+            setMapLocation({address, lat: location.lat, lng: location.lng}); // updated to include lat and lng in the mapLocation state
         } catch (error) {
             console.error('Failed to fetch address:', error);
         }
