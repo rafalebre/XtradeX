@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
-
+import GoogleMaps from "./GoogleMaps.jsx";
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -11,10 +11,39 @@ const AddProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const { store, actions } = useContext(Context);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
     actions.getCategories(); // Fetch categories
   }, []);
+
+  const onLocationChange = async (location) => {
+    // Monta a URL da API
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+
+    try {
+      // Faz a requisição
+      const response = await fetch(url);
+      const data = await response.json();
+
+      // Verifica se houve erro
+      if (data.error_message) {
+        console.error("Google Geocoding API error:", data.error_message);
+        return;
+      }
+
+      // Pega o endereço formatado
+      const address = data.results[0].formatted_address;
+
+      // Atualiza o estado
+      setLocation(address);
+      setLatitude(location.lat);
+      setLongitude(location.lng);
+    } catch (error) {
+      console.error("Failed to fetch address:", error);
+    }
+  };
 
   const createNewProduct = async () => {
     try {
@@ -40,13 +69,15 @@ const AddProduct = () => {
           condition,
           estimated_value: estimatedValue,
           location,
+          latitude,
+          longitude,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        window.confirm("Product successfully created!");  // Alerta personalizado para o usuário
+        window.confirm("Product successfully created!"); // Alerta personalizado para o usuário
         setName("");
         setDescription("");
         setCondition("");
@@ -113,14 +144,23 @@ const AddProduct = () => {
           onChange={(e) => setEstimatedValue(e.target.value)}
         />
 
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
+        <label>
+          Location:
+          <input
+            type="text"
+            placeholder="Location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            readOnly
+          />
+          <GoogleMaps onLocationChange={onLocationChange} />
+        </label>
 
-        <select name="category_id" value={selectedCategory} onChange={handleCategoryChange}>
+        <select
+          name="category_id"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
           <option value="">Select Category</option>
           {store.categories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -143,10 +183,7 @@ const AddProduct = () => {
         </select>
 
         <button type="submit">Add Product</button>
-       
-        <button type="submit">Add Product</button>
       </form>
-      
     </div>
   );
 };

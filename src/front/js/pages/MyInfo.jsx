@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import GoogleMaps from '../component/GoogleMaps.jsx';
@@ -62,6 +62,7 @@ const MyInfo = () => {
     };
 
     const handleLocationChange = async (location) => {
+        console.log('Location Changed:', location);
         // Monta a URL da API
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
 
