@@ -168,7 +168,9 @@ def create_product():
         subcategory_id=subcategory.id,
         condition=data['condition'],
         estimated_value=data['estimated_value'],
-        location=data['location']
+        location=data['location'],
+        latitude=data.get('latitude'),
+        longitude=data.get('longitude')
     )
 
     db.session.add(new_product)
@@ -293,7 +295,9 @@ def create_service():
         category_id=category.id,
         subcategory_id=subcategory.id,
         estimated_value=data['estimated_value'],
-        location=data['location']
+        location=data['location'],
+        latitude=data.get('latitude'),
+        longitude=data.get('longitude')
     )
 
     db.session.add(new_service)

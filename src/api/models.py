@@ -57,6 +57,8 @@ class Product(db.Model):
     condition = db.Column(db.String(120), nullable=False)
     estimated_value = db.Column(db.Float, nullable=False)
     location = db.Column(db.String(120))
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
 
     user = db.relationship('User', backref='products')
     category = db.relationship('ProductCategory', backref='products')  # nova relação
@@ -72,7 +74,9 @@ class Product(db.Model):
             "subcategory": self.subcategory.to_dict() if self.subcategory else None,
             "condition": self.condition,
             "estimated_value": self.estimated_value,
-            "location": self.location
+            "location": self.location,
+            "latitude": self.latitude,
+            "longitude": self.longitude
         }
 
 class ProductCategory(db.Model):
@@ -115,6 +119,8 @@ class Service(db.Model):
     subcategory_id = db.Column(db.Integer, db.ForeignKey('service_subcategories.id'))  # nova coluna
     estimated_value = db.Column(db.Float, nullable=False)
     location = db.Column(db.String(120))
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
 
     user = db.relationship('User', backref='services')
     category = db.relationship('ServiceCategory', backref='services')  # nova relação
@@ -129,7 +135,9 @@ class Service(db.Model):
             "category": self.category.to_dict() if self.category else None,
             "subcategory": self.subcategory.to_dict() if self.subcategory else None,
             "estimated_value": self.estimated_value,
-            "location": self.location
+            "location": self.location,
+            "latitude": self.latitude,
+            "longitude": self.longitude
         }
 
 class ServiceCategory(db.Model):
