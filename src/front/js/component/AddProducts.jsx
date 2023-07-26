@@ -13,9 +13,11 @@ const AddProduct = () => {
   const { store, actions } = useContext(Context);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const userLocation = store.user ? store.user.location : "";
 
   useEffect(() => {
     actions.getCategories(); // Fetch categories
+    actions.getUserInfo(); // Fetch user info
   }, []);
 
   const onLocationChange = async (location) => {
@@ -155,6 +157,16 @@ const AddProduct = () => {
           />
           <GoogleMaps onLocationChange={onLocationChange} />
         </label>
+        <button
+          type="button"
+          onClick={() => {
+            setLocation(userLocation);
+            setLatitude(store.user.latitude);
+            setLongitude(store.user.longitude);
+          }}
+        >
+          Use my registered address
+        </button>
 
         <select
           name="category_id"

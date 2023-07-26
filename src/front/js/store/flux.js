@@ -175,7 +175,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       
           if (response.ok) {
             setStore({
-              user: data,
+              user: {
+                ...data,
+                location: data.location,
+                latitude: data.latitude,
+                longitude: data.longitude, 
+              },
             });
           } else {
             console.error("Failed to fetch user info:", data);
@@ -184,6 +189,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching user info:", error);
         }
       },
+      
       
       updateUserInfo: async function (userInfo) {
         try {
