@@ -119,17 +119,39 @@ def protected():
 def get_products():
     category_id = request.args.get('category_id')
     subcategory_id = request.args.get('subcategory_id')
-    
+
+    top_left_lat = request.args.get('top_left_lat')
+    top_left_long = request.args.get('top_left_long')
+    bottom_right_lat = request.args.get('bottom_right_lat')
+    bottom_right_long = request.args.get('bottom_right_long')
+
+    # convert to float
+    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long:
+        top_left_lat = float(top_left_lat)
+        top_left_long = float(top_left_long)
+        bottom_right_lat = float(bottom_right_lat)
+        bottom_right_long = float(bottom_right_long)
+
     query = Product.query
-    
+
     if category_id:
         query = query.filter_by(category_id=category_id)
-        
+
     if subcategory_id:
         query = query.filter_by(subcategory_id=subcategory_id)
-    
+
+    # filter the products based on location
+    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long:
+        query = query.filter(
+            Product.latitude <= top_left_lat,
+            Product.latitude >= bottom_right_lat,
+            Product.longitude >= top_left_long,
+            Product.longitude <= bottom_right_long
+        )
+
     products = query.all()
     return jsonify([product.to_dict() for product in products])
+
 
 
 @api.route('/products', methods=['POST'])

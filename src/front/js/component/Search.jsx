@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import ItemDetails from "./ItemDetails.jsx";
 import TradeProposal from "./TradeProposal.jsx";
+import GoogleMaps from './GoogleMaps.jsx';
 
 const Search = () => {
   const [searchType, setSearchType] = useState(null);
@@ -14,6 +15,8 @@ const Search = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedItemType, setSelectedItemType] = useState(null);
   const [showTradeProposal, setShowTradeProposal] = useState(false);
+  const [location, setLocation] = useState(null);
+  const [bounds, setBounds] = useState(null);
 
   useEffect(() => {
     if (searchType === "products") {
@@ -86,15 +89,22 @@ const Search = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-
+  
     if (specificSearch) {
-      actions.fetchItemsByName(searchTerm);
+      actions.fetchItemsByName(searchTerm, location, bounds);
     } else if (searchType === "products") {
-      actions.fetchProducts(selectedCategory, selectedSubcategory);
+      actions.fetchProducts(selectedCategory, selectedSubcategory, location, bounds);
     } else if (searchType === "services") {
-      actions.fetchServices(selectedCategory, selectedSubcategory);
+      actions.fetchServices(selectedCategory, selectedSubcategory, location, bounds);
     }
   };
+  
+
+  const handleLocationChange = (newLocation, newBounds) => {
+    setLocation(newLocation);
+    setBounds(newBounds);
+  }
+  
 
   const handleSearchTypeChange = (newSearchType) => {
     setSearchType(newSearchType);
@@ -123,6 +133,7 @@ const Search = () => {
   return (
     <div>
       <div>
+      <GoogleMaps onLocationChange={handleLocationChange} />
         <button onClick={() => handleSearchTypeChange("products")}>
           Search Products
         </button>
