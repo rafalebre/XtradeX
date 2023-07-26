@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import GoogleMaps from '../component/GoogleMaps.jsx';
 
-
 const MyInfo = () => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
@@ -57,8 +56,29 @@ const MyInfo = () => {
         navigate('/profile');
     };
 
-    const handleLocationChange = (location) => {
-        setMapLocation(`${location.lat},${location.lng}`);
+    const handleLocationChange = async (location) => {
+        // Monta a URL da API
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_API_KEY}`;
+
+        try {
+            // Faz a requisição
+            const response = await fetch(url);
+            const data = await response.json();
+
+            // Verifica se houve erro
+            if (data.error_message) {
+                console.error('Google Geocoding API error:', data.error_message);
+                return;
+            }
+
+            // Pega o endereço formatado
+            const address = data.results[0].formatted_address;
+
+            // Atualiza o estado
+            setMapLocation(address);
+        } catch (error) {
+            console.error('Failed to fetch address:', error);
+        }
     };
 
     return (
