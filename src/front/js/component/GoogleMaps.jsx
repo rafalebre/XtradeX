@@ -6,6 +6,9 @@ const mapContainerStyle = {
   width: "800px",
 };
 
+// Declarando a constante libraries aqui
+const libraries = ["places"];
+
 export default function GoogleMaps({ onLocationChange }) {
   const [map, setMap] = useState(null);
   const [center, setCenter] = useState(null);
@@ -14,7 +17,7 @@ export default function GoogleMaps({ onLocationChange }) {
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
-    libraries: ["places"] // Adicionado para carregar a biblioteca de lugares
+    libraries: libraries // Passando a constante libraries
   });
 
   const onLoad = useCallback(function callback(map) {
