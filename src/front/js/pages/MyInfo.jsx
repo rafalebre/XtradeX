@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 import GoogleMaps from '../component/GoogleMaps.jsx';
@@ -6,6 +6,7 @@ import GoogleMaps from '../component/GoogleMaps.jsx';
 const MyInfo = () => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
+    
 
     const [userInfo, setUserInfo] = useState({
         first_name: '',
@@ -20,7 +21,7 @@ const MyInfo = () => {
         business_phone: '' // adicionado para lidar com os trades apenas
     });
     
-    const [mapOpen, setMapOpen] = useState(false);
+    const [mapOpen, setMapOpen] = useState(true);   // set to true to open map when page is loaded
     const [mapLocation, setMapLocation] = useState(null);
     
     useEffect(() => {
@@ -156,8 +157,9 @@ const MyInfo = () => {
                         name="location"
                         value={userInfo.location}
                         onChange={handleChange}
+                        readOnly
                     />
-                    <button type="button" onClick={() => setMapOpen(true)}>Select on Map</button>
+                    <button type="button" onClick={() => setMapOpen(!mapOpen)}>Hide Map</button>
                     {mapOpen && <GoogleMaps onLocationChange={handleLocationChange} />}
                 </label>
                 <br/>
