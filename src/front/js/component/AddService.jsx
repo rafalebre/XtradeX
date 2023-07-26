@@ -133,56 +133,61 @@ const AddService = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        <input
-          type="text"
-          placeholder="Estimated Value"
-          value={estimatedValue}
-          onChange={(e) => setEstimatedValue(e.target.value)}
-        />
+<input
+  type="text"
+  placeholder="Estimated Value"
+  value={estimatedValue}
+  onChange={(e) => setEstimatedValue(e.target.value)}
+/>
 
 <label>
-          Online service:
-          <input
-            type="checkbox"
-            checked={isOnline}
-            onChange={(e) => setIsOnline(e.target.checked)}
-          />
-        </label>
-        <label>
-          Location:
-          <input
-            type="text"
-            placeholder="Location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            readOnly
-            disabled={isOnline}
-          />
-          <GoogleMaps onLocationChange={onLocationChange} disabled={isOnline} />
-        </label>
-        <button
-          type="button"
-          onClick={() => {
-            setLocation(userLocation);
-            setLatitude(store.user.latitude);
-            setLongitude(store.user.longitude);
-          }}
-        >
-          Use my registered address
-        </button>
+  Online service:
+  <input
+    type="checkbox"
+    checked={isOnline}
+    onChange={(e) => setIsOnline(e.target.checked)}
+  />
+</label>
 
-        <select
-          name="category_id"
-          value={selectedCategory}
-          onChange={handleCategoryChange}
-        >
-          <option value="">Select Category</option>
-          {store.serviceCategories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+{!isOnline && (
+  <>
+    <label>
+      Location:
+      <input
+        type="text"
+        placeholder="Location"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}
+        readOnly
+      />
+      <GoogleMaps onLocationChange={onLocationChange} />
+    </label>
+    <button
+      type="button"
+      onClick={() => {
+        setLocation(userLocation);
+        setLatitude(store.user.latitude);
+        setLongitude(store.user.longitude);
+      }}
+    >
+      Use my registered address
+    </button>
+  </>
+)}
+
+<select
+  name="category_id"
+  value={selectedCategory}
+  onChange={handleCategoryChange}
+>
+  <option value="">Select Category</option>
+  {store.serviceCategories.map((category) => (
+    <option key={category.id} value={category.id}>
+      {category.name}
+    </option>
+  ))}
+</select>
+
 
         <select
           name="subcategory_id"
