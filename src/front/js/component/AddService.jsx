@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import GoogleMaps from "./GoogleMaps.jsx";
 
 const AddService = () => {
   const [name, setName] = useState("");
@@ -9,10 +10,41 @@ const AddService = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const { store, actions } = useContext(Context);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
+  const userLocation = store.user ? store.user.location : "";
 
   useEffect(() => {
     actions.getServiceCategories(); // Fetch service categories
+    actions.getUserInfo(); // Fetch user info
   }, []);
+
+  const onLocationChange = async (location) => {
+    // Monta a URL da API
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+
+    try {
+      // Faz a requisição
+      const response = await fetch(url);
+      const data = await response.json();
+
+      // Verifica se houve erro
+      if (data.error_message) {
+        console.error("Google Geocoding API error:", data.error_message);
+        return;
+      }
+
+      // Pega o endereço formatado
+      const address = data.results[0].formatted_address;
+
+      // Atualiza o estado
+      setLocation(address);
+      setLatitude(location.lat);
+      setLongitude(location.lng);
+    } catch (error) {
+      console.error("Failed to fetch address:", error);
+    }
+  };
 
   const createNewService = async () => {
     try {
@@ -37,6 +69,8 @@ const AddService = () => {
           subcategory: selectedSubcategory,
           estimated_value: estimatedValue,
           location,
+          latitude,
+          longitude,
         }),
       });
 
@@ -102,15 +136,33 @@ const AddService = () => {
           onChange={(e) => setEstimatedValue(e.target.value)}
         />
 
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
+        <label>
+          Location:
+          <input
+            type="text"
+            placeholder="Location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            readOnly
+          />
+          <GoogleMaps onLocationChange={onLocationChange} />
+        </label>
+        <button
+          type="button"
+          onClick={() => {
+            setLocation(userLocation);
+            setLatitude(store.user.latitude);
+            setLongitude(store.user.longitude);
+          }}
+        >
+          Use my registered address
+        </button>
 
-        {/* Dropdown Menu for Categories */}
-        <select name="category_id" value={selectedCategory} onChange={handleCategoryChange}>
+        <select
+          name="category_id"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
           <option value="">Select Category</option>
           {store.serviceCategories.map((category) => (
             <option key={category.id} value={category.id}>
@@ -119,7 +171,6 @@ const AddService = () => {
           ))}
         </select>
 
-        {/* Dropdown Menu for Subcategories */}
         <select
           name="subcategory_id"
           value={selectedSubcategory}
