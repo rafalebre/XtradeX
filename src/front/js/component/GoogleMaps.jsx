@@ -24,6 +24,18 @@ export default function GoogleMaps({ onLocationChange }) {
     const bounds = new window.google.maps.LatLngBounds();
     map.fitBounds(bounds);
     setMap(map);
+
+    // Defina a função onBoundsChanged
+    map.addListener('bounds_changed', () => {
+      const ne = map.getBounds().getNorthEast();
+      const sw = map.getBounds().getSouthWest();
+
+      // A função onLocationChange deve aceitar dois argumentos: location e bounds
+      if (onLocationChange) {
+        onLocationChange(center, { ne: { lat: ne.lat(), lng: ne.lng() }, sw: { lat: sw.lat(), lng: sw.lng() } });
+      }
+    });
+
   }, []);
 
   const onUnmount = useCallback(function callback(map) {
@@ -33,19 +45,21 @@ export default function GoogleMaps({ onLocationChange }) {
   const onPlaceChanged = () => {
     if (autoCompleteRef.current != null) {
       const place = autoCompleteRef.current.getPlace();
-
-      if (place && place.geometry) { // Verifique se o 'place' e 'place.geometry' não são 'undefined'
+  
+      if (place && place.geometry) {
         const location = {
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
         };
-
+  
         setCenter(location);
-        if (map) { // Verifique se o 'map' não é 'null'
+        if (map) {
           map.panTo(location);
         }
         if (onLocationChange) {
-          onLocationChange(location);
+          const ne = map.getBounds().getNorthEast();
+          const sw = map.getBounds().getSouthWest();
+          onLocationChange(location, { ne: { lat: ne.lat(), lng: ne.lng() }, sw: { lat: sw.lat(), lng: sw.lng() } });
         }
       }
     } else {
@@ -62,7 +76,9 @@ export default function GoogleMaps({ onLocationChange }) {
       map.panTo(location);
     }
     if (onLocationChange) {
-      onLocationChange(location);
+      const ne = map.getBounds().getNorthEast();
+    const sw = map.getBounds().getSouthWest();
+      onLocationChange(location, { ne: { lat: ne.lat(), lng: ne.lng() }, sw: { lat: sw.lat(), lng: sw.lng() } });
     }
   };
 

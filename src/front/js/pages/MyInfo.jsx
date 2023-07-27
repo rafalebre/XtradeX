@@ -34,6 +34,15 @@ const MyInfo = () => {
                 ...prevUserInfo,
                 ...store.user
             }));
+
+            // Set mapLocation if user location is defined
+            if (store.user.location) {
+                setMapLocation({
+                    address: store.user.location,
+                    lat: store.user.latitude,
+                    lng: store.user.longitude
+                });
+            }
         }
     }, [store.user]);
 
@@ -41,9 +50,9 @@ const MyInfo = () => {
         if (mapLocation) {
             setUserInfo(prevUserInfo => ({
                 ...prevUserInfo,
-                location: mapLocation.address,   // changed from mapLocation to mapLocation.address
-                latitude: mapLocation.lat,   // updating latitude from mapLocation
-                longitude: mapLocation.lng   // updating longitude from mapLocation
+                location: mapLocation.address,
+                latitude: mapLocation.lat,
+                longitude: mapLocation.lng
             }));
         }
     }, [mapLocation]);
@@ -62,6 +71,12 @@ const MyInfo = () => {
     };
 
     const handleLocationChange = async (location) => {
+ // Check if location is defined before accessing properties
+ if (!location) {
+    console.log('Location is null');
+    return;
+}
+
         console.log('Location Changed:', location);
         // Monta a URL da API
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
@@ -152,17 +167,17 @@ const MyInfo = () => {
                 </label>
                 <br/>
                 <label>
-                    Location:
-                    <input
-                        type="text"
-                        name="location"
-                        value={userInfo.location}
-                        onChange={handleChange}
-                        readOnly
-                    />
-                    <button type="button" onClick={() => setMapOpen(!mapOpen)}>Hide Map</button>
-                    {mapOpen && <GoogleMaps onLocationChange={handleLocationChange} />}
-                </label>
+                Location:
+                <input
+                    type="text"
+                    name="location"
+                    value={userInfo.location}
+                    onChange={handleChange}
+                    readOnly
+                />
+                <button type="button" onClick={() => setMapOpen(!mapOpen)}>Hide Map</button>
+                {mapOpen && <GoogleMaps onLocationChange={handleLocationChange} initialLocation={mapLocation} />}
+            </label>
                 <br/>
                 <label>
                     Business Phone:

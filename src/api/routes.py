@@ -132,6 +132,11 @@ def get_products():
         bottom_right_lat = float(bottom_right_lat)
         bottom_right_long = float(bottom_right_long)
 
+    print('top_left_lat:', top_left_lat)  # These lines are new
+    print('top_left_long:', top_left_long)  # These lines are new
+    print('bottom_right_lat:', bottom_right_lat)  # These lines are new
+    print('bottom_right_long:', bottom_right_long)  # These lines are new
+
     query = Product.query
 
     if category_id:

@@ -20,30 +20,34 @@ const AddProduct = () => {
     actions.getUserInfo(); // Fetch user info
   }, []);
 
-  const onLocationChange = async (location) => {
-    // Monta a URL da API
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
-
-    try {
-      // Faz a requisição
-      const response = await fetch(url);
-      const data = await response.json();
-
-      // Verifica se houve erro
-      if (data.error_message) {
-        console.error("Google Geocoding API error:", data.error_message);
-        return;
+  const onLocationChange = async (location, bounds) => {
+    if (location) { // Verificamos se 'location' não é nulo antes de prosseguir
+      // Monta a URL da API
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
+  
+      try {
+        // Faz a requisição
+        const response = await fetch(url);
+        const data = await response.json();
+  
+        // Verifica se houve erro
+        if (data.error_message) {
+          console.error("Google Geocoding API error:", data.error_message);
+          return;
+        }
+  
+        // Pega o endereço formatado
+        const address = data.results[0].formatted_address;
+  
+        // Atualiza o estado
+        setLocation(address);
+        setLatitude(location.lat);
+        setLongitude(location.lng);
+      } catch (error) {
+        console.error("Failed to fetch address:", error);
       }
-
-      // Pega o endereço formatado
-      const address = data.results[0].formatted_address;
-
-      // Atualiza o estado
-      setLocation(address);
-      setLatitude(location.lat);
-      setLongitude(location.lng);
-    } catch (error) {
-      console.error("Failed to fetch address:", error);
+    } else {
+      console.log('Location is null');
     }
   };
 
