@@ -132,11 +132,6 @@ def get_products():
         bottom_right_lat = float(bottom_right_lat)
         bottom_right_long = float(bottom_right_long)
 
-    print('top_left_lat:', top_left_lat)  # These lines are new
-    print('top_left_long:', top_left_long)  # These lines are new
-    print('bottom_right_lat:', bottom_right_lat)  # These lines are new
-    print('bottom_right_long:', bottom_right_long)  # These lines are new
-
     query = Product.query
 
     if category_id:
@@ -274,17 +269,40 @@ def get_product_subcategories_by_category(category_id):
 def get_services():
     category_id = request.args.get('category_id')
     subcategory_id = request.args.get('subcategory_id')
-    
+
+    top_left_lat = request.args.get('top_left_lat')
+    top_left_long = request.args.get('top_left_long')
+    bottom_right_lat = request.args.get('bottom_right_lat')
+    bottom_right_long = request.args.get('bottom_right_long')
+
+    # convert to float
+    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long:
+        top_left_lat = float(top_left_lat)
+        top_left_long = float(top_left_long)
+        bottom_right_lat = float(bottom_right_lat)
+        bottom_right_long = float(bottom_right_long)
+
     query = Service.query
-    
+
     if category_id:
         query = query.filter_by(category_id=category_id)
-        
+
     if subcategory_id:
         query = query.filter_by(subcategory_id=subcategory_id)
-    
+
+    # filter the services based on location, excluding online services
+    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long:
+        query = query.filter(
+            Service.latitude <= top_left_lat,
+            Service.latitude >= bottom_right_lat,
+            Service.longitude >= top_left_long,
+            Service.longitude <= bottom_right_long,
+            Service.online == False   # this is just a placeholder condition, replace with your actual condition
+        )
+
     services = query.all()
     return jsonify([service.to_dict() for service in services])
+
 
 
 @api.route('/services', methods=['POST'])
