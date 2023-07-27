@@ -74,6 +74,7 @@
 	},
 	"dependencies": {
 		"@react-google-maps/api": "^2.19.0",
+		"cloudinary-react": "^1.8.1",
 		"google-maps-react": "^2.0.6",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
