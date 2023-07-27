@@ -168,7 +168,7 @@ def create_product():
     if not data:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
-    required_fields = ["name", "description", "category", "condition"]
+    required_fields = ["name", "description", "category", "condition", "currency"]
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"Missing {field} parameter"}), 400
@@ -189,6 +189,7 @@ def create_product():
         category_id=category.id,
         subcategory_id=subcategory.id,
         condition=data['condition'],
+        currency=data['currency'],
         estimated_value=data['estimated_value'],
         location=data['location'],
         latitude=data.get('latitude'),
@@ -319,7 +320,7 @@ def create_service():
     if not data:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
-    required_fields = ["name", "description", "category"]
+    required_fields = ["name", "description", "category", "currency"]
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"Missing {field} parameter"}), 400
@@ -339,6 +340,7 @@ def create_service():
         description=data['description'],
         category_id=category.id,
         subcategory_id=subcategory.id,
+        currency=data['currency'],
         estimated_value=data['estimated_value'],
         online=data.get('online', False),  # novo campo
         location=(data['location'] if not data.get('online', False) else "online"),  # modificação

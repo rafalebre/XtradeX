@@ -56,6 +56,7 @@ class Product(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('product_category.id'))  # nova coluna
     subcategory_id = db.Column(db.Integer, db.ForeignKey('product_subcategory.id'))  # nova coluna
     condition = db.Column(db.String(120), nullable=False)
+    currency = db.Column(db.String(10))
     estimated_value = db.Column(db.Float, nullable=False)
     location = db.Column(db.String(120))
     latitude = db.Column(db.Float)
@@ -74,6 +75,7 @@ class Product(db.Model):
             "category": self.category.to_dict() if self.category else None,
             "subcategory": self.subcategory.to_dict() if self.subcategory else None,
             "condition": self.condition,
+            "currency": self.currency,
             "estimated_value": self.estimated_value,
             "location": self.location,
             "latitude": self.latitude,
@@ -118,6 +120,7 @@ class Service(db.Model):
     description = db.Column(db.Text, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('service_categories.id'))  # nova coluna
     subcategory_id = db.Column(db.Integer, db.ForeignKey('service_subcategories.id'))  # nova coluna
+    currency = db.Column(db.String(10))
     estimated_value = db.Column(db.Float, nullable=False)
     location = db.Column(db.String(120))
     latitude = db.Column(db.Float)
@@ -137,6 +140,7 @@ class Service(db.Model):
             "description": self.description,
             "category": self.category.to_dict() if self.category else None,
             "subcategory": self.subcategory.to_dict() if self.subcategory else None,
+            "currency": self.currency,
             "estimated_value": self.estimated_value,
             "location": self.location,
             "latitude": self.latitude,

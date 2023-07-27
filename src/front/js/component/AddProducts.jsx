@@ -13,6 +13,7 @@ const AddProduct = () => {
   const { store, actions } = useContext(Context);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
+  const [currency, setCurrency] = useState("");
   const userLocation = store.user ? store.user.location : "";
 
   useEffect(() => {
@@ -74,6 +75,7 @@ const AddProduct = () => {
           subcategory: selectedSubcategory,
           condition,
           estimated_value: estimatedValue,
+          currency,
           location,
           latitude,
           longitude,
@@ -149,6 +151,36 @@ const AddProduct = () => {
           value={estimatedValue}
           onChange={(e) => setEstimatedValue(e.target.value)}
         />
+
+<label>
+  Currency:
+  <select
+    value={currency}
+    onChange={(e) => setCurrency(e.target.value)}
+  >
+    <option value="">Select Currency</option>
+    <option value="USD">United States Dollar</option>
+    <option value="EUR">Euro</option>
+    <option value="JPY">Japanese Yen</option>
+    <option value="GBP">British Pound</option>
+    <option value="AUD">Australian Dollar</option>
+    <option value="CAD">Canadian Dollar</option>
+    <option value="CHF">Swiss Franc</option>
+    <option value="CNY">Chinese Yuan</option>
+    <option value="SEK">Swedish Krona</option>
+    <option value="NZD">New Zealand Dollar</option>
+    <option value="MXN">Mexican Peso</option>
+    <option value="SGD">Singapore Dollar</option>
+    <option value="HKD">Hong Kong Dollar</option>
+    <option value="NOK">Norwegian Krone</option>
+    <option value="KRW">South Korean Won</option>
+    <option value="TRY">Turkish Lira</option>
+    <option value="INR">Indian Rupee</option>
+    <option value="RUB">Russian Ruble</option>
+    <option value="BRL">Brazilian Real</option>
+    <option value="ZAR">South African Rand</option>
+  </select>
+</label>
 
         <label>
           Location:
