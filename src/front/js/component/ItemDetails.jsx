@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ItemDetails.css";
+import CurrencyConverterModal from "./CurrencyConverterModal.jsx";
 
 const ItemDetails = ({ item, onClose }) => {
+  const [showCurrencyModal, setShowCurrencyModal] = useState(false);
+
   if (!item) {
     return null;
   }
@@ -47,6 +50,15 @@ const ItemDetails = ({ item, onClose }) => {
         ))}
       </div>
       <button onClick={onClose}>Close</button>
+      <button onClick={() => setShowCurrencyModal(true)}>Convert Currency</button>
+
+      {showCurrencyModal && (
+        <CurrencyConverterModal
+          baseValue={item.estimated_value}
+          baseCurrency={item.currency}
+          onClose={() => setShowCurrencyModal(false)}
+        />
+      )}
     </div>
   );
 };
