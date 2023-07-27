@@ -317,6 +317,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       
           const response = await fetch(apiUrl);
           const data = await response.json();
+
+          console.log(data); // Imprime os dados retornados pela API
       
           if (response.ok) {
             const store = getStore();
@@ -367,6 +369,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     
           const response = await fetch(apiUrl);
           const data = await response.json();
+
+          console.log(data); // Imprime os dados retornados pela API
     
           if (response.ok) {
             const store = getStore();

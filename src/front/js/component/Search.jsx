@@ -120,6 +120,8 @@ const Search = () => {
     setSelectedSubcategory("");
   };
 
+  
+
   const filteredSubcategories = selectedCategory
     ? (searchType === "products"
         ? store.subcategories
@@ -129,21 +131,26 @@ const Search = () => {
 
   const categories =
     searchType === "products" ? store.categories : store.serviceCategories;
+    
 
   return (
     <div>
       <div>
-      <GoogleMaps onLocationChange={handleLocationChange} />
-        <button onClick={() => handleSearchTypeChange("products")}>
-          Search Products
-        </button>
-        <button onClick={() => handleSearchTypeChange("services")}>
-          Search Services
-        </button>
-        <button onClick={handleSpecificSearchToggle}>
-          Specific Item Search
-        </button>
-      </div>
+  <GoogleMaps 
+    onLocationChange={handleLocationChange} 
+    markers={store.searchedProducts.concat(store.searchedServices)}
+  />
+  <button onClick={() => handleSearchTypeChange("products")}>
+    Search Products
+  </button>
+  <button onClick={() => handleSearchTypeChange("services")}>
+    Search Services
+  </button>
+  <button onClick={handleSpecificSearchToggle}>
+    Specific Item Search
+  </button>
+</div>
+
 
       {specificSearch ? (
         <div>

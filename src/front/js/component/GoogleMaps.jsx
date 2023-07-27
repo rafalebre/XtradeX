@@ -1,5 +1,7 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
-import { GoogleMap, Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import React, { useState, useCallback, useRef, useEffect, useContext } from "react";
+import { GoogleMap, Autocomplete, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { Context } from "../store/appContext";
+
 
 const mapContainerStyle = {
   height: "400px",
@@ -10,9 +12,15 @@ const mapContainerStyle = {
 const libraries = ["places"];
 
 export default function GoogleMaps({ onLocationChange }) {
+  const autoCompleteRef = useRef(null);
+  const { store } = useContext(Context);
   const [map, setMap] = useState(null);
   const [center, setCenter] = useState(null);
-  const autoCompleteRef = useRef(null);
+
+  const products = store.products;
+  const services = store.services;
+  
+  const markers = [...products, ...services];
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
@@ -90,6 +98,7 @@ export default function GoogleMaps({ onLocationChange }) {
     );
   }, []);
 
+
   return isLoaded ? (
     <div>
       <Autocomplete onLoad={(autoComplete) => (autoCompleteRef.current = autoComplete)} onPlaceChanged={onPlaceChanged}>
@@ -103,7 +112,15 @@ export default function GoogleMaps({ onLocationChange }) {
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={onClick}
-      />
+      >
+        {markers?.map((marker, i) => ( // Aqui adicionamos os marcadores no mapa
+          <Marker 
+            key={i} 
+            position={{ lat: marker.latitude, lng: marker.longitude }}
+            title={marker.name} // O 'title' aparecerá quando o usuário passar o mouse por cima do marcador
+          />
+        ))}
+      </GoogleMap>
     </div>
   ) : <></>
 }
