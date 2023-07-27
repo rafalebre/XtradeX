@@ -384,34 +384,44 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     
 
-      fetchItemsByName: async function (searchTerm) {
-        try {
-          const backendUrl = process.env.BACKEND_URL;
-          const apiUrl = `${backendUrl}/api/items/search?name=${searchTerm}`;
-
-          const response = await fetch(apiUrl);
-          const data = await response.json();
-
-          if (response.ok) {
-            const store = getStore();
-            const loggedInUserId = parseInt(store.loggedInUserId, 10);
-            const filteredProducts = data.products.filter(
-              (product) => parseInt(product.user_id, 10) !== loggedInUserId
-            );
-            const filteredServices = data.services.filter(
-              (service) => parseInt(service.user_id, 10) !== loggedInUserId
-            );
-            setStore({
-              searchedProducts: filteredProducts,
-              searchedServices: filteredServices,
-            });
-          } else {
-            console.error("Failed to fetch items by name:", data);
+    fetchItemsByName: async function (searchTerm, location, bounds) {
+      try {
+        const backendUrl = process.env.BACKEND_URL;
+        let apiUrl = `${backendUrl}/api/items/search?name=${searchTerm}`;
+  
+        if (location || bounds) {
+          if (location) {
+            apiUrl += `&location=${location.lat},${location.lng}`;
           }
-        } catch (error) {
-          console.error("Error fetching items by name:", error);
+          if (bounds) {
+            apiUrl += `&top_left_lat=${bounds.ne.lat}&top_left_long=${bounds.sw.lng}&bottom_right_lat=${bounds.sw.lat}&bottom_right_long=${bounds.ne.lng}`;
+          }
         }
-      },
+  
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+  
+        if (response.ok) {
+          const store = getStore();
+          const loggedInUserId = parseInt(store.loggedInUserId, 10);
+          const filteredProducts = data.products.filter(
+            (product) => parseInt(product.user_id, 10) !== loggedInUserId
+          );
+          const filteredServices = data.services.filter(
+            (service) => parseInt(service.user_id, 10) !== loggedInUserId
+          );
+          setStore({
+            searchedProducts: filteredProducts,
+            searchedServices: filteredServices,
+          });
+        } else {
+          console.error("Failed to fetch items by name:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching items by name:", error);
+      }
+    },
+  
 
       fetchUserItems: async function () {
         try {

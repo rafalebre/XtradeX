@@ -418,21 +418,52 @@ def get_service_subcategories_by_category(category_id):
 @api.route('/items/search', methods=['GET'])
 def search_items():
     name = request.args.get('name')
-    
+    top_left_lat = request.args.get('top_left_lat')
+    top_left_long = request.args.get('top_left_long')
+    bottom_right_lat = request.args.get('bottom_right_lat')
+    bottom_right_long = request.args.get('bottom_right_long')
+
+    # Convert to float
+    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long:
+        top_left_lat = float(top_left_lat)
+        top_left_long = float(top_left_long)
+        bottom_right_lat = float(bottom_right_lat)
+        bottom_right_long = float(bottom_right_long)
+
     if not name:
         return jsonify({"msg": "Missing name parameter"}), 400
-    
-    # Busca de produtos por nome
-    products = Product.query.filter(Product.name.ilike(f'%{name}%')).all()
-    # Busca de serviços por nome
-    services = Service.query.filter(Service.name.ilike(f'%{name}%')).all()
 
-    # Converter os produtos e serviços em dicionários
+    query_product = Product.query.filter(Product.name.ilike(f'%{name}%'))
+    query_service = Service.query.filter(Service.name.ilike(f'%{name}%'))
+
+    # filter the products and services based on location
+    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long:
+        query_product = query_product.filter(
+            Product.latitude <= top_left_lat,
+            Product.latitude >= bottom_right_lat,
+            Product.longitude >= top_left_long,
+            Product.longitude <= bottom_right_long
+        )
+
+        query_service = query_service.filter(
+            Service.latitude <= top_left_lat,
+            Service.latitude >= bottom_right_lat,
+            Service.longitude >= top_left_long,
+            Service.longitude <= bottom_right_long,
+            Service.online == False
+        )
+
+    # Get all products and services
+    products = query_product.all()
+    services = query_service.all()
+
+    # Convert the products and services into dictionaries
     products_list = [product.to_dict() for product in products]
     services_list = [service.to_dict() for service in services]
 
-    # Retorna um objeto JSON com ambos, produtos e serviços
+    # Return a JSON object with both, products and services
     return jsonify({"products": products_list, "services": services_list})
+
 
 @api.route('/user/items', methods=['GET'])
 @jwt_required()
