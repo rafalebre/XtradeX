@@ -570,37 +570,38 @@ const getState = ({ getStore, getActions, setStore }) => {
           const apiUrl = `${backendUrl}/api/trades/${proposalId}`;
       
           // Primeiro atualizamos a proposta para "Aceita"
-          await fetch(apiUrl, {
+          const response = await fetch(apiUrl, {
             method: "PUT",
             headers: headers,
             body: JSON.stringify({
               status: "Accepted",
             }),
           });
-      
-          // Depois, buscamos a proposta atualizada para pegar as informações do usuário
-          const response = await fetch(apiUrl, {
-            method: "GET",
-            headers: headers,
-          });
+          console.log(response.status);
           const data = await response.json();
+          console.log(JSON.stringify(data, null, 2));
       
           // Atualiza a store com a proposta de negociação atualizada
-          const index = store.tradeProposals.findIndex(
-            (proposal) => proposal.id === data.id
-          );
-          if (index !== -1) {
-            store.tradeProposals[index] = data;
-          }
-      
-          // Prepara para abrir os detalhes do usuário
-          actions.setTradePartnerData(data.sender_email, data.first_name, data.sender_phone);
+    const index = store.tradeProposals.findIndex(
+      (proposal) => proposal.id === data.trade.id
+    );
+    if (index !== -1) {
+      const updatedTradeProposals = [...store.tradeProposals];
+      updatedTradeProposals[index] = data.trade;
+      setStore({
+        ...store,
+        tradeProposals: updatedTradeProposals,
+      });
+    }
 
+    // Prepara para abrir os detalhes do usuário
+    actions.setTradePartnerData(data.sender.email, data.sender.first_name, data.sender.phone);
+  } catch (error) {
+    // Lógica de tratamento para erros
+    console.error(error);
+  }
+},
       
-        } catch (error) {
-          // Lógica de tratamento para erros
-        }
-      },
       
 
       handleDeclineProposal(proposalId) {
