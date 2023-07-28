@@ -1,7 +1,9 @@
 import React from 'react';
+import "./About.css";
 
 const About = () => {
-  return <h1>
+  return <div className="about-container">
+   <h1 className="about-text">
     
     Welcome to our platform! 
 
@@ -21,9 +23,9 @@ Thank you for being part of the X-Trade-X community. Together, we can make a dif
 
 Warm regards, <br/>
 
-Rafael
+Rafael <br/>
 Founder, X-Trade-X
-  </h1>;
+  </h1> </div>;
 };
 
 export default About;
