@@ -3,20 +3,25 @@ import { Context } from "../store/appContext";
 import "./home.css";
 import { useNavigate } from 'react-router-dom';
 import Logo from "../../img/Logo.png";
+import { Alert } from "react-bootstrap";
 
 export const Home = () => {
-	const { actions } = useContext(Context);
+    const { actions } = useContext(Context);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showAlert, setShowAlert] = useState(false);  
+    const [alertMessage, setAlertMessage] = useState("");
     const navigate = useNavigate();
 
     const handleRegister = () => {
         if (!validateEmail(email)) {
-            alert("Please insert a valid e-mail.");
+            setAlertMessage("Please insert a valid e-mail.");
+            setShowAlert(true);
             return;
         }
         if (password === "") {
-            alert("Please insert a password.");
+            setAlertMessage("Please insert a password.");
+            setShowAlert(true);
             return;
         }
         actions.registerUser(email, password)
@@ -34,6 +39,12 @@ export const Home = () => {
 
     return (
         <div className="home-container">
+            {showAlert && (
+                <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+                    <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                    <p>{alertMessage}</p>
+                </Alert>
+            )}
             <div className="row">
                 <div className="col-6">
                     <h1>How does it work?</h1>
