@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import ItemDetails from "./ItemDetails.jsx";
 import TradeProposal from "./TradeProposal.jsx";
 import GoogleMaps from './GoogleMaps.jsx';
+import "./Search.css";
 
 const Search = () => {
   const [searchType, setSearchType] = useState(null);
@@ -45,8 +46,9 @@ const Search = () => {
       <div key={index} className="item-card">
         <h3>{item.name}</h3>
         {isProduct && <p>Condition: {item.condition}</p>}
-        <p>Estimated Value: ${item.estimated_value}</p>
+        <p>Estimated Value: {item.estimated_value}{item.currency}</p>
         <button
+          className="orange-button"
           onClick={() =>
             handleOpenDetails(item, isProduct ? "product" : "service")
           }
@@ -55,6 +57,7 @@ const Search = () => {
         </button>
         {/* Abre o modal de Trade Proposal */}
         <button
+          className="orange-button"
           onClick={() =>
             handleOpenTradeProposal(item, isProduct ? "product" : "service")
           }
@@ -140,19 +143,19 @@ const Search = () => {
     onLocationChange={handleLocationChange} 
     markers={store.searchedProducts.concat(store.searchedServices)}
   />
-  <button onClick={() => handleSearchTypeChange("products")}>
-    Search Products
-  </button>
-  <button onClick={() => handleSearchTypeChange("services")}>
-    Search Services
-  </button>
-  <button onClick={handleSpecificSearchToggle}>
-    Specific Item Search
-  </button>
+  <button className="search-button" onClick={() => handleSearchTypeChange("products")}>
+          Search Products
+        </button>
+        <button className="search-button" onClick={() => handleSearchTypeChange("services")}>
+          Search Services
+        </button>
+        <button className="search-button" onClick={handleSpecificSearchToggle}>
+          Specific Item Search
+        </button>
 </div>
 
 
-      {specificSearch ? (
+{specificSearch ? (
         <div>
           <input
             type="text"
@@ -160,39 +163,40 @@ const Search = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Enter item name..."
           />
-          <button onClick={handleSearch}>Search</button>
-          {renderItems(store.searchedProducts, true)}
-          {renderItems(store.searchedServices, false)}
+          <button onClick={handleSearch} className="search-button">
+            Search
+          </button>
+          <div className="container">
+            {renderItems(store.searchedProducts, true)}
+            {renderItems(store.searchedServices, false)}
+          </div>
         </div>
       ) : searchType ? (
         <form onSubmit={handleSearch}>
-          <select name="category_id" onChange={handleCategoryChange}>
-            <option value="">Select Category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+          <select name="category_id" className="dropdown" onChange={handleCategoryChange}>
+    <option value="">Select Category</option>
+    {categories.map((category) => (
+        <option key={category.id} value={category.id}>
+            {category.name}
+        </option>
+    ))}
+</select>
 
-          <select
-            name="subcategory_id"
-            value={selectedSubcategory}
-            onChange={(e) => setSelectedSubcategory(e.target.value)}
-          >
-            <option value="">Select Subcategory</option>
-            {filteredSubcategories.map((subcategory) => (
-              <option key={subcategory.id} value={subcategory.id}>
-                {subcategory.name}
-              </option>
-            ))}
-          </select>
-          <button type="submit">Search</button>
+<select name="subcategory_id" className="dropdown" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
+    <option value="">Select Subcategory</option>
+    {filteredSubcategories.map((subcategory) => (
+        <option key={subcategory.id} value={subcategory.id}>
+            {subcategory.name}
+        </option>
+    ))}
+</select>
+          <button type="submit" className="submit-button">Search</button>
+
         </form>
       ) : null}
 
       {!specificSearch && (
-        <div>
+        <div className="item-list">
           {searchType === "products" && renderItems(store.products, true)}
           {searchType === "services" && renderItems(store.services, false)}
         </div>

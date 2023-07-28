@@ -10,7 +10,7 @@ const ItemDetails = ({ item, onClose }) => {
   }
 
   const renderProperty = (key, property) => {
-    if (key === "id" || key === "user_id") {
+    if (key === "id" || key === "user_id" || key === "name") {
       return null;
     }
 
@@ -37,21 +37,20 @@ const ItemDetails = ({ item, onClose }) => {
     <div className="item-details-container">
       <h2>Item Details</h2>
 
-       {/* Display image if it exists */}
-       {item.image_url && <img src={item.image_url} alt={item.name} />}
+      {/* Display the name at the top */}
+      <h3 className="item-name" onClick={onClose}>{item.name}</h3>
+
+      {/* Display image if it exists */}
+      {item.image_url && <img src={item.image_url} alt={item.name} />}
+      
       <div>
         {Object.keys(item).map((key) => (
           <div key={key}>
-            {key === "name" ? (
-              <span className="item-name" onClick={onClose}>
-                {item[key]}
-              </span>
-            ) : (
-              renderProperty(key, item[key])
-            )}
+            {renderProperty(key, item[key])}
           </div>
         ))}
       </div>
+
       <button onClick={onClose}>Close</button>
       <button onClick={() => setShowCurrencyModal(true)}>Convert Currency</button>
 
