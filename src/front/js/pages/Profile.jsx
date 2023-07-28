@@ -8,6 +8,7 @@ import UserItems from "../component/UserItems.jsx";
 import Trades from "../component/Trades.jsx";
 
 const Profile = () => {
+  const [showInitialMessage, setShowInitialMessage] = useState(true);
   // Estado para rastrear a opção de menu selecionada
   const [selectedMenu, setSelectedMenu] = useState(null);
   
@@ -20,6 +21,7 @@ const Profile = () => {
   // Função para atualizar a opção de menu selecionada
   const handleMenuSelection = (menu) => {
     setSelectedMenu(menu);
+    setShowInitialMessage(false);
   };
 
   useEffect(() => {
@@ -42,6 +44,11 @@ const Profile = () => {
         newTradesCount={store.new_sent_trades.length + store.new_received_trades.length}
       />
       <div className="content-area">
+      {showInitialMessage && (
+          <div className="initial-message-container">
+            <h2>Choose an option</h2>
+            <div className="arrow-right" />
+          </div>)}
         {/* Renderiza o componente AddProduct se 'Add a product' estiver selecionado */}
         {selectedMenu === "addProduct" && <AddProduct />}
         {/* Aqui iremos adicionando condições adicionais para outras opções de menu */}
