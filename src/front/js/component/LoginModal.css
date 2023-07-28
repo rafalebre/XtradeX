@@ -1,0 +1,29 @@
+.loginModal .modal-content {
+    background-color: #f0f0f0; /* Um cinza mais claro */
+  }
+  
+  .loginModal .modal-header, .loginModal .modal-footer {
+    border: none;
+  }
+  
+  .loginModal .form-label {
+    color: #FF6347; /* Um laranja similar ao da home */
+  }
+  
+  .loginModal .form-control {
+    border: 1px solid #FF6347;
+  }
+  
+  .loginModal .login-submit {
+    background-color: #FF6347;
+    border: none;
+  }
+  
+  .loginModal .login-submit:hover {
+    background-color: #FF4500; /* Um laranja um pouco mais escuro no hover */
+  }
+  
+  .loginModal .modal-header .close {
+    color: #FF6347;
+  }
+  
