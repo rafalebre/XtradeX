@@ -8,6 +8,7 @@ import UserItems from "../component/UserItems.jsx";
 import Trades from "../component/Trades.jsx";
 
 const Profile = () => {
+  
   const [showInitialMessage, setShowInitialMessage] = useState(true);
   // Estado para rastrear a opção de menu selecionada
   const [selectedMenu, setSelectedMenu] = useState(null);

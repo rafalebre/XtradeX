@@ -29,6 +29,11 @@ export const Navbar = () => {
           About
         </Link>
         <div className="login-logout-button">
+          {store.isLoggedIn && (
+            <Link to="/myinfo" className="btn myinfo-button">
+              My Info
+            </Link>
+          )}
           {!store.isLoggedIn ? (
             <button
               className="btn login-button"

@@ -637,7 +637,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
       },
 
-      handleAcceptProposal: async function (proposalId) {
+      handleAcceptProposal: async function (proposalId, store, setStore) {
         try {
           const token = localStorage.getItem("token");
           const headers = new Headers({

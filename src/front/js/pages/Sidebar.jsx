@@ -16,17 +16,15 @@ const Sidebar = ({ onMenuSelect, newTradesCount }) => {
         <li onClick={() => onMenuSelect("addProduct")}>Add a product</li>
         <li onClick={() => onMenuSelect("addService")}>Add a service</li>
         <li onClick={() => onMenuSelect("search")}>Search</li>
-        <li onClick={() => onMenuSelect("userItems")}>
-          My Products / Services
-        </li>
-        <li onClick={() => onMenuSelect("trades")}>
-          Trades{" "}
-          {newTradesCount > 0 && (
+        <li onClick={() => onMenuSelect("userItems")}>My Products / Services</li>
+        <li onClick={() => onMenuSelect("trades")}>Trades</li>
+        {newTradesCount > 0 && (
+          <li>
             <span className="notification">{newTradesCount}</span>
-          )}
-        </li>
-        <li>Wishlist</li>
-        <li>Favorites</li>
+          </li>
+        )}
+        <li onClick={() => onMenuSelect("wishlist")}>Wishlist</li>
+        <li onClick={() => onMenuSelect("favorites")}>Favorites</li>
       </ul>
     </div>
   );

@@ -4,47 +4,52 @@
   width: 100%;
   background-color: #202020;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-  z-index: 100; /* para garantir que a navbar esteja sempre no topo */
+  z-index: 100;
 }
 
-  
-  .logo-link .logo-image {
-    height: 50px;
-    margin-right: 20px;
-  }
-  
-  .about-link {
-    color: #f7bbc1; /* Um pouco mais clara para combinar com logo */
-    font-size: 1.4rem; /* Tamanho da fonte maior */
-    text-decoration: none;
-    margin-right: auto;
-    font-family: 'Georgia', serif; /* Uma fonte mais sofisticada */
-    font-weight: bold; /* Mais negrito */
-  }
-  
-  .login-logout-button {
-    margin-left: auto;
-  }
-  
-  .btn {
-    padding: 10px 30px; /* Aumento do padding para os lados */
-    border-radius: 20px;
-    border: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .login-button {
-    background-color: #f7bbc1; /* Um pouco mais escura */
-    color: #363636;
-  }
-  
-  .logout-button {
-    background-color: #f7bbc1; /* Um pouco mais escura */
-    color: #363636;
-  }
-  
-  .btn:hover {
-    background-color: #363636;
-    color: #FF6F7D;
-  }
-  
+.logo-link .logo-image {
+  height: 50px;
+  margin-right: 20px;
+}
+
+.about-link {
+  color: #f7bbc1;
+  font-size: 1.4rem;
+  text-decoration: none;
+  margin-right: auto;
+  font-family: 'Georgia', serif;
+  font-weight: bold;
+}
+
+.login-logout-button {
+  margin-left: auto;
+}
+
+.btn {
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.login-button {
+  background-color: #f7bbc1;
+  color: #363636;
+  margin-left: 10px; /* Margem adicionada aqui */
+}
+
+.logout-button {
+  background-color: #f7bbc1;
+  color: #363636;
+}
+
+.myinfo-button {
+  background-color: #f7bbc1;
+  color: #363636;
+  margin-right: 10px; /* Margem adicionada aqui */
+}
+
+.btn:hover {
+  background-color: #363636;
+  color: #FF6F7D;
+}
