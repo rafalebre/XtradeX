@@ -18,6 +18,7 @@ const UserItems = () => {
             store.userProducts.map((product) => (
               <li key={product.id} className="user-item">
                 {product.name} - {product.description} - {product.currency}{product.estimated_value}
+                <button onClick={() => actions.deleteProduct(store, product.id)}>Delete</button>
               </li>
             ))}
         </ul>
@@ -30,6 +31,7 @@ const UserItems = () => {
             store.userServices.map((service) => (
               <li key={service.id} className="user-item">
                 {service.name} - {service.description} - {service.currency}{service.estimated_value}
+                <button onClick={() => actions.deleteService(store, service.id)}>Delete</button>
               </li>
             ))}
         </ul>

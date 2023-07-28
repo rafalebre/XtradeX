@@ -285,6 +285,83 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+
+      deleteProduct: async function (store, productId) {
+        try {
+          const token = localStorage.getItem("token");
+          const headers = new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          });
+          const backendUrl = process.env.BACKEND_URL;
+          const apiUrl = `${backendUrl}/api/products/${productId}`;
+    
+          const response = await fetch(apiUrl, {
+            method: "DELETE",
+            headers: headers,
+          });
+    
+          const textResponse = await response.text();
+    
+          try {
+            const data = JSON.parse(textResponse);
+            if (response.ok) {
+              console.log("Product deleted successfully:", data);
+              // Atualiza a store após a exclusão do produto
+              const updatedProducts = store.userProducts.filter(product => product.id !== productId);
+              setStore({
+                userProducts: updatedProducts,
+              });
+            } else {
+              console.log("Error deleting product:", data);
+            }
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
+            console.log("Server response:", textResponse);
+          }
+        } catch (error) {
+          console.error("Error deleting product:", error);
+        }
+      },
+    deleteService: async function (store, serviceId) {
+        try {
+          const token = localStorage.getItem("token");
+          const headers = new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          });
+          const backendUrl = process.env.BACKEND_URL;
+          const apiUrl = `${backendUrl}/api/services/${serviceId}`;
+    
+          const response = await fetch(apiUrl, {
+            method: "DELETE",
+            headers: headers,
+          });
+    
+          const textResponse = await response.text();
+    
+          try {
+            const data = JSON.parse(textResponse);
+            if (response.ok) {
+              console.log("Service deleted successfully:", data);
+              // Atualiza a store após a exclusão do serviço
+              const updatedServices = store.userServices.filter(service => service.id !== serviceId);
+              setStore({
+                userServices: updatedServices,
+              });
+            } else {
+              console.log("Error deleting service:", data);
+            }
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
+            console.log("Server response:", textResponse);
+          }
+        } catch (error) {
+          console.error("Error deleting service:", error);
+        }
+      },
+    
+
       fetchProducts: async function (categoryId, subcategoryId, location, bounds) {
         try {
           const backendUrl = process.env.BACKEND_URL;

@@ -1,22 +1,35 @@
 .user-items-container {
-    max-width: 1200px;
-    margin: 40px auto 0; /* Reduzindo a margem inferior e adicionando margem superior para mover a lista mais para cima */
-    padding: 20px;
-  }
-  
-  .user-items-list {
-    margin-bottom: 40px;
-  }
-  
-  .user-items-title {
-    color: #FF8C00;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .user-item {
-    font-weight: bold;
-    list-style-type: disc;
-    margin-left: 20px;
-  }
-  
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding: 20px;
+}
+
+.user-items-list {
+  margin-bottom: 40px;
+}
+
+.user-items-title {
+  color: #FF8C00;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-item {
+  font-weight: bold;
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.user-item button {
+  background-color: #FF8C00; /* cor de fundo alaranjada */
+  color: white; /* cor do texto branca */
+  border: none; /* remove o contorno do botão */
+  padding: 10px 20px; /* adiciona um pouco de preenchimento ao redor do texto do botão */
+  margin-left: 10px; /* adiciona uma pequena margem à esquerda do botão para separá-lo do texto do item */
+  cursor: pointer; /* muda o cursor para um ponteiro quando passa sobre o botão */
+  border-radius: 14px;
+}
+
+.user-item button:hover {
+  background-color: #FFA500; /* muda a cor de fundo para um laranja mais claro quando o botão é passado */
+}
