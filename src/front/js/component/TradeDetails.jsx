@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
+import "./TradeDetails.css";
 
 const TradeDetails = ({ show, handleClose, trade, refreshTrades }) => {  // refreshTrades adicionado aqui
   const { store, actions } = useContext(Context);
@@ -27,7 +28,7 @@ const TradeDetails = ({ show, handleClose, trade, refreshTrades }) => {  // refr
   );
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} className="TradeDetails">
       <Modal.Header closeButton>
         <Modal.Title>Trade Details</Modal.Title>
       </Modal.Header>
