@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"; 
 import { Context } from "../store/appContext"; 
 import Sidebar from "./Sidebar.jsx";
-import AddProduct from "../component/AddProducts.jsx";
+import AddProducts from "../component/AddProducts.jsx";
 import AddService from "../component/AddService.jsx";
 import Search from "../component/Search.jsx";
 import UserItems from "../component/UserItems.jsx";
@@ -50,7 +50,7 @@ const Profile = () => {
             <div className="arrow-right" />
           </div>)}
         {/* Renderiza o componente AddProduct se 'Add a product' estiver selecionado */}
-        {selectedMenu === "addProduct" && <AddProduct />}
+        {selectedMenu === "addProduct" && <AddProducts />}
         {/* Aqui iremos adicionando condições adicionais para outras opções de menu */}
         {selectedMenu === "addService" && <AddService />}
         {selectedMenu === "search" && <Search />}
