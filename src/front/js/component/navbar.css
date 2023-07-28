@@ -1,0 +1,45 @@
+.navbar {
+    background-color: #1A1A1A;
+    padding: 10px 0;
+  }
+  
+  .logo-link .logo-image {
+    height: 50px;
+    margin-right: 20px;
+  }
+  
+  .about-link {
+    color: #FF6F7D; /* Um pouco mais escura */
+    font-size: 1.4rem; /* Tamanho da fonte maior */
+    text-decoration: none;
+    margin-right: auto;
+    font-family: 'Georgia', serif; /* Uma fonte mais sofisticada */
+    font-weight: bold; /* Mais negrito */
+  }
+  
+  .login-logout-button {
+    margin-left: auto;
+  }
+  
+  .btn {
+    padding: 10px 30px; /* Aumento do padding para os lados */
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .login-button {
+    background-color: #FF6F7D; /* Um pouco mais escura */
+    color: #363636;
+  }
+  
+  .logout-button {
+    background-color: #FF6F7D; /* Um pouco mais escura */
+    color: #363636;
+  }
+  
+  .btn:hover {
+    background-color: #363636;
+    color: #FF6F7D;
+  }
+  
