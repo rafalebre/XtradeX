@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import "./Profile.css";
 
 const Sidebar = ({ onMenuSelect, newTradesCount }) => {
+  const { store } = useContext(Context);
+
   return (
     <div className="sidebar">
       <div className="avatar-container">
-        {/* O espaço para a foto de perfil do usuário estará aqui */}
+        {store.user && store.user.image_url && (
+          <img src={store.user.image_url} alt="User profile" className="avatar-image"/>
+        )}
       </div>
       <ul className="sidebar-menu">
-        {/* Chama a função de callback ao clicar em uma opção de menu */}
         <li onClick={() => onMenuSelect("addProduct")}>Add a product</li>
         <li onClick={() => onMenuSelect("addService")}>Add a service</li>
         <li onClick={() => onMenuSelect("search")}>Search</li>
@@ -21,8 +25,6 @@ const Sidebar = ({ onMenuSelect, newTradesCount }) => {
             <span className="notification">{newTradesCount}</span>
           )}
         </li>
-        {/* Adicionar o evento onClick para as outras opções à medida que forem criadas */}
-
         <li>Wishlist</li>
         <li>Favorites</li>
       </ul>

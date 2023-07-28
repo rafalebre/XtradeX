@@ -180,6 +180,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 location: data.location,
                 latitude: data.latitude,
                 longitude: data.longitude, 
+                image_url: data.image_url,
               },
             });
           } else {
