@@ -6,6 +6,7 @@ import GoogleMaps from '../component/GoogleMaps.jsx';
 const MyInfo = () => {
     const navigate = useNavigate();
     const { store, actions } = useContext(Context);
+    const [image, setImage] = useState(null);
     
 
     const [userInfo, setUserInfo] = useState({
@@ -18,7 +19,8 @@ const MyInfo = () => {
         location: '',
         latitude: null,    // added latitude state
         longitude: null,   // added longitude state
-        business_phone: '' // adicionado para lidar com os trades apenas
+        business_phone: '', // adicionado para lidar com os trades apenas
+        image_url: image
     });
     
     const [mapOpen, setMapOpen] = useState(true);   // set to true to open map when page is loaded
@@ -102,6 +104,36 @@ const MyInfo = () => {
         }
     };
 
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append("image", file);
+    
+       
+    
+        try {
+          const response = await fetch("https://api.imgur.com/3/image", {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+            },
+          });
+    
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+    
+          const data = await response.json();
+    
+          setImage(data.data.link);
+          
+        } catch (error) {
+          console.error("Error uploading image:", error);
+          
+        }
+      };
+
     return (
         <div>
             <h1>My Info</h1>
@@ -178,6 +210,10 @@ const MyInfo = () => {
                 <button type="button" onClick={() => setMapOpen(!mapOpen)}>Hide Map</button>
                 {mapOpen && <GoogleMaps onLocationChange={handleLocationChange} initialLocation={mapLocation} />}
             </label>
+                <br/>
+
+                <input type="file" onChange={handleImageUpload} /> 
+
                 <br/>
                 <label>
                     Business Phone:

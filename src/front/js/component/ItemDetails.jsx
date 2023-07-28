@@ -36,6 +36,9 @@ const ItemDetails = ({ item, onClose }) => {
   return (
     <div className="item-details-container">
       <h2>Item Details</h2>
+
+       {/* Display image if it exists */}
+       {item.image_url && <img src={item.image_url} alt={item.name} />}
       <div>
         {Object.keys(item).map((key) => (
           <div key={key}>

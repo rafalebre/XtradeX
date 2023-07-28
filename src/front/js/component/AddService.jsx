@@ -13,6 +13,8 @@ const AddService = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [currency, setCurrency] = useState("");
+  const [image, setImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
   const userLocation = store.user ? store.user.location : "";
   const [isOnline, setIsOnline] = useState(false);
 
@@ -80,6 +82,7 @@ const AddService = () => {
           online: isOnline,
           latitude: isOnline ? null : latitude,
           longitude: isOnline ? null : longitude,
+          image_url: image
         }),
       });
 
@@ -106,6 +109,36 @@ const AddService = () => {
     createNewService();
   };
 
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    setImageLoading(true);
+
+    try {
+      const response = await fetch("https://api.imgur.com/3/image", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      setImage(data.data.link);
+      setImageLoading(false);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      setImageLoading(false);
+    }
+  }; 
   const handleCategoryChange = async (event) => {
     const categoryId = event.target.value;
     setSelectedCategory(categoryId);
@@ -211,7 +244,8 @@ const AddService = () => {
     </button>
   </>
 )}
-
+<input type="file" onChange={handleImageUpload} />
+        {imageLoading ? <p>Uploading image...</p> : <img src={image} alt="Upload Preview"/>}
 <select
   name="category_id"
   value={selectedCategory}

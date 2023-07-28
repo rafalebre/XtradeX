@@ -8,6 +8,7 @@ from flask_jwt_extended import jwt_required
 from werkzeug.security import check_password_hash
 from datetime import datetime
 from dateutil import parser
+from requests import Request, Session
 
 api = Blueprint('api', __name__)
 
@@ -97,7 +98,7 @@ def update_user_info():
         elif getattr(user, field) is None:  # check if field is required and not set
             return jsonify({f"msg": f"Missing {field} parameter"}), 400
 
-    optional_fields = ["gender", "birth_date", "phone", "location", "latitude", "longitude"]
+    optional_fields = ["gender", "birth_date", "phone", "location", "latitude", "longitude", "image_url"]
     for field in optional_fields:
         if field in data:
             setattr(user, field, data[field])
@@ -168,7 +169,7 @@ def create_product():
     if not data:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
-    required_fields = ["name", "description", "category", "condition", "currency"]
+    required_fields = ["name", "description", "category", "condition", "currency", "image_url"]
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"Missing {field} parameter"}), 400
@@ -193,13 +194,15 @@ def create_product():
         estimated_value=data['estimated_value'],
         location=data['location'],
         latitude=data.get('latitude'),
-        longitude=data.get('longitude')
+        longitude=data.get('longitude'),
+        image_url=data.get('image_url') # Aqui recebemos a URL da imagem do front-end
     )
 
     db.session.add(new_product)
     db.session.commit()
 
     return jsonify(new_product.to_dict()), 201
+
 
 @api.route('/products/<int:product_id>', methods=['PUT'])
 @jwt_required()
@@ -320,7 +323,7 @@ def create_service():
     if not data:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
-    required_fields = ["name", "description", "category", "currency"]
+    required_fields = ["name", "description", "category", "currency", "image_url"]
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"Missing {field} parameter"}), 400
@@ -345,7 +348,8 @@ def create_service():
         online=data.get('online', False),  # novo campo
         location=(data['location'] if not data.get('online', False) else "online"),  # modificação
         latitude=(data.get('latitude') if not data.get('online', False) else None),  # modificação
-        longitude=(data.get('longitude') if not data.get('online', False) else None)  # modificação
+        longitude=(data.get('longitude') if not data.get('online', False) else None),  # modificação
+        image_url=data.get('image_url')
     )
 
     db.session.add(new_service)

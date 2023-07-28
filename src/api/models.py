@@ -20,6 +20,7 @@ class User(db.Model):
     location = db.Column(db.String(120))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+    image_url = db.Column(db.String, nullable=True)
     last_checked = db.Column(db.DateTime, default=datetime.utcnow)
 
 
@@ -35,7 +36,8 @@ class User(db.Model):
             "phone": self.phone,
             "location": self.location,
             "latitude": self.latitude,
-            "longitude": self.longitude
+            "longitude": self.longitude,
+            "image_url": self.image_url
         }
 
     def set_password(self, password):
@@ -61,6 +63,7 @@ class Product(db.Model):
     location = db.Column(db.String(120))
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
+    image_url = db.Column(db.String, nullable=True)
 
     user = db.relationship('User', backref='products')
     category = db.relationship('ProductCategory', backref='products')  # nova relação
@@ -79,7 +82,8 @@ class Product(db.Model):
             "estimated_value": self.estimated_value,
             "location": self.location,
             "latitude": self.latitude,
-            "longitude": self.longitude
+            "longitude": self.longitude,
+            "image_url": self.image_url
         }
 
 class ProductCategory(db.Model):
@@ -126,6 +130,7 @@ class Service(db.Model):
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     online = db.Column(db.Boolean, default=False, nullable=False)
+    image_url = db.Column(db.String, nullable=True)
     
 
     user = db.relationship('User', backref='services')
@@ -145,7 +150,8 @@ class Service(db.Model):
             "location": self.location,
             "latitude": self.latitude,
             "longitude": self.longitude,
-            "online": self.online
+            "online": self.online,
+            "image_url": self.image_url
         }
 
 class ServiceCategory(db.Model):

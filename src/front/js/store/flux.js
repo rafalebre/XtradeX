@@ -312,8 +312,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 : `top_left_lat=${bounds.ne.lat}&top_left_long=${bounds.sw.lng}&bottom_right_lat=${bounds.sw.lat}&bottom_right_long=${bounds.ne.lng}`;
             }
           }
-
-          console.log("API URL:", apiUrl); 
       
           const response = await fetch(apiUrl);
           const data = await response.json();

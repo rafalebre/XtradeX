@@ -14,6 +14,8 @@ const AddProduct = () => {
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [currency, setCurrency] = useState("");
+  const [image, setImage] = useState(null);
+  const [imageLoading, setImageLoading] = useState(false);
   const userLocation = store.user ? store.user.location : "";
 
   useEffect(() => {
@@ -22,24 +24,25 @@ const AddProduct = () => {
   }, []);
 
   const onLocationChange = async (location, bounds) => {
-    if (location) { // Verificamos se 'location' não é nulo antes de prosseguir
+    if (location) {
+      // Verificamos se 'location' não é nulo antes de prosseguir
       // Monta a URL da API
       const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=${process.env.GOOGLE_MAPS_API_KEY}`;
-  
+
       try {
         // Faz a requisição
         const response = await fetch(url);
         const data = await response.json();
-  
+
         // Verifica se houve erro
         if (data.error_message) {
           console.error("Google Geocoding API error:", data.error_message);
           return;
         }
-  
+
         // Pega o endereço formatado
         const address = data.results[0].formatted_address;
-  
+
         // Atualiza o estado
         setLocation(address);
         setLatitude(location.lat);
@@ -48,7 +51,7 @@ const AddProduct = () => {
         console.error("Failed to fetch address:", error);
       }
     } else {
-      console.log('Location is null');
+      console.log("Location is null");
     }
   };
 
@@ -79,6 +82,7 @@ const AddProduct = () => {
           location,
           latitude,
           longitude,
+          image_url: image
         }),
       });
 
@@ -104,6 +108,36 @@ const AddProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     createNewProduct();
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+
+    setImageLoading(true);
+
+    try {
+      const response = await fetch("https://api.imgur.com/3/image", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      setImage(data.data.link);
+      setImageLoading(false);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      setImageLoading(false);
+    }
   };
 
   const handleCategoryChange = async (event) => {
@@ -152,35 +186,35 @@ const AddProduct = () => {
           onChange={(e) => setEstimatedValue(e.target.value)}
         />
 
-<label>
-  Currency:
-  <select
-    value={currency}
-    onChange={(e) => setCurrency(e.target.value)}
-  >
-    <option value="">Select Currency</option>
-    <option value="USD">United States Dollar</option>
-    <option value="EUR">Euro</option>
-    <option value="JPY">Japanese Yen</option>
-    <option value="GBP">British Pound</option>
-    <option value="AUD">Australian Dollar</option>
-    <option value="CAD">Canadian Dollar</option>
-    <option value="CHF">Swiss Franc</option>
-    <option value="CNY">Chinese Yuan</option>
-    <option value="SEK">Swedish Krona</option>
-    <option value="NZD">New Zealand Dollar</option>
-    <option value="MXN">Mexican Peso</option>
-    <option value="SGD">Singapore Dollar</option>
-    <option value="HKD">Hong Kong Dollar</option>
-    <option value="NOK">Norwegian Krone</option>
-    <option value="KRW">South Korean Won</option>
-    <option value="TRY">Turkish Lira</option>
-    <option value="INR">Indian Rupee</option>
-    <option value="RUB">Russian Ruble</option>
-    <option value="BRL">Brazilian Real</option>
-    <option value="ZAR">South African Rand</option>
-  </select>
-</label>
+        <label>
+          Currency:
+          <select
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+          >
+            <option value="">Select Currency</option>
+            <option value="USD">United States Dollar</option>
+            <option value="EUR">Euro</option>
+            <option value="JPY">Japanese Yen</option>
+            <option value="GBP">British Pound</option>
+            <option value="AUD">Australian Dollar</option>
+            <option value="CAD">Canadian Dollar</option>
+            <option value="CHF">Swiss Franc</option>
+            <option value="CNY">Chinese Yuan</option>
+            <option value="SEK">Swedish Krona</option>
+            <option value="NZD">New Zealand Dollar</option>
+            <option value="MXN">Mexican Peso</option>
+            <option value="SGD">Singapore Dollar</option>
+            <option value="HKD">Hong Kong Dollar</option>
+            <option value="NOK">Norwegian Krone</option>
+            <option value="KRW">South Korean Won</option>
+            <option value="TRY">Turkish Lira</option>
+            <option value="INR">Indian Rupee</option>
+            <option value="RUB">Russian Ruble</option>
+            <option value="BRL">Brazilian Real</option>
+            <option value="ZAR">South African Rand</option>
+          </select>
+        </label>
 
         <label>
           Location:
@@ -203,6 +237,9 @@ const AddProduct = () => {
         >
           Use my registered address
         </button>
+
+        <input type="file" onChange={handleImageUpload} />
+        {imageLoading ? <p>Uploading image...</p> : <img src={image} alt="Upload Preview"/>}
 
         <select
           name="category_id"
