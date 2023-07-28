@@ -1,0 +1,37 @@
+.home-container {
+    background-color: #2f2f2f;
+    min-height: 100vh;
+    color: #fa7d6a;
+    padding-top: 180px; /* aumentando o padding-top para adicionar mais espaço acima */
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.home-container h1 {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.home-container .row {
+    margin-top: 20px;
+}
+
+.home-container .form-control,
+.home-container .btn {
+    width: 300px;
+}
+
+.home-container .btn {
+    background-color: #fa7d6a;
+    border: none;
+}
+
+.home-container ol {
+    padding-left: 80px; /* aumentando o padding-left para mover a lista mais para a direita */
+}
+
+.logo {
+    width: 300px;
+    height: auto;
+    margin-top: 150px;
+}

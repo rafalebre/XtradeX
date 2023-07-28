@@ -4,7 +4,7 @@ import { Context } from "../store/appContext";
 import LoginModal from "./LoginModal.jsx";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../img/Logo.png";
-import navbar from "./navbar.css";
+import "./navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
