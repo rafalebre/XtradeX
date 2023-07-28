@@ -1,0 +1,55 @@
+.my-info-container {
+    background-color: #F5F5F5; /* Cinza claro */
+    padding-top: 100px; /* Este valor pode precisar de ajustes dependendo do tamanho da sua navbar */
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+
+.my-info-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaçamento entre os inputs */
+    align-items: center;
+    width: 70%; /* Largura do formulário, isso pode ser ajustado de acordo com suas preferências */
+}
+
+.my-info-form label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.my-info-form input[type="text"],
+.my-info-form input[type="date"],
+.my-info-form input[type="tel"],
+.my-info-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #FFA500;
+}
+
+.my-info-form button[type="button"],
+.my-info-form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: center;
+}
+
+.my-info-form input[disabled] {
+    background-color: #ccc; /* Um cinza mais escuro para campos desabilitados */
+}
+
+.GoogleMaps {
+    width: 90%; /* Reduzindo a largura para permitir margens automáticas */
+    height: 400px;
+    margin: 0 auto; /* Margens automáticas para centralizar o elemento */
+}
