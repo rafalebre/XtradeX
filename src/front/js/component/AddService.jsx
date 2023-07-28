@@ -263,7 +263,7 @@ const AddService = () => {
                 onChange={handleCategoryChange}
               >
                 <option value="">Select Category</option>
-                {store.categories.map((category) => (
+                {store.serviceCategories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
                   </option>
