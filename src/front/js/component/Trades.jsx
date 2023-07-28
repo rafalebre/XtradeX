@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import TradeDetails from "./TradeDetails.jsx";
 import Deal from "./Deal.jsx";
+import "./Trades.css";
 
 const Trades = ({ intervalId, clearInterval }) => {
   const { store, actions } = useContext(Context);
@@ -35,7 +36,7 @@ const Trades = ({ intervalId, clearInterval }) => {
   const handleAcceptedProposal = (proposal) => {
     console.log(proposal);
     actions.handleAcceptProposal(proposal.id);
-    setSelectedSender(proposal.sender_id);  // <-- Mudado para sender_id
+    setSelectedSender(proposal.sender_id);
     setShowDeal(true);
   };
 
@@ -45,56 +46,56 @@ const Trades = ({ intervalId, clearInterval }) => {
   return (
     <div>
       <h2>Trade Proposals</h2>
-      <h3>Proposals Sent:</h3>
+      <h3 className="sent-proposals">Proposals Sent:</h3>
       {sentTrades.map((proposal) => (
         <div key={proposal.id}>
           <p>
             You have offered "
             <span
-              style={{ cursor: "pointer", textDecoration: "underline" }}
+              className="underline-text"
               onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.sender_item_name}
             </span>
             " in exchange for "
             <span
-              style={{ cursor: "pointer", textDecoration: "underline" }}
+              className="underline-text"
               onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.receiver_item_name}
             </span>
             "
           </p>
-          <button onClick={() => handleOpenDetails(proposal)}>
+          <button className="button-details" onClick={() => handleOpenDetails(proposal)}>
             Check Details
           </button>
         </div>
       ))}
-      <h3>Proposals Received:</h3>
+      <h3 className="received-proposals">Proposals Received:</h3>
       {receivedTrades.map((proposal) => (
         <div key={proposal.id}>
           <p>
             Check the offer: "
             <span
-              style={{ cursor: "pointer", textDecoration: "underline" }}
+              className="underline-text"
               onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.sender_item_name}
             </span>
             " in exchange for your "
             <span
-              style={{ cursor: "pointer", textDecoration: "underline" }}
+              className="underline-text"
               onClick={() => handleOpenDetails(proposal)}
             >
               {proposal.receiver_item_name}
             </span>
             "
           </p>
-          <button onClick={() => handleOpenDetails(proposal)}>
+          <button className="button-details" onClick={() => handleOpenDetails(proposal)}>
             Check Details
           </button>
           {proposal.status === "Accepted" ? (
-            <button onClick={() => handleAcceptedProposal(proposal)}>
+            <button className="button-accept" onClick={() => handleAcceptedProposal(proposal)}>
               {proposal.status}
             </button>
           ) : (

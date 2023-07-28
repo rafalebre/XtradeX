@@ -1,0 +1,55 @@
+.sent-proposals {
+    color: #FF5722;
+  }
+  
+  .received-proposals {
+    color: #FF5722;
+  }
+  
+  .button-details {
+    background-color: #FF5722;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+  .button-details:hover {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #0066ff;
+  }
+  
+  .button-accept {
+    background-color: #FF5722;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 2px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+  .button-accept:hover {
+    background-color: orange; 
+    color: black; 
+    border: 2px solid green;
+  }
+  
+  .underline-text {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
