@@ -72,6 +72,11 @@ const MyInfo = () => {
     navigate("/profile");
   };
 
+
+  const handleDelete = () => {
+    actions.deleteUserInfo();
+    navigate("/login")};
+     
   const handleLocationChange = async (location) => {
     // Check if location is defined before accessing properties
     if (!location) {
@@ -227,6 +232,13 @@ const MyInfo = () => {
 
         <br />
         <button type="submit">Update Info</button>
+        <button
+          type="button"
+          onClick={handleDelete}
+          style={{backgroundColor: "red", borderRadius: "15px", color: "white", marginLeft: "10px"}}
+        >
+          Delete Account
+        </button>
       </form>
     </div>
   );

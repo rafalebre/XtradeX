@@ -78,6 +78,21 @@ def get_user_info():
         return jsonify({"msg": "User not found"}), 404
     return jsonify(user.to_dict()), 200
 
+@api.route('/user/me', methods=['DELETE'])
+@jwt_required()
+def delete_user_info():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"msg": "User deleted"}), 200
+    
+
 @api.route('/user/me', methods=['PUT'])
 @jwt_required()
 def update_user_info():

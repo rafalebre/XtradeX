@@ -286,6 +286,47 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      deleteUserInfo: async function (store) {
+        try {
+          const token = localStorage.getItem("token");
+          const headers = new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          });
+          const backendUrl = process.env.BACKEND_URL;
+          const apiUrl = `${backendUrl}/api/user/me`;
+      
+          const response = await fetch(apiUrl, {
+            method: "DELETE",
+            headers: headers,
+          });
+      
+          const textResponse = await response.text();
+      
+          try {
+            const data = JSON.parse(textResponse);
+            if (response.ok) {
+              console.log("User deleted successfully:", data);
+              // Atualiza a store após a exclusão do usuário
+              setStore({
+                user: null,
+                token: null,
+              });
+              // Limpa o token do localStorage
+              localStorage.removeItem("token");
+            } else {
+              console.log("Error deleting user:", data);
+            }
+          } catch (error) {
+            console.error("Error parsing JSON:", error);
+            console.log("Server response:", textResponse);
+          }
+        } catch (error) {
+          console.error("Error deleting user:", error);
+        }
+      },
+      
+
 
       deleteProduct: async function (store, productId) {
         try {
@@ -324,6 +365,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error deleting product:", error);
         }
       },
+
     deleteService: async function (store, serviceId) {
         try {
           const token = localStorage.getItem("token");
