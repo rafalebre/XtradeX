@@ -107,6 +107,12 @@ def update_user_info():
     if not data:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
+    # Verificar se o username já existe
+    if "username" in data:
+        existing_user = User.query.filter_by(username=data["username"]).first()
+        if existing_user and existing_user.email != user_email:
+            return jsonify({"msg": "Username already in use"}), 400
+
     for field in ["first_name", "last_name", "username"]:
         if field in data:
             setattr(user, field, data[field])
@@ -115,12 +121,13 @@ def update_user_info():
 
     optional_fields = ["gender", "birth_date", "phone", "location", "latitude", "longitude", "image_url"]
     for field in optional_fields:
-        if field in data:
+        if field in data and data[field] != '':
             setattr(user, field, data[field])
 
     db.session.commit()
 
     return jsonify({"msg": "User information updated successfully"}), 200
+
 
 
 @api.route('/protected', methods=['GET'])
