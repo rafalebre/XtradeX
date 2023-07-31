@@ -261,15 +261,13 @@ class Wishlist(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    description = db.Column(db.String, nullable=False)
-    importance = db.Column(db.Integer, nullable=False)
+    item = db.Column(db.String, nullable=False)
 
     def to_dict(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "description": self.description,
-            "importance": self.importance
+            "item": self.item,
         }
 
 
