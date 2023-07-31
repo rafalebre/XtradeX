@@ -63,37 +63,43 @@ const AddProduct = () => {
     try {
       const backendUrl = process.env.BACKEND_URL;
       const authToken = localStorage.getItem("token");
-
+  
       if (!authToken) {
         console.error("Authentication Token not found");
         return;
       }
-
+  
+      const requestBody = {
+        name,
+        description,
+        category: selectedCategory,
+        subcategory: selectedSubcategory,
+        condition,
+        estimated_value: estimatedValue,
+        currency,
+        location,
+        latitude,
+        longitude,
+      };
+  
+      // Adicione a imagem ao corpo do JSON apenas se tiver sido fornecida
+      if (image) {
+        requestBody.image_url = image;
+      }
+  
       const response = await fetch(`${backendUrl}/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
         },
-        body: JSON.stringify({
-          name,
-          description,
-          category: selectedCategory,
-          subcategory: selectedSubcategory,
-          condition,
-          estimated_value: estimatedValue,
-          currency,
-          location,
-          latitude,
-          longitude,
-          image_url: image,
-        }),
+        body: JSON.stringify(requestBody),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        window.confirm("Product successfully created!"); // Alerta personalizado para o usuário
+        window.confirm("Product successfully created!");
         setName("");
         setDescription("");
         setCondition("");
@@ -108,6 +114,7 @@ const AddProduct = () => {
       console.error("Error in the request:", error);
     }
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -116,7 +123,6 @@ const AddProduct = () => {
       !name ||
       !description ||
       !condition ||
-      !image ||
       !estimatedValue ||
       !currency ||
       !selectedCategory ||
