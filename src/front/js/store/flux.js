@@ -203,16 +203,24 @@ const getState = ({ getStore, getActions, setStore }) => {
       
           // Enviar uma solicitação PUT para atualizar as informações do usuário
           const response = await fetch(`${backendUrl}/api/user/me`, {
-              method: 'PUT',
-              headers: headers,
-              body: JSON.stringify(userInfo)
+            method: 'PUT',
+            headers: headers,
+            body: JSON.stringify(userInfo)
           });
-          const data = await response.json();
       
-          // Verifica se a solicitação foi bem-sucedida
+          // Se a resposta não for ok, lançamos um erro
           if (!response.ok) {
+            const data = await response.json();
+            
+            // Aqui verificamos a mensagem de erro retornada pela resposta
+            if (data.msg === 'Username already in use') {
+              throw new Error('This username is already in use, please choose another one');
+            } else {
               throw new Error('Network response was not ok');
+            }
           }
+      
+          const data = await response.json();
       
           // Aqui podemos mostrar uma mensagem de sucesso.
           console.log('User information updated successfully:', data);
@@ -221,11 +229,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({
             user: data,
           });
+
+          return true;
       
         } catch(error) {
-          console.error('There was a problem with the fetch operation:', error);
+      
+          // Aqui posso decidir como desejo manipular o erro de username já existente
+          if (error.message === 'This username is already in use, please choose another one') {
+            alert(error.message);
+          }
+          return false;
         }
       },
+      
       
 
       getCategories: async function () {

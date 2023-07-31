@@ -64,10 +64,12 @@ useEffect(() => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    actions.updateUserInfo(userInfo);
-    navigate("/profile");
+    const success = await actions.updateUserInfo(userInfo);
+    if (success) {
+      navigate("/profile");
+    }
   };
 
 
