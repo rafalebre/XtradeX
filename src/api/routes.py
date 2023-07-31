@@ -184,7 +184,7 @@ def create_product():
     if not data:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
-    required_fields = ["name", "description", "category", "condition", "currency", "image_url"]
+    required_fields = ["name", "description", "category", "condition", "currency" ]
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"Missing {field} parameter"}), 400
@@ -338,7 +338,7 @@ def create_service():
     if not data:
         return jsonify({"msg": "Missing JSON in request"}), 400
 
-    required_fields = ["name", "description", "category", "currency", "image_url"]
+    required_fields = ["name", "description", "category", "currency"]
     for field in required_fields:
         if field not in data:
             return jsonify({"msg": f"Missing {field} parameter"}), 400
