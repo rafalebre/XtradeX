@@ -17,8 +17,8 @@ const MyInfo = () => {
     birth_date: "",
     phone: "",
     location: "",
-    latitude: null, // added latitude state
-    longitude: null, // added longitude state
+    latitude: "", // added latitude state
+    longitude: "", // added longitude state
     business_phone: "", // adicionado para lidar com os trades apenas
     image_url: image,
   });
@@ -32,32 +32,30 @@ const MyInfo = () => {
 
   useEffect(() => {
     if (store.user) {
-      setUserInfo((prevUserInfo) => ({
-        ...prevUserInfo,
-        ...store.user,
-      }));
+        const updatedUserInfo = Object.keys(store.user).reduce((obj, key) => {
+            obj[key] = store.user[key] ?? userInfo[key];
+            return obj;
+        }, {});
 
-      // Set mapLocation if user location is defined
-      if (store.user.location) {
-        setMapLocation({
-          address: store.user.location,
-          lat: store.user.latitude,
-          lng: store.user.longitude,
-        });
-      }
+        setUserInfo(prevUserInfo => ({
+            ...prevUserInfo,
+            ...updatedUserInfo,
+        }));
     }
-  }, [store.user]);
+}, [store.user]);
 
-  useEffect(() => {
-    if (mapLocation) {
-      setUserInfo((prevUserInfo) => ({
-        ...prevUserInfo,
-        location: mapLocation.address,
-        latitude: mapLocation.lat,
-        longitude: mapLocation.lng,
-      }));
-    }
-  }, [mapLocation]);
+
+useEffect(() => {
+  if (mapLocation) {
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      location: mapLocation.address,
+      latitude: mapLocation.lat ?? "", // caso seja null ou undefined, será ""
+      longitude: mapLocation.lng ?? "", // caso seja null ou undefined, será ""
+    }));
+  }
+}, [mapLocation]);
+
 
   const handleChange = (e) => {
     setUserInfo({
@@ -193,13 +191,13 @@ const MyInfo = () => {
           Phone:
           <input
             type="tel"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            pattern="[\+\-\(\)\s\d]+"
             name="phone"
             value={userInfo.phone}
             onChange={handleChange}
             required
           />
-          <small>Format: 123-456-7890</small>
+          <small>Accepts numbers, + -, and ( )</small>
         </label>
         <br />
         <label>

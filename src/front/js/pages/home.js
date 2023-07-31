@@ -13,7 +13,10 @@ export const Home = () => {
     const [alertMessage, setAlertMessage] = useState("");
     const navigate = useNavigate();
 
-    const handleRegister = () => {
+    const handleRegister = (event) => {
+        // Prevenir a ação padrão do formulário
+        event.preventDefault();
+
         if (!validateEmail(email)) {
             setAlertMessage("Please insert a valid e-mail.");
             setShowAlert(true);
@@ -59,9 +62,11 @@ export const Home = () => {
                 <div className="col-6">
                     <div className="d-flex flex-column align-items-center justify-content-center">
                         <h1>REGISTER</h1>
-                        <input type="email" className="form-control mt-2" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                        <input type="password" className="form-control mt-2" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-                        <button className="btn btn-primary mt-2" onClick={handleRegister}>Submit</button>
+                        <form onSubmit={handleRegister}>
+                            <input type="email" className="form-control mt-2" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+                            <input type="password" className="form-control mt-2" placeholder="Password" onChange={e => setPassword(e.target.value)} />
+                            <button className="btn btn-primary mt-2" type="submit">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
