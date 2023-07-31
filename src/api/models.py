@@ -261,16 +261,17 @@ class Wishlist(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
-    service_id = db.Column(db.Integer, db.ForeignKey('service.id'))
+    description = db.Column(db.String, nullable=False)
+    importance = db.Column(db.Integer, nullable=False)
 
     def to_dict(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "product_id": self.product_id,
-            "service_id": self.service_id
+            "description": self.description,
+            "importance": self.importance
         }
+
 
 
 class Favorite(db.Model):
