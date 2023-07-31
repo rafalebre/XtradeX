@@ -198,6 +198,8 @@ def create_product():
     if not category or not subcategory:
         return jsonify({"msg": "Category or Subcategory not found"}), 404
 
+    estimated_value = float(data['estimated_value'].replace(',', '.')) if 'estimated_value' in data else None
+
     new_product = Product(
         user_id=user.id,
         name=data['name'],
@@ -206,7 +208,7 @@ def create_product():
         subcategory_id=subcategory.id,
         condition=data['condition'],
         currency=data['currency'],
-        estimated_value=data['estimated_value'],
+        estimated_value=estimated_value,
         location=data['location'],
         latitude=data.get('latitude'),
         longitude=data.get('longitude'),
@@ -352,6 +354,8 @@ def create_service():
     if not category or not subcategory:
         return jsonify({"msg": "Category or Subcategory not found"}), 404
 
+    estimated_value = float(data['estimated_value'].replace(',', '.')) if 'estimated_value' in data else None
+
     new_service = Service(
         user_id=user.id,
         name=data['name'],
@@ -359,7 +363,7 @@ def create_service():
         category_id=category.id,
         subcategory_id=subcategory.id,
         currency=data['currency'],
-        estimated_value=data['estimated_value'],
+        estimated_value=estimated_value,
         online=data.get('online', False),  # novo campo
         location=(data['location'] if not data.get('online', False) else "online"),  # modificação
         latitude=(data.get('latitude') if not data.get('online', False) else None),  # modificação
