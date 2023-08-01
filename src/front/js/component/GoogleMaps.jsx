@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect, useContext } from "react";
 import { GoogleMap, Autocomplete, useJsApiLoader, Marker } from "@react-google-maps/api";
 import { Context } from "../store/appContext";
+import "./GoogleMaps.css";
 
 
 const mapContainerStyle = {

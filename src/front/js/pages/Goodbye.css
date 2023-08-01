@@ -1,0 +1,36 @@
+.goodbye-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 56px); /* Subtrai a altura da navbar para garantir que o conteúdo esteja centralizado na tela */
+    background-color: #202020; /* Cor de fundo igual à cor de fundo da home */
+    color: white; /* Cor do texto */
+  }
+  
+  /* Estilize o título */
+  .goodbye-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilize o botão salmão */
+  .goodbye-button {
+    background-color: #f7bbc1;
+    color: #363636;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 20px;
+    transition-duration: 0.4s;
+  }
+  
+  /* Adicione uma animação de hover ao botão */
+  .goodbye-button:hover {
+    background-color: #363636;
+    color: #f7bbc1;
+  }
