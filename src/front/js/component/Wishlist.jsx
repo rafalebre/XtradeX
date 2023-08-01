@@ -38,12 +38,12 @@ function Wishlist() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${authToken}`
         },
-        body: JSON.stringify({ content: newItem })  // Change 'item' to 'content'
+        body: JSON.stringify({ item: newItem, priority: newPriority })
       });
 
       if (response.ok) {
         const data = await response.json();
-        setItems(prevItems => [...prevItems, { ...data, priority: newPriority }]);
+        setItems(prevItems => [...prevItems, { ...data }]);
         setNewItem('');
         setNewPriority(1);
       } else {
@@ -76,13 +76,21 @@ function Wishlist() {
 
   return (
     <div>
+      <h2>Add an item</h2>
       <input value={newItem} onChange={(e) => setNewItem(e.target.value)} />
-      <input type="number" min="1" max="5" value={newPriority} onChange={(e) => setNewPriority(e.target.value)} />
-      <button onClick={handleAddItem}>Add Item</button>
+      <select value={newPriority} onChange={(e) => setNewPriority(e.target.value)}>
+        <option value="1">Add a priority</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button onClick={handleAddItem}>Add to the list</button>
 
       {items.sort((a, b) => b.priority - a.priority).map(item => (
         <div key={item.id}>
-          <p>{item.content} (Priority: {item.priority})</p>
+          <p>{item.item} (Priority: {item.priority})</p>
           <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
         </div>
       ))}
