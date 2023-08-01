@@ -496,6 +496,27 @@ def search_items():
     # Return a JSON object with both, products and services
     return jsonify({"products": products_list, "services": services_list})
 
+@api.route('/services/online', methods=['GET'])
+def get_online_services():
+    category_id = request.args.get('category_id')
+    subcategory_id = request.args.get('subcategory_id')
+    searchTerm = request.args.get('search_term')
+
+    query = Service.query.filter_by(online=True)
+
+    if category_id:
+        query = query.filter_by(category_id=category_id)
+
+    if subcategory_id:
+        query = query.filter_by(subcategory_id=subcategory_id)
+
+    if searchTerm:
+        query = query.filter(Service.name.contains(searchTerm))
+
+    services = query.all()
+    return jsonify([service.to_dict() for service in services])
+
+
 
 @api.route('/user/items', methods=['GET'])
 @jwt_required()

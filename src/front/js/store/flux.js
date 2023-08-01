@@ -243,7 +243,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       
       
-
       getCategories: async function () {
         try {
           const response = await fetch(`${backendUrl}/api/product-categories`);
@@ -520,6 +519,48 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error fetching services:", error);
         }
     },
+
+    fetchOnlineServices: async function (categoryId, subcategoryId, searchTerm) {
+      try {
+        const backendUrl = process.env.BACKEND_URL;
+        let apiUrl = `${backendUrl}/api/services/online`;
+  
+        if (categoryId || subcategoryId || searchTerm) {
+          apiUrl += "?";
+          if (categoryId) {
+            apiUrl += `category_id=${categoryId}`;
+          }
+          if (subcategoryId) {
+            apiUrl += categoryId
+              ? `&subcategory_id=${subcategoryId}`
+              : `subcategory_id=${subcategoryId}`;
+          }
+  
+          if (searchTerm) {
+            apiUrl += categoryId || subcategoryId
+              ? `&search_term=${searchTerm}`
+              : `search_term=${searchTerm}`;
+          }
+        }
+  
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+  
+        if (response.ok) {
+          const store = getStore();
+          const loggedInUserId = parseInt(store.loggedInUserId, 10);
+          const filteredServices = data.filter(
+            (service) => parseInt(service.user_id, 10) !== loggedInUserId
+          );
+          setStore({ onlineServices: filteredServices });
+        } else {
+          console.error("Failed to fetch online services:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching online services:", error);
+      }
+  },
+  
     
 
     fetchItemsByName: async function (searchTerm, location, bounds) {
