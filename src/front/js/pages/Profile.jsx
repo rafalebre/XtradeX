@@ -7,6 +7,7 @@ import Search from "../component/Search.jsx";
 import UserItems from "../component/UserItems.jsx";
 import Trades from "../component/Trades.jsx";
 import Wishlist from "../component/Wishlist.jsx";
+import Favorites from "../component/Favorites.jsx";
 
 const Profile = () => {
   
@@ -58,6 +59,7 @@ const Profile = () => {
         {selectedMenu === "search" && <Search />}
         {selectedMenu === "userItems" && <UserItems />}
         {selectedMenu === "trades" && <Trades intervalId={intervalId} clearInterval={clearInterval}/>}
+        {selectedMenu === "favorites" && <Favorites />}
         {selectedMenu === "wishlist" && <Wishlist />}
       </div>
     </div>

@@ -22,6 +22,7 @@ class User(db.Model):
     longitude = db.Column(db.Float)
     image_url = db.Column(db.String, nullable=True)
     last_checked = db.Column(db.DateTime, default=datetime.utcnow)
+    favorites = db.relationship('Favorite', backref='user', lazy=True)
 
 
     def to_dict(self):
@@ -37,7 +38,8 @@ class User(db.Model):
             "location": self.location,
             "latitude": self.latitude,
             "longitude": self.longitude,
-            "image_url": self.image_url
+            "image_url": self.image_url,
+            "favorites": [favorite.to_dict() for favorite in self.favorites]
         }
 
     def set_password(self, password):
