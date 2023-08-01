@@ -1,15 +1,54 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "./Profile.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+
 
 const Sidebar = ({ onMenuSelect, newTradesCount }) => {
   const { store } = useContext(Context);
+  const [profilePic, setProfilePic] = useState(() => localStorage.getItem("profilePic") || null);
+
+  useEffect(() => {
+    // Carregar a foto de perfil do localStorage quando o componente for montado
+    const storedProfilePic = localStorage.getItem("profilePic");
+    if (storedProfilePic) {
+      setProfilePic(storedProfilePic);
+    }
+  }, []);
+
+  const handleProfilePicChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataURL = reader.result;
+      setProfilePic(dataURL);
+      // Armazenar a foto de perfil no localStorage
+      localStorage.setItem("profilePic", dataURL);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="sidebar">
       <div className="avatar-container">
-        {store.user && store.user.image_url && (
-          <img src={store.user.image_url} alt="User profile" className="avatar-image"/>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleProfilePicChange}
+        />
+        {profilePic ? (
+          <img src={profilePic} alt="User profile" className="avatar-image" />
+        ) : (
+          store.user && store.user.image_url ? (
+            <img src={store.user.image_url} alt="User profile" className="avatar-image" />
+          ) : (
+            <div className="no-profile-pic">
+              <FontAwesomeIcon icon={faCamera} size="lg" />
+            </div>
+          )
         )}
       </div>
       <ul className="sidebar-menu">

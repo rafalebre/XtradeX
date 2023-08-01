@@ -1,6 +1,19 @@
-/* Profile.css */
+
 .profile-container {
   display: flex;
+  height: calc(100vh - 56px); 
+  margin-top: 56px; 
+}
+
+.sidebar, .content-area {
+  overflow-y: auto; 
+}
+
+.avatar-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .sidebar {
@@ -20,6 +33,7 @@
   flex-direction: column;
 }
 
+/* Estilo para a foto de perfil no componente Profile */
 .avatar-container {
   width: 120px; /* Aumentar o tamanho */
   height: 120px; /* Aumentar o tamanho */
@@ -29,6 +43,8 @@
   display: flex;
   justify-content: center; /* Centralizar o conteúdo horizontalmente */
   border: 2px solid #FF5722;
+  background-size: cover; /* Adicionar esta linha para ajustar o tamanho da imagem */
+  background-position: center; /* Adicionar esta linha para centralizar a imagem */
 }
 
 .sidebar-menu {
@@ -51,6 +67,23 @@
 .initial-message-container h2 {
   color: #6c757d;
 }
+
+.no-profile-pic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #6c757d;
+  margin: 0 auto 20px;
+  border: 2px solid #FF5722;
+}
+
+.no-profile-pic svg {
+  color: #FF5722;
+}
+
 
 .arrow-right {
   margin: 50px auto;
