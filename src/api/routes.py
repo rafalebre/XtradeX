@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Product, Service, Message, Trade, ProductCategory, ProductSubcategory, ServiceCategory, ServiceSubcategory, Wishlist
+from api.models import db, User, Product, Service, Message, Trade, ProductCategory, ProductSubcategory, ServiceCategory, ServiceSubcategory, Wishlist, Favorite
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity

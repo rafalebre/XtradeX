@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       received_trades: [],
       new_sent_trades: [],
       new_received_trades: [],
+      addFavorite: [],
       demo: [
         {
           title: "FIRST",
@@ -741,6 +742,39 @@ const getState = ({ getStore, getActions, setStore }) => {
           new_received_trades: [],
         });
       },
+
+      addFavorite: async (item) => {
+        try {
+            const backendUrl = process.env.BACKEND_URL;
+            const authToken = localStorage.getItem("token");
+    
+            if (!authToken) {
+                throw new Error("Authentication Token not found");
+            }
+    
+            const requestBody = item.service_id ? {service_id: item.id} : {product_id: item.id};
+    
+            const response = await fetch(`${backendUrl}/api/users/favorites`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${authToken}`,
+                },
+                body: JSON.stringify(requestBody),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                console.log("Item successfully added to favorites!");
+            } else {
+                throw new Error("Failed adding item to favorites:", data);
+            }
+        } catch (error) {
+            console.error("Error in the request:", error);
+        }
+    },
+    
 
       handleAcceptProposal: async function (proposalId) {
         try {
