@@ -1,0 +1,41 @@
+.trade-proposal-modal .modal-content {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+  }
+  
+  .trade-proposal-modal .modal-header,
+  .trade-proposal-modal .modal-footer {
+    border: none;
+  }
+  
+  .trade-proposal-modal .form-label {
+    color: #FF6347;
+  }
+  
+  .trade-proposal-modal .form-control {
+    border: 1px solid #FF6347;
+    border-radius: 15px;
+  }
+  
+  .trade-proposal-modal .login-submit {
+    background-color: #FF6347;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin: 10px 2px;
+    display: inline-block;
+    transition-duration: 0.4s;
+  }
+  
+  .trade-proposal-modal .login-submit:hover {
+    background-color: #FF4500;
+  }
+  
+  .trade-proposal-modal .modal-header .close {
+    color: #FF6347;
+  }
+  

@@ -1,0 +1,25 @@
+.Deal .modal-content {
+    background-color: #e0e0e0; /* Um cinza um pouco mais escuro */
+}
+  
+.Deal .modal-header, .Deal .modal-footer {
+    border: none;
+}
+  
+.Deal .modal-body p {
+    color: #FF6347; /* Um laranja similar ao da home */
+}
+  
+.Deal .btn {
+    background-color: #FF6347;
+    border: none;
+    border-radius: 10px; /* Adicione esta linha, altere o valor conforme necessário */
+}
+
+.Deal .btn:hover {
+    background-color: #FF4500; /* Um laranja um pouco mais escuro no hover */
+}
+  
+.Deal .modal-header .close {
+    color: #FF6347;
+}

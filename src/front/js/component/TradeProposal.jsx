@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Context } from "../store/appContext";
+import "./TradeProposal.css"; // Importando os estilos
 
 const TradeProposal = ({ show, handleClose, itemToTrade, itemType }) => {
   const { store, actions } = useContext(Context);
@@ -24,7 +25,7 @@ const TradeProposal = ({ show, handleClose, itemToTrade, itemType }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} className="trade-proposal-modal">
       <Modal.Header closeButton>
         <Modal.Title>Trade Proposal</Modal.Title>
       </Modal.Header>
@@ -37,6 +38,7 @@ const TradeProposal = ({ show, handleClose, itemToTrade, itemType }) => {
               value={selectedItemType}
               onChange={(e) => setSelectedItemType(e.target.value)}
               required
+              className="rounded-input orange-border"
             >
               <option value="">Select type</option>
               <option value="product">Product</option>
@@ -51,6 +53,7 @@ const TradeProposal = ({ show, handleClose, itemToTrade, itemType }) => {
                 value={selectedItemId}
                 onChange={(e) => setSelectedItemId(e.target.value)}
                 required
+                className="rounded-input orange-border"
               >
                 <option value="">Select a product</option>
                 {store.userProducts &&
@@ -70,6 +73,7 @@ const TradeProposal = ({ show, handleClose, itemToTrade, itemType }) => {
                 value={selectedItemId}
                 onChange={(e) => setSelectedItemId(e.target.value)}
                 required
+                className="rounded-input orange-border"
               >
                 <option value="">Select a service</option>
                 {store.userServices &&
@@ -89,6 +93,7 @@ const TradeProposal = ({ show, handleClose, itemToTrade, itemType }) => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
+              className="rounded-input orange-border"
             />
           </Form.Group>
         </Modal.Body>

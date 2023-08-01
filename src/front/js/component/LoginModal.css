@@ -12,6 +12,7 @@
   
   .loginModal .form-control {
     border: 1px solid #FF6347;
+    border-radius: 15px;
   }
   
   .loginModal .login-submit {
