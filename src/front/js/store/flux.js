@@ -113,6 +113,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             body: JSON.stringify({ email, password }),
           });
 
+          if (response.status === 401) {
+            getActions().logoutUser();
+            navigate("/login");
+            return;
+        }
+
           if (response.ok) {
             const data = await response.json();
             // Atualizando o estado global com as informações do usuário logado

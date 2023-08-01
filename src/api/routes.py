@@ -7,6 +7,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from werkzeug.security import check_password_hash
 from datetime import datetime
+from datetime import timedelta
 from dateutil import parser
 from requests import Request, Session
 
@@ -32,7 +33,7 @@ def register():
     db.session.commit()
 
     # Cria um token de acesso para o novo usuário logo após seu registro
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=email, expires_delta=timedelta(minutes=60))
 
     # Criar um dicionário para representar o novo usuário
     user_dict = new_user.to_dict()
@@ -55,7 +56,7 @@ def login():
 
     # removendo a senha do usuário
     user_dict = user.to_dict()
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=email, expires_delta=timedelta(minutes=60))
     return jsonify(access_token=access_token, user=user_dict)
 
 @api.route('/profile', methods=['GET'])
