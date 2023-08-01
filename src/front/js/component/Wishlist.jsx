@@ -43,7 +43,8 @@ function Wishlist() {
 
       if (response.ok) {
         const data = await response.json();
-        setItems(prevItems => [...prevItems, { ...data }]);
+        const newItem = { ...data, priority: parseInt(newPriority, 10) }; // Convertendo para inteiro
+        setItems(prevItems => [...prevItems, newItem]);
         setNewItem('');
         setNewPriority(1);
       } else {
