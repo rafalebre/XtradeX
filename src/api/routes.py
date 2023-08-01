@@ -298,6 +298,7 @@ def get_product_subcategories_by_category(category_id):
 def get_services():
     category_id = request.args.get('category_id')
     subcategory_id = request.args.get('subcategory_id')
+    online = request.args.get('online')
 
     top_left_lat = request.args.get('top_left_lat')
     top_left_long = request.args.get('top_left_long')
@@ -311,6 +312,10 @@ def get_services():
         bottom_right_lat = float(bottom_right_lat)
         bottom_right_long = float(bottom_right_long)
 
+    # convert to boolean
+    if online is not None:
+        online = online.lower() in ['true', '1']
+
     query = Service.query
 
     if category_id:
@@ -319,18 +324,21 @@ def get_services():
     if subcategory_id:
         query = query.filter_by(subcategory_id=subcategory_id)
 
+    if online is not None:
+        query = query.filter_by(online=online)
+
     # filter the services based on location, excluding online services
-    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long:
+    if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long and not online:
         query = query.filter(
             Service.latitude <= top_left_lat,
             Service.latitude >= bottom_right_lat,
             Service.longitude >= top_left_long,
             Service.longitude <= bottom_right_long,
-            Service.online == False   # this is just a placeholder condition, replace with your actual condition
         )
 
     services = query.all()
     return jsonify([service.to_dict() for service in services])
+
 
 
 

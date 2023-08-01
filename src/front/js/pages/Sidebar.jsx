@@ -55,6 +55,7 @@ const Sidebar = ({ onMenuSelect, newTradesCount }) => {
         <li onClick={() => onMenuSelect("addProduct")}>Add a product</li>
         <li onClick={() => onMenuSelect("addService")}>Add a service</li>
         <li onClick={() => onMenuSelect("search")}>Search</li>
+        <li onClick={() => onMenuSelect("onlineSearch")}>Online Services</li>
         <li onClick={() => onMenuSelect("userItems")}>My Products / Services</li>
         <li onClick={() => onMenuSelect("trades")}>Trades</li>
         {newTradesCount > 0 && (

@@ -22,6 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       new_received_trades: [],
       addFavorite: [],
       favorites: [],
+      onlineServices: [],
       demo: [
         {
           title: "FIRST",
@@ -621,46 +622,42 @@ getFavoriteById: async (favoriteId) => {
         }
     },
 
-    fetchOnlineServices: async function (categoryId, subcategoryId, searchTerm) {
+    fetchOnlineServices: async function (categoryId, subcategoryId) {
       try {
-        const backendUrl = process.env.BACKEND_URL;
-        let apiUrl = `${backendUrl}/api/services/online`;
+          const backendUrl = process.env.BACKEND_URL;
+          let apiUrl = `${backendUrl}/api/services?online=true`;
   
-        if (categoryId || subcategoryId || searchTerm) {
-          apiUrl += "?";
-          if (categoryId) {
-            apiUrl += `category_id=${categoryId}`;
-          }
-          if (subcategoryId) {
-            apiUrl += categoryId
-              ? `&subcategory_id=${subcategoryId}`
-              : `subcategory_id=${subcategoryId}`;
+          if (categoryId || subcategoryId) {
+              if (categoryId) {
+                  apiUrl += `&category_id=${categoryId}`;
+              }
+              if (subcategoryId) {
+                  apiUrl += `&subcategory_id=${subcategoryId}`;
+              }
           }
   
-          if (searchTerm) {
-            apiUrl += categoryId || subcategoryId
-              ? `&search_term=${searchTerm}`
-              : `search_term=${searchTerm}`;
+          console.log("API URL:", apiUrl); 
+  
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+  
+          console.log(data); // Imprime os dados retornados pela API
+  
+          if (response.ok) {
+              const store = getStore();
+              const loggedInUserId = parseInt(store.loggedInUserId, 10);
+              const filteredServices = data.filter(
+                  (service) => parseInt(service.user_id, 10) !== loggedInUserId
+              );
+              setStore({ services: filteredServices });
+          } else {
+              console.error("Failed to fetch services:", data);
           }
-        }
-  
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-  
-        if (response.ok) {
-          const store = getStore();
-          const loggedInUserId = parseInt(store.loggedInUserId, 10);
-          const filteredServices = data.filter(
-            (service) => parseInt(service.user_id, 10) !== loggedInUserId
-          );
-          setStore({ onlineServices: filteredServices });
-        } else {
-          console.error("Failed to fetch online services:", data);
-        }
       } catch (error) {
-        console.error("Error fetching online services:", error);
+          console.error("Error fetching services:", error);
       }
   },
+  
   
     
 

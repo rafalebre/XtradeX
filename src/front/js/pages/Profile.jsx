@@ -8,6 +8,7 @@ import UserItems from "../component/UserItems.jsx";
 import Trades from "../component/Trades.jsx";
 import Wishlist from "../component/Wishlist.jsx";
 import Favorites from "../component/Favorites.jsx";
+import OnlineServicesSearch from "../component/OnlineServicesSearch.jsx";
 
 const Profile = () => {
   
@@ -57,6 +58,7 @@ const Profile = () => {
         {/* Aqui iremos adicionando condições adicionais para outras opções de menu */}
         {selectedMenu === "addService" && <AddService />}
         {selectedMenu === "search" && <Search />}
+        {selectedMenu === "onlineSearch" && <OnlineServicesSearch />}
         {selectedMenu === "userItems" && <UserItems />}
         {selectedMenu === "trades" && <Trades intervalId={intervalId} clearInterval={clearInterval}/>}
         {selectedMenu === "favorites" && <Favorites />}
