@@ -33,11 +33,36 @@ const Trades = ({ intervalId, clearInterval }) => {
     setShowDetails(false);
   };
 
-  const handleAcceptedProposal = (proposal) => {
+  const handleAcceptedProposal = async (proposal) => {
     console.log(proposal);
     actions.handleAcceptProposal(proposal.id);
-    setSelectedSender(proposal.sender_id);
-    setShowDeal(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      const headers = new Headers({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      });
+      const backendUrl = process.env.BACKEND_URL;
+      const apiUrl = `${backendUrl}/api/trades/${proposal.id}`;
+
+      const response = await fetch(apiUrl, {
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify({ status: 'Accepted' }) 
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSelectedSender(data.sender);
+        setShowDeal(true);
+      } else {
+        console.log("Error fetching sender details:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching sender details:", error);
+    }
   };
 
   const sentTrades = store.sent_trades || [];

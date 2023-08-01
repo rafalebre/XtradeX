@@ -868,8 +868,7 @@ getFavoriteById: async (favoriteId) => {
         console.error("Error in the request:", error);
     }
 },
-
-    
+ 
 
       handleAcceptProposal: async function (proposalId) {
         try {
@@ -907,8 +906,7 @@ getFavoriteById: async (favoriteId) => {
             });
           }
       
-          // Prepara para abrir os detalhes do usuário
-          actions.setTradePartnerData(data.sender.email, data.sender.first_name, data.sender.phone);
+         
         } catch (error) {
           // Lógica de tratamento para erros
           console.error(error);
