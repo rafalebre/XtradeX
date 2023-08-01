@@ -6,6 +6,7 @@ import AddService from "../component/AddService.jsx";
 import Search from "../component/Search.jsx";
 import UserItems from "../component/UserItems.jsx";
 import Trades from "../component/Trades.jsx";
+import Wishlist from "../component/Wishlist.jsx";
 
 const Profile = () => {
   
@@ -57,6 +58,7 @@ const Profile = () => {
         {selectedMenu === "search" && <Search />}
         {selectedMenu === "userItems" && <UserItems />}
         {selectedMenu === "trades" && <Trades intervalId={intervalId} clearInterval={clearInterval}/>}
+        {selectedMenu === "wishlist" && <Wishlist />}
       </div>
     </div>
   );
