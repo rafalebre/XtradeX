@@ -797,3 +797,39 @@ def get_favorites():
     return {"favorites": [favorite.to_dict() for favorite in favorites]}, 200
 
 
+@api.route('/api/users/favorites/<int:favorite_id>', methods=['DELETE'])
+@jwt_required()
+def remove_favorite(favorite_id):
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    if not user:
+        return {"error": "User not found"}, 404
+
+    favorite = Favorite.query.filter_by(id=favorite_id, user_id=user.id).first()
+
+    if not favorite:
+        return {"error": "Favorite not found"}, 404
+
+    db.session.delete(favorite)
+    db.session.commit()
+
+    return {"message": "Favorite removed successfully"}, 200
+
+@api.route('/users/favorites/<int:favorite_id>', methods=['GET'])
+@jwt_required()
+def get_favorite_by_id(favorite_id):
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(email=current_user).first()
+
+    if not user:
+        return {"error": "User not found"}, 404
+
+    favorite = Favorite.query.filter_by(id=favorite_id, user_id=user.id).first()
+
+    if not favorite:
+        return {"error": "Favorite not found"}, 404
+
+    return {"favorite": favorite.to_dict()}, 200
+
+

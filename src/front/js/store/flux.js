@@ -21,6 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       new_sent_trades: [],
       new_received_trades: [],
       addFavorite: [],
+      favorites: [],
       demo: [
         {
           title: "FIRST",
@@ -198,6 +199,99 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       
+      getFavorites: async () => {
+        try {
+          const backendUrl = process.env.BACKEND_URL;
+          const authToken = localStorage.getItem("token");
+
+          if (!authToken) {
+            throw new Error("Authentication Token not found");
+          }
+
+          const response = await fetch(`${backendUrl}/api/users/favorites`, {
+            method: "GET", // Método GET para obter a lista de favoritos
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Atualiza a lista de favoritos no estado com os dados obtidos do backend
+            setStore({ favorites: data.favorites });
+          } else {
+            throw new Error(`Failed to fetch favorites: ${data.error}`);
+          }
+        } catch (error) {
+          console.error("Error in the request:", error);
+        }
+      },
+
+      removeFavorite: async (favoriteId) => {
+        try {
+          const backendUrl = process.env.BACKEND_URL;
+          const authToken = localStorage.getItem("token");
+
+          if (!authToken) {
+            throw new Error("Authentication Token not found");
+          }
+
+          const response = await fetch(`${backendUrl}/api/users/favorites/${favoriteId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+          });
+
+          if (response.ok) {
+            // Remove o favorito da lista de favoritos no estado
+            const store = getStore();
+            const updatedFavorites = store.favorites.filter((fav) => fav.id !== favoriteId);
+            setStore({ favorites: updatedFavorites });
+          } else {
+            throw new Error("Failed to remove favorite");
+          }
+        } catch (error) {
+          console.error("Error in the request:", error);
+          throw error;
+        }
+      },
+
+      // Ação para obter um favorito específico por ID
+getFavoriteById: async (favoriteId) => {
+  try {
+    const backendUrl = process.env.BACKEND_URL;
+    const authToken = localStorage.getItem("token");
+
+    if (!authToken) {
+      throw new Error("Authentication Token not found");
+    }
+
+    const response = await fetch(`${backendUrl}/api/users/favorites/${favoriteId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      return data.favorite; // Return the specific favorite object
+    } else {
+      throw new Error(`Failed to fetch favorite: ${data.error}`);
+    }
+  } catch (error) {
+    console.error("Error in the request:", error);
+    throw error;
+  }
+},
+      
+
       
       updateUserInfo: async function (userInfo) {
         try {
