@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../store/appContext';
 import "./Search.css";
+import TradeProposal from './TradeProposal.jsx';
 
 const OnlineServicesSearch = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -8,10 +9,17 @@ const OnlineServicesSearch = () => {
   const [specificSearch, setSpecificSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const { store, actions } = useContext(Context);
+  const [showTradeProposalModal, setShowTradeProposalModal] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
 
   useEffect(() => {
     actions.getServiceCategories();
   }, []);
+
+  const handleProposeDeal = (service) => {
+    setSelectedService(service);
+    setShowTradeProposalModal(true);
+  };
 
   const handleCategoryChange = (event) => {
     const categoryId = event.target.value;
@@ -64,6 +72,8 @@ const OnlineServicesSearch = () => {
             <div key={index}>
               <h3>{service.name}</h3>
               <p>{service.description}</p>
+              <p>{service.currency} {service.estimated_value}</p>
+              <button onClick={() => handleProposeDeal(service)}>Propose a Deal</button> 
             </div>
           ))}
         </div>
@@ -94,9 +104,19 @@ const OnlineServicesSearch = () => {
             <div key={index}>
               <h3>{service.name}</h3>
               <p>{service.description}</p>
+              <p>{service.currency} {service.estimated_value}</p>
+              <button onClick={() => handleProposeDeal(service)}>Propose a Deal</button> 
             </div>
           ))}
         </form>
+      )}
+      {showTradeProposalModal && (
+        <TradeProposal
+          show={showTradeProposalModal}
+          handleClose={() => setShowTradeProposalModal(false)}
+          itemToTrade={selectedService}
+          itemType="service"
+        />
       )}
     </div>
   );
