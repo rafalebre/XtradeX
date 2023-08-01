@@ -1,11 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import "./ItemDetails.css";
 import CurrencyConverterModal from "./CurrencyConverterModal.jsx";
-import { Context } from "../store/appContext";
 
 const ItemDetails = ({ item, onClose }) => {
   const [showCurrencyModal, setShowCurrencyModal] = useState(false);
-  const { actions } = useContext(Context);
 
   if (!item) {
     return null;
@@ -55,8 +53,6 @@ const ItemDetails = ({ item, onClose }) => {
 
       <button onClick={onClose}>Close</button>
       <button onClick={() => setShowCurrencyModal(true)}>Convert Currency</button>
-      <button onClick={() => actions.addFavorite(item)}>Add to Favorites</button>
-
 
       {showCurrencyModal && (
         <CurrencyConverterModal

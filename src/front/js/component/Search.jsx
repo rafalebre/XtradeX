@@ -123,7 +123,9 @@ const Search = () => {
     setSelectedSubcategory("");
   };
 
-  
+  const handleAddToFavorites = (item) => {
+    actions.addFavorite(item);
+  };
 
   const filteredSubcategories = selectedCategory
     ? (searchType === "products"
