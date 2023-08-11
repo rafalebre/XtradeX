@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  padding-top: 150px; /* para garantir que o conteúdo não fique escondido pela navbar */
+  padding-top: 150px;
 }
 
 .button-container {
@@ -38,18 +38,22 @@
 .item-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   gap: 10px;
 }
 
 .item-card {
   display: flex;
   flex-direction: column;
-  width: 20%; /* Ajustado para um tamanho mediano */
+  width: 300px;  /* Largura padrão */
+  max-width: 350px;  /* Largura máxima */
+  min-width: 200px;  /* Largura mínima */
   background-color: #F0F0F0;
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+  word-wrap: break-word;  /* Isso irá quebrar palavras longas */
+  box-sizing: border-box; 
 }
 
 .dropdown {
@@ -78,5 +82,3 @@
   justify-content: center;
   gap: 10px;
 }
-
-
