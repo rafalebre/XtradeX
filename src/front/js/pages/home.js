@@ -50,7 +50,7 @@ export const Home = () => {
             )}
 
             <div className="d-flex justify-content-center"> {/* Adicionando a imagem que você fez no topo da página */}
-              <img src={homehowto} alt="Your Custom Image Description" className="logo"/>  
+              <img src={homehowto} alt="Your Custom Image Description" className="homehowto"/>  
             </div>
 
             <div className="d-flex justify-content-center">
