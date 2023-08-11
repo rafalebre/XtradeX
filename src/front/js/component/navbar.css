@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: #202020;
+  background-color: #e8e4e4;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   z-index: 100;
 }
@@ -39,12 +39,12 @@
 }
 
 .logout-button {
-  background-color: #f7bbc1;
+  background-color: #fa7d6a;
   color: #363636;
 }
 
 .myinfo-button {
-  background-color: #f7bbc1;
+  background-color: #fa7d6a;
   color: #363636;
   margin-right: 10px; /* Margem adicionada aqui */
 }
