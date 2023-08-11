@@ -7,6 +7,13 @@
     padding-right: 15%;
 }
 
+.homehowto {
+    max-width: 80%; /* Ajusta a largura máxima da imagem para 80% da largura do container */
+    height: auto; /* Mantém a proporção da imagem */
+    display: block; /* Faz a imagem ser exibida como bloco */
+    margin: 0 auto; /* Centraliza a imagem */
+}
+
 .home-container h1 {
     text-align: center;
     padding: 40px 0;

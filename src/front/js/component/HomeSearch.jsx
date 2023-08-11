@@ -116,11 +116,8 @@ const Search = () => {
 
     return (
       <div>
+        {/* Botões de busca movidos acima do mapa */}
         <div>
-          <GoogleMaps 
-            onLocationChange={handleLocationChange} 
-            markers={store.searchedProducts.concat(store.searchedServices)}
-          />
           <button className="search-button2" onClick={() => handleSearchTypeChange("products")}>
             Search Products
           </button>
@@ -131,7 +128,36 @@ const Search = () => {
             Specific Item Search
           </button>
         </div>
-  
+
+        {/* Seção de seleção de categoria e subcategoria */}
+        {searchType ? (
+          <form onSubmit={handleSearch}>
+            <select name="category_id" className="dropdown" onChange={handleCategoryChange}>
+              <option value="">Select Category</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+
+            <select name="subcategory_id" className="dropdown" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
+              <option value="">Select Subcategory</option>
+              {filteredSubcategories.map((subcategory) => (
+                <option key={subcategory.id} value={subcategory.id}>
+                  {subcategory.name}
+                </option>
+              ))}
+            </select>
+            <button type="submit" className="submit-button2">Search</button>
+          </form>
+        ) : null}
+
+        <GoogleMaps 
+            onLocationChange={handleLocationChange} 
+            markers={store.searchedProducts.concat(store.searchedServices)}
+        />
+
         {specificSearch ? (
           <div>
             <input
@@ -148,37 +174,13 @@ const Search = () => {
               {renderItems(store.searchedServices, false)}
             </div>
           </div>
-        ) : searchType ? (
-          <form onSubmit={handleSearch}>
-            <select name="category_id" className="dropdown" onChange={handleCategoryChange}>
-              <option value="">Select Category</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-  
-            <select name="subcategory_id" className="dropdown" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
-              <option value="">Select Subcategory</option>
-              {filteredSubcategories.map((subcategory) => (
-                <option key={subcategory.id} value={subcategory.id}>
-                  {subcategory.name}
-                </option>
-              ))}
-            </select>
-            <button type="submit" className="submit-button2">Search</button>
-  
-          </form>
-        ) : null}
-  
-        {!specificSearch && (
+        ) : (
           <div className="item-list">
             {searchType === "products" && renderItems(store.products, true)}
             {searchType === "services" && renderItems(store.services, false)}
           </div>
         )}
-        {/* Aqui é onde colocamos o trecho para renderizar o modal */}
+
         {showDetails && selectedItem && selectedItemType && (
           <ItemDetails
             item={selectedItem}
@@ -186,9 +188,8 @@ const Search = () => {
             onClose={handleCloseDetails}
           />
         )}
-        
       </div>
     );
-  };
-  
-  export default Search;
+};
+
+export default Search;
