@@ -1,0 +1,30 @@
+
+.registerModal .modal-content {
+    background-color: #f0f0f0; /* Um cinza mais claro */
+}
+
+.registerModal .modal-header, .registerModal .modal-footer {
+    border: none;
+}
+
+.registerModal .form-label {
+    color: #FF6347; /* Um laranja similar ao da home */
+}
+
+.registerModal .form-control {
+    border: 1px solid #FF6347;
+    border-radius: 15px;
+}
+
+.registerModal .register-submit {
+    background-color: #FF6347;
+    border: none;
+}
+
+.registerModal .register-submit:hover {
+    background-color: #FF4500; /* Um laranja um pouco mais escuro no hover */
+}
+
+.registerModal .modal-header .close {
+    color: #FF6347;
+}
