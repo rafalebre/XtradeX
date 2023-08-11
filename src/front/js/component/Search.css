@@ -1,75 +1,55 @@
-.search-button {
-    background-color: #fa7d6a;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
-  }
-  
-  .item-card {
-    display: flex;
-    flex-direction: column;
-    width: 45%;
-    margin: 10px;
-    background-color: #F0F0F0;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .item-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .trade-button, .detail-button {
-    background-color: #fa7d6a;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-  
-  .orange-button {
-    background-color: #fa7d6a;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-  
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
 
-  .submit-button {
-    background-color: #fa7d6a; 
-    color: white;
-    padding: 10px 20px; 
-    border: none;
-    border-radius: 12px; 
-    cursor: pointer;
-    font-size: 16px;
-    text-decoration: none;
-    text-align: center;
-    margin: 10px 2px;
-    display: inline-block;
-    transition-duration: 0.4s;
+.button-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px; 
+  margin-bottom: 20px;
+}
+
+.search-button, .submit-button {
+  background-color: #fa7d6a;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.item-card {
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+  flex: 1 1 30%;
+  margin: 10px;
+  background-color: #F0F0F0;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .dropdown {
@@ -90,4 +70,23 @@
 
 .dropdown option {
   padding: 10px;
+}
+
+.category-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .item-card {
+      flex: 1 1 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .item-card {
+      flex: 1 1 100%;
+  }
 }

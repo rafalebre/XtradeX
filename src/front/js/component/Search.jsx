@@ -146,70 +146,49 @@ const Search = () => {
     
 
     return (
-      <div>
-        <div>
-          <GoogleMaps 
-            onLocationChange={handleLocationChange} 
-            markers={store.searchedProducts.concat(store.searchedServices)}
-          />
-          <button className="search-button" onClick={() => handleSearchTypeChange("products")}>
-            Search Products
-          </button>
-          <button className="search-button" onClick={() => handleSearchTypeChange("services")}>
-            Search Services
-          </button>
-          <button className="search-button" onClick={handleSpecificSearchToggle}>
-            Specific Item Search
-          </button>
+      <div className="search-container">
+        <div className="button-container">
+          <button className="search-button" onClick={() => handleSearchTypeChange("products")}>Search Products</button>
+          <button className="search-button" onClick={() => handleSearchTypeChange("services")}>Search Services</button>
+          <button className="search-button" onClick={handleSpecificSearchToggle}>Specific Item Search</button>
         </div>
-  
+      
+        <GoogleMaps onLocationChange={handleLocationChange} markers={store.searchedProducts.concat(store.searchedServices)} />
+        
         {specificSearch ? (
-          <div>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Enter item name..."
-            />
-            <button onClick={handleSearch} className="search-button">
-              Search
-            </button>
-            <div className="container">
+          <div className="input-container">
+            <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Enter item name..." />
+            <button onClick={handleSearch} className="search-button">Search</button>
+            <div className="item-list">
               {renderItems(store.searchedProducts, true)}
               {renderItems(store.searchedServices, false)}
             </div>
           </div>
         ) : searchType ? (
-          <form onSubmit={handleSearch}>
+          <form onSubmit={handleSearch} className="category-form">
             <select name="category_id" className="dropdown" onChange={handleCategoryChange}>
               <option value="">Select Category</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
+                <option key={category.id} value={category.id}>{category.name}</option>
               ))}
             </select>
-  
             <select name="subcategory_id" className="dropdown" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
               <option value="">Select Subcategory</option>
               {filteredSubcategories.map((subcategory) => (
-                <option key={subcategory.id} value={subcategory.id}>
-                  {subcategory.name}
-                </option>
+                <option key={subcategory.id} value={subcategory.id}>{subcategory.name}</option>
               ))}
             </select>
             <button type="submit" className="submit-button">Search</button>
-  
           </form>
         ) : null}
-  
+    
         {!specificSearch && (
           <div className="item-list">
             {searchType === "products" && renderItems(store.products, true)}
             {searchType === "services" && renderItems(store.services, false)}
           </div>
         )}
-        {/* Aqui é onde colocamos o trecho para renderizar o modal */}
+    
         {showDetails && selectedItem && selectedItemType && (
           <ItemDetails
             item={selectedItem}
@@ -217,17 +196,17 @@ const Search = () => {
             onClose={handleCloseDetails}
           />
         )}
-        {/* Botão para abrir oTradeProposal */}
+    
         {selectedItem && (
           <TradeProposal
             show={showTradeProposal}
             handleClose={handleCloseTradeProposal}
             itemToTrade={selectedItem}
-            itemType={selectedItemType} // passa o tipo de item selecionado 
+            itemType={selectedItemType}
           />
         )}
       </div>
-    );
-  };
-  
-  export default Search;
+    );}
+    
+    export default Search;
+    
