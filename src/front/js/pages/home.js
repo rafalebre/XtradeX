@@ -2,8 +2,9 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "./home.css";
 import { useNavigate } from 'react-router-dom';
-import Logo from "../../img/Logo.png";
+import homehowto from "../../img/homehowto.png";  /* Presumindo que a imagem que você deseja adicionar está no mesmo diretório que o logo */
 import { Alert } from "react-bootstrap";
+import HomeSearch from "../component/HomeSearch.jsx";
 
 export const Home = () => {
     const { actions } = useContext(Context);
@@ -14,7 +15,6 @@ export const Home = () => {
     const navigate = useNavigate();
 
     const handleRegister = (event) => {
-        // Prevenir a ação padrão do formulário
         event.preventDefault();
 
         if (!validateEmail(email)) {
@@ -48,6 +48,15 @@ export const Home = () => {
                     <p>{alertMessage}</p>
                 </Alert>
             )}
+
+            <div className="d-flex justify-content-center"> {/* Adicionando a imagem que você fez no topo da página */}
+              <img src={homehowto} alt="Your Custom Image Description" className="logo"/>  
+            </div>
+
+            <div className="d-flex justify-content-center">
+                <HomeSearch /> {/* Adicionando a ferramenta de busca completa */}
+            </div>
+
             <div className="row">
                 <div className="col-6">
                     <h1>How does it work?</h1>
@@ -69,9 +78,6 @@ export const Home = () => {
                         </form>
                     </div>
                 </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <img src={Logo} alt="X-Trade-X logo" className="logo"/>  {/* Adicionando o logo */}
             </div>
         </div>
     );

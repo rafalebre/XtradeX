@@ -1,8 +1,8 @@
 .home-container {
-    background-color: #2f2f2f;
+    background-color: #ffffff;  /* Alterado para branco */
     min-height: 100vh;
     color: #fa7d6a;
-    padding-top: 180px; /* aumentando o padding-top para adicionar mais espaço acima */
+    padding-top: 180px; 
     padding-left: 15%;
     padding-right: 15%;
 }
@@ -27,7 +27,7 @@
 }
 
 .home-container ol {
-    padding-left: 80px; /* aumentando o padding-left para mover a lista mais para a direita */
+    padding-left: 80px; 
 }
 
 .logo {
