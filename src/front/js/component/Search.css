@@ -1,5 +1,5 @@
 .search-button {
-    background-color: #FFB6C1;
+    background-color: #fa7d6a;
     border: none;
     color: white;
     padding: 10px 24px;
@@ -29,7 +29,7 @@
   }
   
   .trade-button, .detail-button {
-    background-color: orange;
+    background-color: #fa7d6a;
     border: none;
     color: white;
     padding: 10px 24px;
@@ -43,7 +43,7 @@
   }
   
   .orange-button {
-    background-color: orange;
+    background-color: #fa7d6a;
     border: none;
     color: white;
     padding: 10px 24px;
@@ -58,7 +58,7 @@
   
 
   .submit-button {
-    background-color: #FF8C00; 
+    background-color: #fa7d6a; 
     color: white;
     padding: 10px 20px; 
     border: none;
