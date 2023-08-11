@@ -4,11 +4,13 @@ import { Context } from "../store/appContext";
 import LoginModal from "./LoginModal.jsx";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../img/logo.png";
+import RegisterModal from "./RegisterModal.jsx";
 import "./navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -16,6 +18,8 @@ export const Navbar = () => {
       navigate("/Goodbye");
     });
   };
+
+  
 
   const logoPath = store.isLoggedIn ? "/profile" : "/";
 
@@ -34,19 +38,34 @@ export const Navbar = () => {
               My Info
             </Link>
           )}
-          {!store.isLoggedIn ? (
+          {!store.isLoggedIn && (
+            <button
+              className="btn login-button"
+              onClick={() => setShowRegisterModal(true)}
+            >
+              Register
+            </button>
+          )}
+          {!store.isLoggedIn && (
             <button
               className="btn login-button"
               onClick={() => setShowLoginModal(true)}
             >
               Login
             </button>
-          ) : (
+          )}
+          
+          {store.isLoggedIn && (
             <button className="btn logout-button" onClick={handleLogout}>
               Logout
             </button>
           )}
         </div>
+        
+        <RegisterModal
+          show={showRegisterModal}
+          handleClose={() => setShowRegisterModal(false)}
+        />
         <LoginModal
           show={showLoginModal}
           handleClose={() => setShowLoginModal(false)}

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import "./home.css";
 import { useNavigate } from 'react-router-dom';
-import homehowto from "../../img/homehowto.png";  /* Presumindo que a imagem que você deseja adicionar está no mesmo diretório que o logo */
+import homehowto from "../../img/homehowto.png";  
 import { Alert } from "react-bootstrap";
 import HomeSearch from "../component/HomeSearch.jsx";
 
