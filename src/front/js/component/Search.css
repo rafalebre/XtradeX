@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  padding-top: 60px; /* para garantir que o conteúdo não fique escondido pela navbar */
 }
 
 .button-container {
@@ -37,19 +38,18 @@
 .item-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
 }
 
 .item-card {
   display: flex;
   flex-direction: column;
-  max-width: 30%;
-  flex: 1 1 30%;
-  margin: 10px;
+  width: 20%; /* Ajustado para um tamanho mediano */
   background-color: #F0F0F0;
   padding: 10px;
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .dropdown {
@@ -79,14 +79,4 @@
   gap: 10px;
 }
 
-@media (max-width: 768px) {
-  .item-card {
-      flex: 1 1 45%;
-  }
-}
 
-@media (max-width: 480px) {
-  .item-card {
-      flex: 1 1 100%;
-  }
-}

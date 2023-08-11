@@ -119,3 +119,7 @@
 .sidebar, .content-area {
   overflow-y: auto; 
 }
+
+body {
+  margin-top: 60px !important;
+}

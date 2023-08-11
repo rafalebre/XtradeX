@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../img/logo.png";
 import RegisterModal from "./RegisterModal.jsx";
 import "./navbar.css";
+import "./scrollToTop";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
