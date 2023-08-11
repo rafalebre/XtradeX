@@ -101,7 +101,7 @@ const OnlineServicesSearch = () => {
               <h3>{service.name}</h3>
               <p>{service.description}</p>
               <p>{service.currency} {service.estimated_value}</p>
-              <button className="search-button" onClick={() => handleProposeDeal(service)}>Propose a Deal</button> 
+              <button className="propose-button" onClick={() => handleProposeDeal(service)}>Propose a Deal</button> 
             </div>
           ))}
         </div>
