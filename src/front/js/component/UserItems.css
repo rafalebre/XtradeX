@@ -1,10 +1,13 @@
 .user-items-container {
   max-width: 1200px;
-  margin: 40px auto 0;
+  margin: -50px auto 0;
   padding: 20px;
+  display: flex; /* Configura este container para usar flexbox */
+  justify-content: space-between; /* Distribui o espaço entre as duas listas */
 }
 
 .user-items-list {
+  width: 48%; /* Permite que cada lista ocupe aproximadamente metade da largura total, considerando uma pequena margem entre elas */
   margin-bottom: 40px;
 }
 
