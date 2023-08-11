@@ -110,12 +110,6 @@
 }
 
 
-.profile-container {
-  display: flex;
-  height: calc(100vh - 56px); 
-  margin-top: 56px; 
-}
-
 .sidebar, .content-area {
   overflow-y: auto; 
 }
