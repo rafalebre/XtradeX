@@ -9,7 +9,7 @@
 }
 
 .user-items-title {
-  color: #FF8C00;
+  color: #FF6347;
   text-align: center;
   margin-bottom: 20px;
 }
@@ -21,7 +21,7 @@
 }
 
 .user-item button {
-  background-color: #FF8C00; /* cor de fundo alaranjada */
+  background-color: #FF6347; /* cor de fundo alaranjada */
   color: white; /* cor do texto branca */
   border: none; /* remove o contorno do botão */
   padding: 10px 20px; /* adiciona um pouco de preenchimento ao redor do texto do botão */
@@ -31,5 +31,5 @@
 }
 
 .user-item button:hover {
-  background-color: #FFA500; /* muda a cor de fundo para um laranja mais claro quando o botão é passado */
+  background-color: #FF6347; /* muda a cor de fundo para um laranja mais claro quando o botão é passado */
 }

@@ -8,13 +8,13 @@
 
 .form-field {
     display: flex;
-    flex-direction: column; /* muda a orientação para vertical */
-    margin-bottom: 20px; /* aumenta o espaçamento entre cada campo */
+    flex-direction: column; 
+    margin-bottom: 20px; 
 }
 
 .form-field label {
     min-width: 150px;
-    margin-bottom: 10px; /* aumenta o espaçamento entre a label e o input */
+    margin-bottom: 10px; 
 }
 
 .add-product-form input[type="text"],
@@ -22,11 +22,17 @@
     flex-grow: 1;
     padding: 5px;
     border-radius: 4px;
-    border: 1px solid #fa7d6a;
-    margin-bottom: 10px; /* adiciona espaço após cada campo de entrada */
+    border: 1px solid #fa7d6a; 
+    margin-bottom: 10px; 
 }
 
-.add-product-form button[type="submit"] {
+/* Campo de descrição mais alto */
+.add-product-form input[type="text"][value=description] {
+    height: 100px;
+}
+
+.add-product-form button[type="submit"],
+.location-section button {
     margin-top: 20px;
     padding: 10px 20px;
     background-color: #fa7d6a;
@@ -42,23 +48,24 @@
 
 .location-section label {
     display: block;
-    margin-bottom: 5px; /* adiciona espaçamento entre a label e o botão */
+    margin-bottom: 5px; 
 }
 
 .location-section button {
     margin-left: 10px;
-    padding: 5px 10px; /* adiciona padding */
-    background-color: #fa7d6a; /* mesmo background que o botão de submissão */
-    color: white; /* mesmo texto branco que o botão de submissão */
+    padding: 5px 10px; 
+    background-color: #fa7d6a; 
+    color: white; 
     border: none; 
-    border-radius: 4px; /* mesmo border-radius que o botão de submissão */
-    cursor: pointer; /* para mostrar que o botão é clicável */
-    font-size: 0.9em; /* reduzir um pouco o tamanho da fonte */
+    border-radius: 4px; 
+    cursor: pointer;
+    font-size: 0.9em; 
 }
+ label {
+    margin: 5px 20px 0px 0px;
+    padding-right: 3px;
+ }
 
-
-
-
-
-
-
+ input {
+    margin: 3px;
+ }
