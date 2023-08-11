@@ -15,19 +15,22 @@
 .item-card {
   display: flex;
   flex-direction: column;
-  width: 45%;
+  width: 300px;  /* Largura padrão */
+  max-width: 400px;  /* Largura máxima */
+  min-width: 250px;  /* Largura mínima */
   margin: 10px;
   background-color: #F0F0F0;
   padding: 10px;
   border-radius: 5px;
+  word-wrap: break-word;  /* Isso irá quebrar palavras longas */
+  box-sizing: border-box; 
 }
 
 .item-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around; /* Mudado para space-around para melhor espaçamento */
 }
-
 
 .orange-button {
   background-color: orange;
@@ -42,7 +45,6 @@
   cursor: pointer;
   border-radius: 10px;
 }
-
 
 .submit-button2 {
   background-color: #fa7d6a; 
@@ -60,21 +62,21 @@
 }
 
 .dropdown {
-width: 200px;
-height: 50px;
-padding: 10px;
-font-size: 16px;
-border: none;
-margin: 5px 0;
-border-radius: 5px;
-background-color: #f1f1f1;
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  margin: 5px 0;
+  border-radius: 5px;
+  background-color: #f1f1f1;
 }
 
 .dropdown:focus {
-outline: none;
-border-color: #FFB6C1;
+  outline: none;
+  border-color: #FFB6C1;
 }
 
 .dropdown option {
-padding: 10px;
+  padding: 10px;
 }
