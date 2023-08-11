@@ -3,7 +3,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #e0e0e0; /* Fundo acinzentado */
+  background: #edecec; /* Fundo acinzentado */
   padding: 1em;
   z-index: 1000;
   height: 800px;
@@ -23,12 +23,12 @@
 
 .item-details-container h2 {
   margin-bottom: 1em;
-  color: #FF8C00; /* Alaranjado dos botões */
+  color: orange /* Alaranjado dos botões */
 }
 
 /* Estilo dos botões */
 .item-details-container button {
-  background-color: #FF8C00;
+  background-color: orange;
   color: white;
   padding: 10px 20px;
   border: none;
