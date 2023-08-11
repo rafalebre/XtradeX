@@ -4,6 +4,7 @@ import ItemDetails from "./ItemDetails.jsx";
 import TradeProposal from "./TradeProposal.jsx";
 import GoogleMaps from './GoogleMaps.jsx';
 import "./Search.css";
+import "./scrollToTop";
 
 const Search = () => {
   const [searchType, setSearchType] = useState(null);
