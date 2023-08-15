@@ -1,86 +1,115 @@
 .online-search-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin-top: -150px;
-  }
-  
-  .search-button {
-    background-color: #fa7d6a;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-top: -150px;
+}
 
-  .propose-button {
-    background-color: orange;
-    border: none;
-    color: white;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
-  }
-  
-  .input-container, .category-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .online-card {
-    display: flex;
-    flex-direction: column;
-    width: 300px;  /* Use uma largura fixa ou combinada com min-width e max-width */
-    max-width: 400px;  /* Largura máxima que um card pode ter */
-    min-width: 250px;  /* Largura mínima que um card pode ter */
-    background-color: #F0F0F0;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px;
-    border: 1px solid #ccc;  /* Adicionei uma cor ao border para ser visível */
-    word-wrap: break-word;  /* Isso quebrará palavras longas e as impedirá de ultrapassar os limites do card */
-    box-sizing: border-box;  /* Isso garante que padding e border estejam incluídos na largura total */
+.search-btn {
+  background-color: #fa7d6a;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.propose-btn {
+  background-color: orange;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  align-self: flex-end;
+}
+
+.input-container,
+.category-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.online-card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  max-width: 400px;
+  min-width: 250px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+.online-card h3 {
+  font-size: 18px;
+}
+
+.online-card p.description {
+  max-height: 3em;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.see-more-btn {
+  background-color: transparent;
+  border: none;
+  color: #fa7d6a;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown-input {
+  width: 200px;
+  height: 50px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  margin: 5px 0;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+}
+
+.dropdown-input:focus {
+  outline: none;
+  border-color: #ffb6c1;
+}
+
+.dropdown-input option {
+  padding: 10px;
 }
 
 .online-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;  /* Alinha os cards uniformemente */
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
 }
 
-  
-  .dropdown {
-    width: 200px;
-    height: 50px;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    margin: 5px 0;
-    border-radius: 5px;
-    background-color: #f1f1f1;
-  }
-  
-  .dropdown:focus {
-    outline: none;
-    border-color: #FFB6C1;
-  }
-  
-  .dropdown option {
-    padding: 10px;
-  }
-  
+.card-content {
+  flex: 1;
+}
+
+.card-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
