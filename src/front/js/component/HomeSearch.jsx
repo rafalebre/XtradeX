@@ -4,7 +4,7 @@ import ItemDetails from "./ItemDetails.jsx";
 import GoogleMaps from './GoogleMaps.jsx';
 import "./HomeSearch.css";
 
-const Search = () => {
+const HomeSearch = () => {
   const [searchType, setSearchType] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
@@ -41,19 +41,18 @@ const Search = () => {
 
   const renderItems = (items, isProduct) => {
     return items.map((item, index) => (
-      <div key={index} className="item-card">
+      <div key={index} className="item-card-custom">
         <h3>{item.name}</h3>
         {isProduct && <p>Condition: {item.condition}</p>}
         <p>Estimated Value: {item.estimated_value}{item.currency}</p>
         <button
-          className="orange-button"
+          className="orange-button-custom"
           onClick={() =>
             handleOpenDetails(item, isProduct ? "product" : "service")
           }
         >
           Check details
         </button>
-       
       </div>
     ));
   };
@@ -70,7 +69,7 @@ const Search = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-  
+
     if (specificSearch) {
       actions.fetchItemsByName(searchTerm, location, bounds);
     } else if (searchType === "products") {
@@ -79,13 +78,11 @@ const Search = () => {
       actions.fetchServices(selectedCategory, selectedSubcategory, location, bounds);
     }
   };
-  
 
   const handleLocationChange = (newLocation, newBounds) => {
     setLocation(newLocation);
     setBounds(newBounds);
-  }
-  
+  };
 
   const handleSearchTypeChange = (newSearchType) => {
     setSearchType(newSearchType);
@@ -101,8 +98,6 @@ const Search = () => {
     setSelectedSubcategory("");
   };
 
-  
-
   const filteredSubcategories = selectedCategory
     ? (searchType === "products"
         ? store.subcategories
@@ -112,27 +107,25 @@ const Search = () => {
 
   const categories =
     searchType === "products" ? store.categories : store.serviceCategories;
-    
 
-    return (
-      <div>
-        {/* Botões de busca movidos acima do mapa */}
-        <div>
-          <button className="search-button2" onClick={() => handleSearchTypeChange("products")}>
-            Search Products
-          </button>
-          <button className="search-button2" onClick={() => handleSearchTypeChange("services")}>
-            Search Services
-          </button>
-          <button className="search-button2" onClick={handleSpecificSearchToggle}>
-            Specific Item Search
-          </button>
-        </div>
+  return (
+    <div>
+      <div className="button-container">
+        <button className="search-button-custom" onClick={() => handleSearchTypeChange("products")}>
+          Search Products
+        </button>
+        <button className="search-button-custom" onClick={() => handleSearchTypeChange("services")}>
+          Search Services
+        </button>
+        <button className="search-button-custom" onClick={handleSpecificSearchToggle}>
+          Specific Item Search
+        </button>
+      </div>
 
-        {/* Seção de seleção de categoria e subcategoria */}
-        {searchType ? (
-          <form onSubmit={handleSearch}>
-            <select name="category_id" className="dropdown" onChange={handleCategoryChange}>
+      {searchType ? (
+        <form onSubmit={handleSearch}>
+          <div className="dropdown-container">
+            <select name="category_id" className="dropdown-custom" onChange={handleCategoryChange}>
               <option value="">Select Category</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -141,7 +134,7 @@ const Search = () => {
               ))}
             </select>
 
-            <select name="subcategory_id" className="dropdown" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
+            <select name="subcategory_id" className="dropdown-custom" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
               <option value="">Select Subcategory</option>
               {filteredSubcategories.map((subcategory) => (
                 <option key={subcategory.id} value={subcategory.id}>
@@ -149,47 +142,49 @@ const Search = () => {
                 </option>
               ))}
             </select>
-            <button type="submit" className="submit-button2">Search</button>
-          </form>
-        ) : null}
 
-        <GoogleMaps 
-            onLocationChange={handleLocationChange} 
-            markers={store.searchedProducts.concat(store.searchedServices)}
-        />
-
-        {specificSearch ? (
-          <div>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Enter item name..."
-            />
-            <button onClick={handleSearch} className="search-button2">
-              Search
-            </button>
-            <div className="container">
-              {renderItems(store.searchedProducts, true)}
-              {renderItems(store.searchedServices, false)}
-            </div>
+            <button type="submit" className="submit-button-custom">Search</button>
           </div>
-        ) : (
-          <div className="item-list">
-            {searchType === "products" && renderItems(store.products, true)}
-            {searchType === "services" && renderItems(store.services, false)}
-          </div>
-        )}
+        </form>
+      ) : null}
 
-        {showDetails && selectedItem && selectedItemType && (
-          <ItemDetails
-            item={selectedItem}
-            itemType={selectedItemType}
-            onClose={handleCloseDetails}
+      <GoogleMaps 
+          onLocationChange={handleLocationChange} 
+          markers={store.searchedProducts.concat(store.searchedServices)}
+      />
+
+      {specificSearch ? (
+        <div>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Enter item name..."
           />
-        )}
-      </div>
-    );
+          <button onClick={handleSearch} className="search-button-custom">
+            Search
+          </button>
+          <div className="container">
+            {renderItems(store.searchedProducts, true)}
+            {renderItems(store.searchedServices, false)}
+          </div>
+        </div>
+      ) : (
+        <div className="item-list-custom">
+          {searchType === "products" && renderItems(store.products, true)}
+          {searchType === "services" && renderItems(store.services, false)}
+        </div>
+      )}
+
+      {showDetails && selectedItem && selectedItemType && (
+        <ItemDetails
+          item={selectedItem}
+          itemType={selectedItemType}
+          onClose={handleCloseDetails}
+        />
+      )}
+    </div>
+  );
 };
 
-export default Search;
+export default HomeSearch;
