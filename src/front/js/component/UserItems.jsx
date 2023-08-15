@@ -1,5 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import "./UserItems.css";
 
 const UserItems = () => {
@@ -9,32 +11,33 @@ const UserItems = () => {
     actions.fetchUserItems(); // Fetch user items on component mount
   }, []);
 
+  const renderItems = (items, deleteFunction) => {
+    return items.map((item) => (
+      <Card key={item.id} className="user-item-card">
+        <Card.Body>
+          <Card.Text className="user-item-text">
+            {item.name} - {item.description} - {item.currency}{item.estimated_value}
+          </Card.Text>
+          <Button variant="danger" className="user-item-button" onClick={() => deleteFunction(store, item.id)}>Delete</Button>
+        </Card.Body>
+      </Card>
+    ));
+  };
+
   return (
     <div className="user-items-container">
       <div className="user-items-list">
         <h2 className="user-items-title">My Products</h2>
-        <ul>
-          {store.userProducts &&
-            store.userProducts.map((product) => (
-              <li key={product.id} className="user-item">
-                {product.name} - {product.description} - {product.currency}{product.estimated_value}
-                <button onClick={() => actions.deleteProduct(store, product.id)}>Delete</button>
-              </li>
-            ))}
-        </ul>
+        <div className="user-items-ul">
+          {store.userProducts && renderItems(store.userProducts, actions.deleteProduct)}
+        </div>
       </div>
 
       <div className="user-items-list">
         <h2 className="user-items-title">My Services</h2>
-        <ul>
-          {store.userServices &&
-            store.userServices.map((service) => (
-              <li key={service.id} className="user-item">
-                {service.name} - {service.description} - {service.currency}{service.estimated_value}
-                <button onClick={() => actions.deleteService(store, service.id)}>Delete</button>
-              </li>
-            ))}
-        </ul>
+        <div className="user-items-ul">
+          {store.userServices && renderItems(store.userServices, actions.deleteService)}
+        </div>
       </div>
     </div>
   );

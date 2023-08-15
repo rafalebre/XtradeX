@@ -2,12 +2,12 @@
   max-width: 1200px;
   margin: -50px auto 0;
   padding: 20px;
-  display: flex; /* Configura este container para usar flexbox */
-  justify-content: space-between; /* Distribui o espaço entre as duas listas */
+  display: flex;
+  justify-content: space-between;
 }
 
 .user-items-list {
-  width: 48%; /* Permite que cada lista ocupe aproximadamente metade da largura total, considerando uma pequena margem entre elas */
+  width: 48%;
   margin-bottom: 40px;
 }
 
@@ -17,23 +17,37 @@
   margin-bottom: 20px;
 }
 
-.user-item {
+.user-items-ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+.user-item-card {
+  width: 100%;
+  max-width: 300px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  word-wrap: break-word;
+  box-sizing: border-box;
+}
+
+.user-item-text {
   font-weight: bold;
-  list-style-type: disc;
-  margin-left: 20px;
-  margin-bottom: 5px;
 }
 
-.user-item button {
-  background-color: #fa7d6a; /* cor de fundo alaranjada */
-  color: white; /* cor do texto branca */
-  border: none; /* remove o contorno do botão */
-  padding: 10px 20px; /* adiciona um pouco de preenchimento ao redor do texto do botão */
-  margin-left: 10px; /* adiciona uma pequena margem à esquerda do botão para separá-lo do texto do item */
-  cursor: pointer; /* muda o cursor para um ponteiro quando passa sobre o botão */
+.user-item-button {
+  margin-top: 10px;
   border-radius: 14px;
+  width: 100%;
 }
 
-.user-item button:hover {
-  background-color: #fa7d6a; /* muda a cor de fundo para um laranja mais claro quando o botão é passado */
+.user-item-button:hover {
+  background-color: #fa7d6a;
+  color: white;
 }
