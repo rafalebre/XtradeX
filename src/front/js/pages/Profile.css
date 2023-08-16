@@ -58,6 +58,12 @@
   border: 1px solid #FF5722;
   border-radius: 20px;
   padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.sidebar-menu li.selected {
+  background-color: #FF5722; /* Defina a cor de destaque para o item selecionado */
+  color: white; /* Altere a cor do texto para contrastar com o fundo */
 }
 
 .initial-message-container {
