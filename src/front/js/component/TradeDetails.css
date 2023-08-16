@@ -5,6 +5,7 @@
 .modal-header {
   background-color: #f8f9fa;
   text-align: center;
+  justify-content: center; /* Centraliza o título */
 }
 
 .modal-title {
@@ -38,4 +39,22 @@
 .message-status-row {
   margin-top: 20px;
   text-align: center;
+}
+
+.TradeDetails .modal-dialog {
+    max-width: 50%; /* Reduzindo a largura do modal */
+}
+
+.TradeDetails table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.TradeDetails td {
+    padding: 5px 0;  /* Espaçamento vertical em vez de linhas de borda */
+    vertical-align: top;
+}
+
+.TradeDetails td:first-child {
+    width: 150px;
 }

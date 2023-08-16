@@ -38,22 +38,48 @@ const TradeDetails = ({ show, handleClose, trade, refreshTrades }) => {
             <div className="details-section">
               <h4>Sender Item: {trade.sender_item_name}</h4>
               {trade.sender_product_details && (
-                <div>
-                  <h5>Product Details:</h5>
-                  <p><strong>Name:</strong> {trade.sender_product_details.name}</p>
-                  <p><strong>Description:</strong> {trade.sender_product_details.description}</p>
-                  <p><strong>Estimated Value:</strong> {trade.sender_product_details.estimated_value}</p>
-                  <p><strong>Location:</strong> {trade.sender_product_details.location}</p>
-                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><strong>Name:</strong></td>
+                      <td>{trade.sender_product_details.name}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Description:</strong></td>
+                      <td>{trade.sender_product_details.description}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Estimated Value:</strong></td>
+                      <td>{trade.sender_product_details.estimated_value}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Location:</strong></td>
+                      <td>{trade.sender_product_details.location}</td>
+                    </tr>
+                  </tbody>
+                </table>
               )}
               {trade.sender_service_details && (
-                <div>
-                  <h5>Service Details:</h5>
-                  <p><strong>Name:</strong> {trade.sender_service_details.name}</p>
-                  <p><strong>Description:</strong> {trade.sender_service_details.description}</p>
-                  <p><strong>Estimated Value:</strong> {trade.sender_service_details.estimated_value}</p>
-                  <p><strong>Location:</strong> {trade.sender_service_details.location}</p>
-                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><strong>Name:</strong></td>
+                      <td>{trade.sender_service_details.name}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Description:</strong></td>
+                      <td>{trade.sender_service_details.description}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Estimated Value:</strong></td>
+                      <td>{trade.sender_service_details.estimated_value}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Location:</strong></td>
+                      <td>{trade.sender_service_details.location}</td>
+                    </tr>
+                  </tbody>
+                </table>
               )}
             </div>
           </Col>
@@ -61,22 +87,48 @@ const TradeDetails = ({ show, handleClose, trade, refreshTrades }) => {
             <div className="details-section">
               <h4>Receiver Item: {trade.receiver_item_name}</h4>
               {trade.receiver_product_details && (
-                <div>
-                  <h5>Product Details:</h5>
-                  <p><strong>Name:</strong> {trade.receiver_product_details.name}</p>
-                  <p><strong>Description:</strong> {trade.receiver_product_details.description}</p>
-                  <p><strong>Estimated Value:</strong> {trade.receiver_product_details.estimated_value}</p>
-                  <p><strong>Location:</strong> {trade.receiver_product_details.location}</p>
-                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><strong>Name:</strong></td>
+                      <td>{trade.receiver_product_details.name}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Description:</strong></td>
+                      <td>{trade.receiver_product_details.description}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Estimated Value:</strong></td>
+                      <td>{trade.receiver_product_details.estimated_value}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Location:</strong></td>
+                      <td>{trade.receiver_product_details.location}</td>
+                    </tr>
+                  </tbody>
+                </table>
               )}
               {trade.receiver_service_details && (
-                <div>
-                  <h5>Service Details:</h5>
-                  <p><strong>Name:</strong> {trade.receiver_service_details.name}</p>
-                  <p><strong>Description:</strong> {trade.receiver_service_details.description}</p>
-                  <p><strong>Estimated Value:</strong> {trade.receiver_service_details.estimated_value}</p>
-                  <p><strong>Location:</strong> {trade.receiver_service_details.location}</p>
-                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td><strong>Name:</strong></td>
+                      <td>{trade.receiver_service_details.name}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Description:</strong></td>
+                      <td>{trade.receiver_service_details.description}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Estimated Value:</strong></td>
+                      <td>{trade.receiver_service_details.estimated_value}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Location:</strong></td>
+                      <td>{trade.receiver_service_details.location}</td>
+                    </tr>
+                  </tbody>
+                </table>
               )}
             </div>
           </Col>
