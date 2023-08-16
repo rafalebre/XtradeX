@@ -95,6 +95,7 @@ const AddService = () => {
       if (response.ok) {
         window.confirm("Service successfully created!");
         setName("");
+        setImage("");
         setDescription("");
         setEstimatedValue("");
         setLocation("");

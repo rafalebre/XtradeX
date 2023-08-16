@@ -101,6 +101,7 @@ const AddProduct = () => {
       if (response.ok) {
         window.confirm("Product successfully created!");
         setName("");
+        setImage("");
         setDescription("");
         setCondition("");
         setEstimatedValue("");
