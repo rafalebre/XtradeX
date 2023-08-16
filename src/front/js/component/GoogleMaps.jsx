@@ -126,6 +126,7 @@ export default function GoogleMaps({ onLocationChange, showMarkers = true, setHi
             position={{ lat: marker.latitude, lng: marker.longitude }}
             title={marker.name}
             icon={highlightedItem === marker ? highlightedIcon : defaultIcon}
+            zIndex={highlightedItem === marker ? 1000 : 1}
         />
     );
 })}
