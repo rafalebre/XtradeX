@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Wishlist.css';
 
 function Wishlist() {
   const [items, setItems] = useState([]);
@@ -76,23 +77,35 @@ function Wishlist() {
   }
 
   return (
-    <div>
-      <h2>Add an item</h2>
-      <input value={newItem} onChange={(e) => setNewItem(e.target.value)} />
-      <select value={newPriority} onChange={(e) => setNewPriority(e.target.value)}>
-        <option value="1">Add a priority</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
-      <button onClick={handleAddItem}>Add to the list</button>
+    <div className="wishlist-container">
+      <div className="wishlist-add-item-section">
+        <h2>Add an item</h2>
+        <input
+          type="text"
+          value={newItem}
+          onChange={(e) => setNewItem(e.target.value)}
+          placeholder="Item name"
+        />
+        <select
+          value={newPriority}
+          onChange={(e) => setNewPriority(e.target.value)}
+        >
+          <option value="1">Add a priority</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button onClick={handleAddItem}>Add to the list</button>
+      </div>
 
       {items.sort((a, b) => b.priority - a.priority).map(item => (
-        <div key={item.id}>
-          <p>{item.item} (Priority: {item.priority})</p>
-          <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+        <div className="wishlist-item" key={item.id}>
+          <div className="wishlist-item-details">
+            <p>{item.item} (Priority: {item.priority})</p>
+            <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+          </div>
         </div>
       ))}
     </div>
