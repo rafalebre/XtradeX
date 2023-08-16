@@ -12,7 +12,7 @@ const mapContainerStyle = {
 // Declarando a constante libraries aqui
 const libraries = ["places"];
 
-export default function GoogleMaps({ onLocationChange }) {
+export default function GoogleMaps({ onLocationChange, showMarkers = true }) {
   const autoCompleteRef = useRef(null);
   const { store } = useContext(Context);
   const [map, setMap] = useState(null);
@@ -114,7 +114,7 @@ export default function GoogleMaps({ onLocationChange }) {
         onUnmount={onUnmount}
         onClick={onClick}
       >
-        {markers?.map((marker, i) => ( // Aqui adicionamos os marcadores no mapa
+        {showMarkers && markers?.map((marker, i) => ( // Aqui adicionamos os marcadores no mapa
           <Marker 
             key={i} 
             position={{ lat: marker.latitude, lng: marker.longitude }}

@@ -319,7 +319,8 @@ const AddProduct = () => {
             </button>
           </label>
 
-          <GoogleMaps onLocationChange={onLocationChange} />
+          <GoogleMaps onLocationChange={onLocationChange}
+          showMarkers={false} />
 
           <label>
             Location

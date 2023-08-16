@@ -302,7 +302,7 @@ const AddService = () => {
             </button>
           </label>
 
-          {!isOnline && <GoogleMaps onLocationChange={onLocationChange} />}
+          {!isOnline && <GoogleMaps onLocationChange={onLocationChange} showMarkers={false}/>}
 
           <label>
             Location
