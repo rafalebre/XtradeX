@@ -1,39 +1,41 @@
-/* TradeDetails.css */
 .TradeDetails {
-    /* Personalize a fonte geral do modal */
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Personalize o título do modal */
-  .TradeDetails .modal-title {
-    color: #333;
-    font-size: 24px;
-  }
-  
-  /* Personalize o conteúdo do modal */
-  .TradeDetails .modal-body {
-    color: #666;
-    font-size: 18px;
-  }
-  
-  /* Personalize o rodapé do modal */
-  .TradeDetails .modal-footer {
-    background-color: #f8f9fa;
-  }
-  
-  /* Personalize os botões no rodapé do modal */
-  .TradeDetails .modal-footer .btn {
-    margin-right: 10px;
-  }
-  
-  /* Personalize os botões para aceitar e recusar a negociação */
-  .TradeDetails .btn-accept {
-    background-color: #28a745;
-    color: #fff;
-  }
-  
-  .TradeDetails .btn-decline {
-    background-color: #dc3545;
-    color: #fff;
-  }
-  
+  font-family: Arial, sans-serif;
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.modal-title {
+  color: #333;
+  font-size: 24px;
+}
+
+.TradeDetails .modal-body {
+  color: #666;
+  font-size: 18px;
+}
+
+.TradeDetails .modal-footer {
+  background-color: #f8f9fa;
+}
+
+.TradeDetails .modal-footer .btn {
+  margin-right: 10px;
+}
+
+.TradeDetails .btn-accept {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.TradeDetails .btn-decline {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.message-status-row {
+  margin-top: 20px;
+  text-align: center;
+}
