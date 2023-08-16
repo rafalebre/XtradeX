@@ -13,7 +13,7 @@
     flex-direction: column;
     gap: 20px; /* Espaçamento entre os inputs */
     align-items: center;
-    width: 70%; /* Largura do formulário, isso pode ser ajustado de acordo com suas preferências */
+    width: 50%; /* Largura do formulário, isso pode ser ajustado de acordo com  preferências */
 }
 
 .my-info-form label {
@@ -21,6 +21,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+   
 }
 
 .my-info-form input[type="text"],
@@ -29,7 +30,7 @@
 .my-info-form input[type="file"] {
     width: 100%;
     padding: 10px;
-    border-radius: 4px;
+    border-radius: 14px;
     border: 1px solid #FFA500;
 }
 
@@ -39,7 +40,7 @@
     background-color: #FFA500;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 14px;
     cursor: pointer;
     align-self: center;
 }
@@ -51,5 +52,5 @@
 .GoogleMaps {
     width: 90%; /* Reduzindo a largura para permitir margens automáticas */
     height: 400px;
-    margin: 0 auto; /* Margens automáticas para centralizar o elemento */
+    margin: 0 auto ; /* Margens automáticas para centralizar o elemento */
 }
