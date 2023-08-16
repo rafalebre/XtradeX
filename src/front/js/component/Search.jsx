@@ -19,6 +19,7 @@ const Search = () => {
   const [showTradeProposal, setShowTradeProposal] = useState(false);
   const [location, setLocation] = useState(null);
   const [bounds, setBounds] = useState(null);
+  const [highlightedItem, setHighlightedItem] = useState(null);
 
   useEffect(() => {
     if (searchType === "products") {
@@ -44,7 +45,9 @@ const Search = () => {
 
   const renderItems = (items, isProduct) => {
     return items.map((item, index) => (
-      <div key={index} className="item-card">
+      <div key={index} className="item-card"
+      onMouseEnter={() => setHighlightedItem(item)}
+      onMouseLeave={() => setHighlightedItem(null)}>
         <h3>{item.name}</h3>
         {isProduct && <p>Condition: {item.condition}</p>}
         <p>Estimated Value: {item.estimated_value}{item.currency}</p>
@@ -172,7 +175,11 @@ const Search = () => {
           </form>
         )}
       
-        <GoogleMaps onLocationChange={handleLocationChange} markers={store.searchedProducts.concat(store.searchedServices)} />
+        <GoogleMaps 
+        onLocationChange={handleLocationChange} 
+        markers={store.searchedProducts.concat(store.searchedServices)}
+        setHighlightedItem={setHighlightedItem}
+        highlightedItem={highlightedItem} />
         
         {specificSearch ? (
           <div className="input-container">

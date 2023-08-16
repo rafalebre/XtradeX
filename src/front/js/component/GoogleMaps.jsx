@@ -12,12 +12,15 @@ const mapContainerStyle = {
 // Declarando a constante libraries aqui
 const libraries = ["places"];
 
-export default function GoogleMaps({ onLocationChange, showMarkers = true }) {
+export default function GoogleMaps({ onLocationChange, showMarkers = true, setHighlightedItem, highlightedItem }) {
   const autoCompleteRef = useRef(null);
   const { store } = useContext(Context);
   const [map, setMap] = useState(null);
   const [center, setCenter] = useState(null);
+  const defaultIcon = 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="%23FF5733"/></svg>';
 
+  const highlightedIcon = 'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="%230000FF"/></svg>';
+  
   const products = store.products;
   const services = store.services;
   
@@ -114,13 +117,18 @@ export default function GoogleMaps({ onLocationChange, showMarkers = true }) {
         onUnmount={onUnmount}
         onClick={onClick}
       >
-        {showMarkers && markers?.map((marker, i) => ( // Aqui adicionamos os marcadores no mapa
-          <Marker 
+        {showMarkers && markers?.map((marker, i) => { 
+    console.log("Highlighted:", highlightedItem, "Marker:", marker);
+
+    return (
+        <Marker 
             key={i} 
             position={{ lat: marker.latitude, lng: marker.longitude }}
-            title={marker.name} // O 'title' aparecerá quando o usuário passar o mouse por cima do marcador
-          />
-        ))}
+            title={marker.name}
+            icon={highlightedItem === marker ? highlightedIcon : defaultIcon}
+        />
+    );
+})}
       </GoogleMap>
     </div>
   ) : <></>
