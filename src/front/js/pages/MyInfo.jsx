@@ -218,6 +218,7 @@ useEffect(() => {
             <GoogleMaps
               onLocationChange={handleLocationChange}
               initialLocation={mapLocation}
+              showMarkers={false}
             />
           )}
         </label>
