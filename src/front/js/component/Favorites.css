@@ -1,0 +1,77 @@
+.fav-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.fav-heading {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.fav-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.fav-card {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+}
+
+.fav-card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.fav-card-description {
+    height: 3em;
+    overflow: hidden;
+}
+
+.fav-card-condition,
+.fav-card-value {
+    font-size: 14px;
+    color: #555;
+}
+
+.fav-card-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.fav-details-btn,
+.fav-trade-btn,
+.fav-remove-btn {
+    background-color: #fa7d6a;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 12px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.fav-trade-btn {
+    background-color: orange;
+}
+
+.fav-remove-btn {
+    background-color: #f56464; /* Slight variation for the remove button */
+}
