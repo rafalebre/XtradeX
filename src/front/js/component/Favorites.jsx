@@ -48,43 +48,41 @@ const Favorites = () => {
     actions.removeFavorite(itemId);
   };
 
-  const renderItems = (items, isProduct) => {
+  const renderItems = (items) => {
     if (!items) {
       return null;
     }
 
     return items.map((item, index) => (
       <div key={index} className="item-card">
-        <h3>{item.name}</h3>
-        {isProduct && <p>Condition: {item.condition}</p>}
-        <p>Estimated Value: {item.estimated_value}{item.currency}</p>
+        <h3>{item.details.name}</h3>
+        {item.type === "product" && <p>Condition: {item.details.condition}</p>}
+        <p>Estimated Value: {item.details.estimated_value}{item.details.currency}</p>
         <button
           className="orange-button"
           onClick={() =>
-            handleOpenDetails(item, isProduct ? "product" : "service")
+            handleOpenDetails(item.details, item.type)
           }
         >
           Check details
         </button>
-        {/* Botão para abrir oTradeProposal */}
         <button
           className="orange-button"
           onClick={() =>
-            handleOpenTradeProposal(item, isProduct ? "product" : "service")
+            handleOpenTradeProposal(item.details, item.type)
           }
         >
           Propose Trade
         </button>
-        {/* Botão para remover dos favoritos */}
         <button
           className="orange-button"
-          onClick={() => handleRemoveFromFavorites(item.id)}
+          onClick={() => handleRemoveFromFavorites(item.details.id)}
         >
           Remove from Favorites
         </button>
       </div>
     ));
-  };
+};
 
   return (
     <div>

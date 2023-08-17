@@ -842,7 +842,22 @@ def get_favorites():
         return {"error": "User not found"}, 404
 
     favorites = user.favorites
-    return {"favorites": [favorite.to_dict() for favorite in favorites]}, 200
+    favorite_list = []
+    for favorite in favorites:
+        if favorite.product_id:
+            product = Product.query.get(favorite.product_id)
+            favorite_list.append({
+                "type": "product",
+                "details": product.to_dict()  # Certificar que o modelo Product tenha uma função to_dict()
+            })
+        if favorite.service_id:
+            service = Service.query.get(favorite.service_id)
+            favorite_list.append({
+                "type": "service",
+                "details": service.to_dict()  # Certificar que o modelo Service tenha uma função to_dict()
+            })
+    return {"favorites": favorite_list}, 200
+
 
 
 @api.route('/api/users/favorites/<int:favorite_id>', methods=['DELETE'])
