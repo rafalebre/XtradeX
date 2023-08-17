@@ -40,7 +40,10 @@ export const Home = () => {
               <img src={homehowto} alt="Your Custom Image Description" className="homehowto"/>  
             </div>
 
-            <h2 className="section-title">See some online services from our already registered users</h2>
+            <h2 className="section-title">Check some of the online services registered from our users :</h2>
+            <p className="drag-instruction">
+    &larr; Drag and slide to see more services &rarr;
+</p>
 
             <div className="carousel-container">
                 <Slider {...sliderSettings}>
