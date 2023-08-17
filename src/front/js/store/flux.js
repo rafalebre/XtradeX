@@ -665,8 +665,6 @@ getFavoriteById: async (favoriteId) => {
       }
   },
   
-    
-  
   
     
 

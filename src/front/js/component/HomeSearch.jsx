@@ -16,6 +16,7 @@ const HomeSearch = () => {
   const [selectedItemType, setSelectedItemType] = useState(null);
   const [location, setLocation] = useState(null);
   const [bounds, setBounds] = useState(null);
+  const [highlightedItem, setHighlightedItem] = useState(null);
 
   useEffect(() => {
     if (searchType === "products") {
@@ -41,7 +42,12 @@ const HomeSearch = () => {
 
   const renderItems = (items, isProduct) => {
     return items.map((item, index) => (
-      <div key={index} className="item-card-custom">
+      <div
+        key={index}
+        className="item-card-custom"
+        onMouseEnter={() => setHighlightedItem(item)}
+        onMouseLeave={() => setHighlightedItem(null)}
+      >
         <h3>{item.name}</h3>
         {isProduct && <p>Condition: {item.condition}</p>}
         <p>Estimated Value: {item.estimated_value}{item.currency}</p>
@@ -111,13 +117,22 @@ const HomeSearch = () => {
   return (
     <div>
       <div className="button-container">
-        <button className="search-button-custom" onClick={() => handleSearchTypeChange("products")}>
+        <button
+          className="search-button-custom"
+          onClick={() => handleSearchTypeChange("products")}
+        >
           Search Products
         </button>
-        <button className="search-button-custom" onClick={() => handleSearchTypeChange("services")}>
+        <button
+          className="search-button-custom"
+          onClick={() => handleSearchTypeChange("services")}
+        >
           Search Services
         </button>
-        <button className="search-button-custom" onClick={handleSpecificSearchToggle}>
+        <button
+          className="search-button-custom"
+          onClick={handleSpecificSearchToggle}
+        >
           Specific Item Search
         </button>
       </div>
@@ -125,7 +140,11 @@ const HomeSearch = () => {
       {searchType ? (
         <form onSubmit={handleSearch}>
           <div className="dropdown-container">
-            <select name="category_id" className="dropdown-custom" onChange={handleCategoryChange}>
+            <select
+              name="category_id"
+              className="dropdown-custom"
+              onChange={handleCategoryChange}
+            >
               <option value="">Select Category</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -134,7 +153,12 @@ const HomeSearch = () => {
               ))}
             </select>
 
-            <select name="subcategory_id" className="dropdown-custom" value={selectedSubcategory} onChange={(e) => setSelectedSubcategory(e.target.value)}>
+            <select
+              name="subcategory_id"
+              className="dropdown-custom"
+              value={selectedSubcategory}
+              onChange={(e) => setSelectedSubcategory(e.target.value)}
+            >
               <option value="">Select Subcategory</option>
               {filteredSubcategories.map((subcategory) => (
                 <option key={subcategory.id} value={subcategory.id}>
@@ -143,14 +167,18 @@ const HomeSearch = () => {
               ))}
             </select>
 
-            <button type="submit" className="submit-button-custom">Search</button>
+            <button type="submit" className="submit-button-custom">
+              Search
+            </button>
           </div>
         </form>
       ) : null}
 
-      <GoogleMaps 
-          onLocationChange={handleLocationChange} 
-          markers={store.searchedProducts.concat(store.searchedServices)}
+      <GoogleMaps
+        onLocationChange={handleLocationChange}
+        markers={store.searchedProducts.concat(store.searchedServices)}
+        setHighlightedItem={setHighlightedItem}
+        highlightedItem={highlightedItem}
       />
 
       {specificSearch ? (
@@ -161,7 +189,10 @@ const HomeSearch = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Enter item name..."
           />
-          <button onClick={handleSearch} className="search-button-custom">
+          <button
+            onClick={handleSearch}
+            className="search-button-custom"
+          >
             Search
           </button>
           <div className="container">
