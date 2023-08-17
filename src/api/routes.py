@@ -10,6 +10,8 @@ from datetime import datetime
 from datetime import timedelta
 from dateutil import parser
 from requests import Request, Session
+from sqlalchemy import func
+
 
 api = Blueprint('api', __name__)
 
@@ -299,6 +301,8 @@ def get_services():
     category_id = request.args.get('category_id')
     subcategory_id = request.args.get('subcategory_id')
     online = request.args.get('online')
+    random_services = request.args.get('random')
+    limit = request.args.get('limit')
 
     top_left_lat = request.args.get('top_left_lat')
     top_left_long = request.args.get('top_left_long')
@@ -313,8 +317,12 @@ def get_services():
         bottom_right_long = float(bottom_right_long)
 
     # convert to boolean
-    if online is not None:
-        online = online.lower() in ['true', '1']
+    online = online.lower() in ['true', '1'] if online is not None else None
+    random_services = random_services.lower() in ['true', '1'] if random_services is not None else None
+
+    # convert limit to int
+    if limit:
+        limit = int(limit)
 
     query = Service.query
 
@@ -327,6 +335,12 @@ def get_services():
     if online is not None:
         query = query.filter_by(online=online)
 
+    if random_services:
+        query = query.order_by(func.random())  # Ordena aleatoriamente no PostgreSQL
+
+    if limit:
+        query = query.limit(limit)    
+
     # filter the services based on location, excluding online services
     if top_left_lat and top_left_long and bottom_right_lat and bottom_right_long and not online:
         query = query.filter(
@@ -338,6 +352,7 @@ def get_services():
 
     services = query.all()
     return jsonify([service.to_dict() for service in services])
+
 
 
 

@@ -622,41 +622,49 @@ getFavoriteById: async (favoriteId) => {
         }
     },
 
-    fetchOnlineServices: async function (categoryId, subcategoryId) {
+    fetchOnlineServices: async function (categoryId, subcategoryId, options = {}) {
       try {
           const backendUrl = process.env.BACKEND_URL;
           let apiUrl = `${backendUrl}/api/services?online=true`;
-    
-          if (categoryId || subcategoryId) {
-              if (categoryId) {
-                  apiUrl += `&category_id=${categoryId}`;
-              }
-              if (subcategoryId) {
-                  apiUrl += `&subcategory_id=${subcategoryId}`;
-              }
+        
+          if (categoryId) {
+              apiUrl += `&category_id=${categoryId}`;
           }
-    
+  
+          if (subcategoryId) {
+              apiUrl += `&subcategory_id=${subcategoryId}`;
+          }
+  
+          if (options.random) {
+              apiUrl += `&random=true`;
+          }
+  
+          if (options.limit) {
+              apiUrl += `&limit=${options.limit}`;
+          }
+  
           console.log("API URL:", apiUrl); 
-    
+  
           const response = await fetch(apiUrl);
           const data = await response.json();
-    
+  
           console.log(data); // Imprime os dados retornados pela API
-    
+  
           if (response.ok) {
               const store = getStore();
               const loggedInUserId = parseInt(store.loggedInUserId, 10);
               const filteredServices = data.filter(
                   (service) => parseInt(service.user_id, 10) !== loggedInUserId
               );
-              setStore({ onlineServices: filteredServices }); // <-- Mude aqui
+              setStore({ onlineServices: filteredServices });
           } else {
               console.error("Failed to fetch services:", data);
           }
       } catch (error) {
           console.error("Error fetching services:", error);
       }
-    },
+  },
+  
     
   
   
