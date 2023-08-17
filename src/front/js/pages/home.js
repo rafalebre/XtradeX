@@ -47,6 +47,7 @@ export const Home = () => {
                             <img src={service.image} alt={service.name} />
                             <h4>{service.name}</h4>
                             <p>{service.description}</p>
+                            <p>{service.currency} {service.estimated_value}</p>
                         </div>
                     ))}
                 </Slider>
