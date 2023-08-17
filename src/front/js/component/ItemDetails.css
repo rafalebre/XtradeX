@@ -13,6 +13,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px; /* Bordas arredondadas */
+  width: 70%; /* largura padrão de 70% da janela da tela */
+  max-width: 600px; /* largura máxima de 600px */
 }
 
 .item-details-container img {
