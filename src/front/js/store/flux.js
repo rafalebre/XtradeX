@@ -836,6 +836,53 @@ getFavoriteById: async (favoriteId) => {
         }
       },
 
+      deleteTrade: async function(tradeId) {
+        try {
+            const token = localStorage.getItem("token");
+            const headers = new Headers({
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            });
+            const apiUrl = `${backendUrl}/api/trades/${tradeId}`;
+    
+            const response = await fetch(apiUrl, {
+                method: "DELETE",
+                headers: headers,
+            });
+    
+            const textResponse = await response.text();
+    
+            try {
+                const data = JSON.parse(textResponse);
+                if (response.ok) {
+                    console.log("Trade successfully deleted:", data);
+    
+                    // Get the current state of the store
+                    const currentStore = getStore();
+    
+                    // Remove the deleted trade from sent_trades
+                    const updatedSentTrades = currentStore.sent_trades.filter(
+                        (trade) => trade.id !== tradeId
+                    );
+    
+                    // Update the store
+                    setStore({
+                        ...currentStore,
+                        sent_trades: updatedSentTrades,
+                    });
+                } else {
+                    console.log("Error deleting trade proposal:", data);
+                }
+            } catch (error) {
+                console.error("Error parsing JSON:", error);
+                console.log("Server response:", textResponse);
+            }
+        } catch (error) {
+            console.error("Error deleting trade proposal:", error);
+        }
+      },
+      
+
       clearTradeNotifications: () => {
         setStore({
           new_sent_trades: [],

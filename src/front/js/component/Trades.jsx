@@ -16,6 +16,8 @@ const Trades = ({ intervalId, clearInterval }) => {
 
     actions.getTrades();
     actions.clearTradeNotifications();
+    actions.deleteTrade(sentTrades.id);
+
 
     return () => {
       intervalId = setInterval(() => {
@@ -65,8 +67,23 @@ const Trades = ({ intervalId, clearInterval }) => {
     }
   };
 
+ 
+
   const sentTrades = store.sent_trades || [];
   const receivedTrades = store.received_trades || [];
+
+  const handleDeleteProposal = async (proposalId) => {
+    try {
+      await actions.deleteTrade(proposalId);
+      const updatedSentTrades = sentTrades.filter(proposal => proposal.id !== proposalId);
+      setStore({
+        ...store,
+        sent_trades: updatedSentTrades,
+      });
+    } catch (error) {
+      console.error("Error deleting proposal:", error);
+    }
+  };
 
   return (
     <div>
@@ -94,6 +111,10 @@ const Trades = ({ intervalId, clearInterval }) => {
           <button className="button-details" onClick={() => handleOpenDetails(proposal)}>
             Check Details
           </button>
+          <button className="button-delete" onClick={() => handleDeleteProposal(proposal.id)}>
+  Delete
+</button>
+
         </div>
       ))}
       <h3 className="received-proposals">Proposals Received:</h3>

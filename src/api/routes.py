@@ -705,6 +705,31 @@ def respond_to_trade(trade_id):
 
     return jsonify(response), 200
 
+@api.route('/trades/<int:trade_id>', methods=['DELETE'])
+@jwt_required()
+def delete_trade(trade_id):
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email=user_email).first()
+
+    if not user:
+        return jsonify({"msg": "User not found"}), 404
+
+    trade = Trade.query.get(trade_id)
+
+    if not trade:
+        return jsonify({"msg": "Trade not found"}), 404
+
+    # Verificação adicional para assegurar que somente o sender pode deletar o trade
+    if user.id != trade.sender_id:
+        return jsonify({"msg": "Unauthorized. Only the sender can delete the trade."}), 401
+
+    # Remover o trade
+    db.session.delete(trade)
+    db.session.commit()
+
+    return jsonify({"msg": "Trade successfully deleted"}), 200
+
+
 
 @api.route('/wishlist', methods=['GET'])
 @jwt_required()
