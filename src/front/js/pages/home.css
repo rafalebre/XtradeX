@@ -37,8 +37,8 @@
     border-radius: 8px;
     background-color: #f9f9f9; 
     color: #f57d5a;
-    height: 300px; /* Defina uma altura fixa que se adeque ao seu design. Este é apenas um valor de exemplo. */
-    width: 200px; /* Defina uma largura fixa, novamente ajuste conforme necessário. */
+    height: 300px; 
+    width: 200px; 
 }
 
 .service-image {
@@ -53,21 +53,19 @@
 
 .service-title {
     margin: 10px 0;
-    height: 40px; /* Altura fixa para o título */
-    overflow: hidden; /* Se por acaso o título for muito grande, ele não se estenderá para fora da área designada */
+    height: 40px; 
+    overflow: hidden; 
     display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; 
+    justify-content: center; 
+    text-align: center; 
 }
 
 .service-description {
-    max-height: 70px; /* Altura fixa para a descrição */
+    max-height: 70px;
     overflow-y: auto;
     padding: 0 10px;
-    display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    text-align: center; /* Centraliza o texto */
+    text-align: center; 
 }
 
 .service-price {
