@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "./Profile.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
+
 
 const Sidebar = ({ onMenuSelect, selectedMenu, newTradesCount }) => {
   const { store } = useContext(Context);
