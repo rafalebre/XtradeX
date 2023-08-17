@@ -22,6 +22,10 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    actions.getUserInfo(); 
+  }, []);
+
+  useEffect(() => {
     const id = setInterval(() => {
       actions.getTrades(); 
     }, 60000);

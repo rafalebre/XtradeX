@@ -113,7 +113,7 @@ useEffect(() => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
-
+  
     try {
       const response = await fetch("https://api.imgur.com/3/image", {
         method: "POST",
@@ -122,14 +122,20 @@ useEffect(() => {
           Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
         },
       });
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+  
       const data = await response.json();
-
       setImage(data.data.link);
+  
+      // Aqui, atualizamos o userInfo com o link da imagem recém-carregada.
+      setUserInfo(prevState => ({
+        ...prevState,
+        image_url: data.data.link,
+      }));
+  
     } catch (error) {
       console.error("Error uploading image:", error);
     }
