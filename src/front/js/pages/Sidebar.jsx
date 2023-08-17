@@ -31,21 +31,9 @@ const Sidebar = ({ onMenuSelect, selectedMenu, newTradesCount }) => {
   return (
     <div className="sidebar">
       <div className="avatar-container">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleProfilePicChange}
-        />
-        {profilePic ? (
-          <img src={profilePic} alt="User profile" className="avatar-image" />
-        ) : (
-          store.user && store.user.image_url ? (
+        
+        {store.user && store.user.image_url && (
             <img src={store.user.image_url} alt="User profile" className="avatar-image" />
-          ) : (
-            <div className="no-profile-pic">
-              <FontAwesomeIcon icon={faCamera} size="lg" />
-            </div>
-          )
         )}
       </div>
       <ul className="sidebar-menu">
