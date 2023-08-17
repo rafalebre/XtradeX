@@ -44,7 +44,7 @@ export const Home = () => {
                 <Slider {...sliderSettings}>
                     {store.onlineServices && store.onlineServices.map(service => (
                         <div key={service.id}>
-                            <img src={service.image} alt={service.name} />
+                            <img src={service.image_url} alt={service.name} />
                             <h4>{service.name}</h4>
                             <p>{service.description}</p>
                             <p>{service.currency} {service.estimated_value}</p>
