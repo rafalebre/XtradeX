@@ -4,7 +4,7 @@ import ItemDetails from "./ItemDetails.jsx";
 import TradeProposal from "./TradeProposal.jsx";
 import GoogleMaps from './GoogleMaps.jsx';
 import "./Search.css";
-import "./scrollToTop";
+
 
 const Search = () => {
   const [searchType, setSearchType] = useState(null);
@@ -45,30 +45,28 @@ const Search = () => {
 
   const renderItems = (items, isProduct) => {
     return items.map((item, index) => (
-      <div key={index} className="item-card"
+      <div key={index} className="fix-item-card"
       onMouseEnter={() => setHighlightedItem(item)}
       onMouseLeave={() => setHighlightedItem(null)}>
-        <h3>{item.name}</h3>
-        {isProduct && <p>Condition: {item.condition}</p>}
-        <p>Estimated Value: {item.estimated_value}{item.currency}</p>
+        <h3 className="fix-item-title">{item.name}</h3>
+        {isProduct && <p className="fix-item-condition">Condition: {item.condition}</p>}
+        <p className="fix-item-estimate">Estimated Value: {item.estimated_value}{item.currency}</p>
         <button
-          className="orange-button"
+          className="fix-item-details-button orange-button"
           onClick={() =>
             handleOpenDetails(item, isProduct ? "product" : "service")
           }
         >
           Check details
         </button>
-        {/* Adicionar botão para adicionar aos favoritos */}
         <button
-          className="orange-button"
+          className="fix-item-favorite-button orange-button"
           onClick={() => handleAddToFavorites(item)}
         >
           Add to Favorites
         </button>
-        {/* Abre o modal de Trade Proposal */}
         <button
-          className="orange-button"
+          className="fix-item-trade-button orange-button"
           onClick={() =>
             handleOpenTradeProposal(item, isProduct ? "product" : "service")
           }
@@ -78,6 +76,7 @@ const Search = () => {
       </div>
     ));
   };
+  
 
   // Função para abrir o modal de TradeProposal
   const handleOpenTradeProposal = (item, itemType) => {

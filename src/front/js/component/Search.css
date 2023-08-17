@@ -20,12 +20,15 @@
   color: white;
   padding: 10px 24px;
   text-align: center;
-  text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
   cursor: pointer;
   border-radius: 12px;
+  transition: 0.3s;
+}
+
+.search-button:hover, .submit-button:hover {
+  background-color: #f56c4e;
 }
 
 .input-container {
@@ -40,20 +43,67 @@
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 10px;
+  margin-top: 10px;
 }
 
-.item-card {
+.fix-item-card {
   display: flex;
   flex-direction: column;
-  width: 300px;  /* Largura padrão */
-  max-width: 350px;  /* Largura máxima */
-  min-width: 200px;  /* Largura mínima */
+  width: 200px;  
   background-color: #F0F0F0;
   padding: 10px;
   border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.fix-item-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.fix-item-title {
+  font-size: 1.2rem;
   margin-bottom: 10px;
-  word-wrap: break-word;  /* Isso irá quebrar palavras longas */
-  box-sizing: border-box; 
+}
+
+.fix-item-condition, .fix-item-estimate {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.fix-item-details-button, .fix-item-favorite-button, .fix-item-trade-button {
+  margin-top: 10px;
+  padding: 8px 10px;  /* Reduzimos o padding para torná-los mais compactos */
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px; /* Ajustamos o border-radius */
+  transition: 0.3s;
+}
+
+.fix-item-details-button {
+  background-color: #4CAF50;
+}
+
+.fix-item-favorite-button {
+  background-color: #FFC107;
+}
+
+.fix-item-trade-button {
+  background-color: #FF5722;
+}
+
+.fix-item-details-button:hover {
+  background-color: #45a049;
+}
+
+.fix-item-favorite-button:hover {
+  background-color: #ffb300;
+}
+
+.fix-item-trade-button:hover {
+  background-color: #ff3300;
 }
 
 .dropdown {
@@ -70,10 +120,6 @@
 .dropdown:focus {
   outline: none;
   border-color: #FFB6C1;
-}
-
-.dropdown option {
-  padding: 10px;
 }
 
 .category-form {
