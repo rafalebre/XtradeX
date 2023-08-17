@@ -16,7 +16,7 @@ const UserItems = () => {
       <Card key={item.id} className="user-item-card">
         <Card.Body>
           <Card.Text className="user-item-text">
-            {item.name} - {item.description} - {item.currency}{item.estimated_value}
+            <span className="bold-text">{item.name}</span> - {item.description} - <span className="bold-text">{item.currency}{item.estimated_value}</span>
           </Card.Text>
           <Button variant="danger" className="user-item-button" onClick={() => deleteFunction(store, item.id)}>Delete</Button>
         </Card.Body>
