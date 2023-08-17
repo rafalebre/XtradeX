@@ -1,5 +1,5 @@
 .home-container {
-    background-color: #ffffff;  /* Alterado para branco */
+    background-color: #ffffff;
     min-height: 100vh;
     color: #fa7d6a;
     padding-top: 40px; 
@@ -8,10 +8,10 @@
 }
 
 .homehowto {
-    max-width: 80%; /* Ajusta a largura máxima da imagem para 80% da largura do container */
-    height: auto; /* Mantém a proporção da imagem */
-    display: block; /* Faz a imagem ser exibida como bloco */
-    margin: 0 auto; /* Centraliza a imagem */
+    width: 50%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .home-container h1 {
@@ -41,4 +41,46 @@
     width: 300px;
     height: auto;
     margin-top: 150px;
+}
+
+.section-title {
+    text-align: center;
+    padding: 20px 0;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.carousel-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.service-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.service-image {
+    width: 80%;
+    max-height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.service-title {
+    margin: 10px 0;
+}
+
+.service-description {
+    height: 50px; /* or whatever you want */
+    overflow-y: auto;
+}
+
+.service-price {
+    margin-top: auto;
 }

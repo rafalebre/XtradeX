@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";  // Adicionado useEffect
+import React, { useContext, useState, useEffect } from "react";  
 import { Context } from "../store/appContext";
 import "./home.css";
 import { useNavigate } from 'react-router-dom';
@@ -36,22 +36,28 @@ export const Home = () => {
                 </Alert>
             )}
 
-            <div className="d-flex justify-content-center">
+<div className="d-flex justify-content-center">
               <img src={homehowto} alt="Your Custom Image Description" className="homehowto"/>  
             </div>
+
+            <h2 className="section-title">See some online services from our already registered users</h2>
 
             <div className="carousel-container">
                 <Slider {...sliderSettings}>
                     {store.onlineServices && store.onlineServices.map(service => (
-                        <div key={service.id}>
-                            <img src={service.image_url} alt={service.name} />
-                            <h4>{service.name}</h4>
-                            <p>{service.description}</p>
-                            <p>{service.currency} {service.estimated_value}</p>
+                        <div key={service.id} className="service-card">
+                            <img src={service.image_url} alt={service.name} className="service-image" />
+                            <h4 className="service-title">{service.name}</h4>
+                            <div className="service-description">
+                                <p>{service.description}</p>
+                            </div>
+                            <p className="service-price">{service.currency} {service.estimated_value}</p>
                         </div>
                     ))}
                 </Slider>
             </div>
+
+            <h2 className="section-title">Explore the products and services offered by our users</h2>
 
             <div className="d-flex justify-content-center">
                 <HomeSearch />
