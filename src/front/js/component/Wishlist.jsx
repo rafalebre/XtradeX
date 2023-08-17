@@ -19,10 +19,17 @@ function Wishlist() {
           'Authorization': `Bearer ${authToken}`
         }
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        setItems(data);
+        
+        // Convertendo prioridades para números inteiros
+        const processedItems = data.map(item => ({
+          ...item,
+          priority: parseInt(item.priority, 10)
+        }));
+  
+        setItems(processedItems);
       } else {
         console.error("Failed fetching items:", data);
       }
@@ -30,6 +37,7 @@ function Wishlist() {
       console.error("Error in the request:", error);
     }
   }
+  
 
   async function handleAddItem() {
     try {

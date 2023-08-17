@@ -725,8 +725,8 @@ def add_wishlist_item():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email=user_email).first()
 
-    item = request.json.get('item', None)  # Alterar 'content' para 'item'
-    priority = request.json.get('priority', 1)  # Definir prioridade padrão como 1
+    item = request.json.get('item', None)
+    priority = request.json.get('priority', 1)  # Já estava certo
 
     if not item:
         return jsonify({"msg": "Missing item parameter"}), 400
@@ -734,7 +734,7 @@ def add_wishlist_item():
     new_item = Wishlist()
     new_item.user_id = user.id
     new_item.item = item
-    new_item.priority = priority
+    new_item.priority = priority  # Adicionando priority ao novo item
     db.session.add(new_item)
     db.session.commit()
 

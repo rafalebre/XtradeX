@@ -264,13 +264,16 @@ class Wishlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     item = db.Column(db.String, nullable=False)
+    priority = db.Column(db.Integer, default=1)  # Adicionando o campo priority
 
     def to_dict(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
             "item": self.item,
+            "priority": self.priority  # Adicionando priority ao retorno
         }
+
 
 
 
