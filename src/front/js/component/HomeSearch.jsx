@@ -173,14 +173,14 @@ const HomeSearch = () => {
           </div>
         </form>
       ) : null}
-
-      <GoogleMaps
-        onLocationChange={handleLocationChange}
-        markers={store.searchedProducts.concat(store.searchedServices)}
-        setHighlightedItem={setHighlightedItem}
-        highlightedItem={highlightedItem}
-      />
-
+<div className="google-maps-container">
+        <GoogleMaps
+          onLocationChange={handleLocationChange}
+          markers={store.searchedProducts.concat(store.searchedServices)}
+          setHighlightedItem={setHighlightedItem}
+          highlightedItem={highlightedItem}
+        />
+      </div>
       {specificSearch ? (
         <div>
           <input

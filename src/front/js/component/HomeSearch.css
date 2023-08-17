@@ -26,6 +26,7 @@
   display: flex;
   gap: 10px;
   margin-top: 10px;
+  justify-content: center;
 }
 
 .dropdown-custom {
@@ -37,6 +38,7 @@
   border-radius: 5px;
   background-color: #f1f1f1;
   transition: border-color 0.3s;
+  max-width: 200px;
 }
 
 .dropdown-custom:focus {
@@ -72,7 +74,15 @@
 .item-list-custom {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center; /* Centraliza os itens horizontalmente */
+  align-items: flex-start; /* Alinha os itens ao topo verticalmente */
+  max-width: 1000px;
+}
+
+.google-maps-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .orange-button-custom {
