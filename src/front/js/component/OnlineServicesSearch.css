@@ -64,7 +64,7 @@
 
 .online-card p.description {
   max-height: 3em;
-  overflow: hidden;
+  overflow: auto;
   margin-bottom: 10px;
 }
 

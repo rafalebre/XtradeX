@@ -116,7 +116,7 @@ const OnlineServicesSearch = () => {
                   className="see-more-btn"
                   onClick={() => handleExpandDescription(service.id)}
                 >
-                  {expandedDescriptions[service.id] ? 'See Less' : 'See More'}
+                  {expandedDescriptions[service.id]}
                 </button>
               )}
             </div>
