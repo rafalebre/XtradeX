@@ -25,30 +25,44 @@ This project was developed as a final capstone project for a full stack web deve
 - Additional integrations include Google Maps API and Exchange Rate API.
 
 ## Installation and Setup
-- **Backend Setup:**
-  - Install Python 3.8, Pipenv, and a database engine (PostgreSQL recommended).
-  - Install Python packages: `pipenv install`
-  - Create a `.env` file from the template: `cp .env.example .env`
-  - Set up your database and update the `DATABASE_URL` in the `.env` file.
-  - Run migrations: `pipenv run migrate` and `pipenv run upgrade`
-  - Start the application: `pipenv run start`
+### Backend Setup:
+- Install Python 3.8, Pipenv, and a database engine (PostgreSQL recommended).
+- Install Python packages: `pipenv install`
+- Create a `.env` file from the template: `cp .env.example .env`
+- Set up your database and update the `DATABASE_URL` in the `.env` file.
+- Run migrations: `pipenv run migrate` and `pipenv run upgrade`
+- Start the application: `pipenv run start`
 
-- **Frontend Setup:**
-  - Ensure Node.js (version 14+) is installed.
-  - Install npm packages: `npm install`
-  - Start the development server: `npm run start`
+### Frontend Setup:
+- Ensure Node.js (version 14+) is installed.
+- Install npm packages: `npm install`
+- Start the development server: `npm run start`
 
-## Usage Examples
-> Note: The screenshots and further detailed usage examples will be provided separately and are not included in the project repository to avoid modifications on Gitpod.
+## Note on Development
+This project was developed six months after my first contact with programming, and it still contains some errors, including in the use of colors and visual standards. That is why I am redesigning it from scratch in a new project.
 
 ## Contributing
-This project was primarily developed to demonstrate my capabilities and to fulfill graduation requirements from the coding bootcamp. It serves as a showcase of my skills, and I am currently working on an improved version of this project, hence it is not open for external contributions.
+This project was primarily developed to demonstrate my capabilities and to fulfill graduation requirements from the coding bootcamp. It serves as a showcase of my skills, and I am currently working on an improved version of this project; hence it is not open for external contributions.
 
 ## License
 This project is not currently under any specific open source license.
 
 ## Contact
 This project is a demonstration of my skills for potential employment opportunities and is not intended for public contributions.
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
 
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+## Project Visuals
+Below are some visual representations of the X-trade-X app. These images provide a look at the app's interface and functionality without the need to run it locally:
+
+![Home Screen](XtradeX%20images/Home.png)
+
+![Add a service](XtradeX%20images/AddService.png)
+
+![Add a product](XtradeX%20images/AddProduct.png)
+
+![Search Results](XtradeX%20images/Search.png)
+
+![Trade Proposal](XtradeX%20images/TradeProposal.png)
+
+![Trade Proposal Details](XtradeX%20images/TradeProposalDetails.png)
+
+These images offer a glimpse into the various features and capabilities of the app, illustrating the user-friendly design and interactive elements.
